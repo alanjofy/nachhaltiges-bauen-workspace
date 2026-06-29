@@ -278,33 +278,25 @@ RESPONSE GUIDELINES:
      ──────────────────────────────────────────────────────────────── */
   
   async function callGemini(messages) {
-    const model = 'gemini-2.5-flash-lite';
-    const url = `https://generativelanguage.googleapis.com/v1beta/models/${model}:generateContent?key=${state.geminiKey}`;
-    
-    const contents = messages.map(m => ({
-      role: m.role === 'assistant' ? 'model' : 'user',
-      parts: [{ text: m.content }]
-    }));
-    
-    const res = await fetch(url, {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
+    const PROXY_URL = "https://aria-proxy-lac.vercel.app/api/aria";
+
+    const res = await fetch(PROXY_URL, {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
       body: JSON.stringify({
-        system_instruction: { parts: [{ text: SYSTEM_PROMPT }] },
-        contents,
-        generationConfig: { maxOutputTokens: 800, temperature: 0.7 }
+        messages,
+        systemPrompt: SYSTEM_PROMPT
       })
     });
-    
+
     if (!res.ok) {
       const err = await res.json().catch(() => ({}));
-      throw new Error(err?.error?.message || `Gemini error ${res.status}`);
+      throw new Error(err?.error || `ARIA error ${res.status}`);
     }
-    
-    const data = await res.json();
-    return data.candidates?.[0]?.content?.parts?.[0]?.text || 'No response.';
-  }
 
+    const data = await res.json();
+    return data.text || "No response.";
+  }
   async function callAnthropic(messages) {
     const res = await fetch('https://api.anthropic.com/v1/messages', {
       method: 'POST',
@@ -535,11 +527,18 @@ RESPONSE GUIDELINES:
       };
       
       let reply;
-      if (state.activeProvider === 'gemini') {
-        reply = await callGemini(messages);
-      } else {
-        reply = await callAnthropic(messages);
+      let lastErr = null;
+      for (let attempt = 0; attempt < 3; attempt++) {
+        try {
+          reply = await callGemini(messages);
+          lastErr = null;
+          break;
+        } catch (e) {
+          lastErr = e;
+          if (attempt < 2) await new Promise(r => setTimeout(r, 800 * (attempt + 1)));
+        }
       }
+      if (lastErr) throw lastErr;
       
       hideTyping(typingId);
       
@@ -711,8 +710,9 @@ RESPONSE GUIDELINES:
     // Bind events
     bindEvents();
     
-    // Show chat if API key already present
-    if (state.activeProvider) showChat();
+    // Proxy mode — Gemini key lives securely on Vercel, activate immediately
+    state.activeProvider = "gemini";
+    showChat();
     
     state.initialized = true;
     console.log(`[ARIA] Initialized on page: ${state.pageId}`);
