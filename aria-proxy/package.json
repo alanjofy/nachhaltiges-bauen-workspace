@@ -1,6 +1,0 @@
-{
-  "name": "aria-proxy",
-  "version": "1.0.0",
-  "description": "Secure Gemini proxy for ARIA",
-  "private": true
-}
