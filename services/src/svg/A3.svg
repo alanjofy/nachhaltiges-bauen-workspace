@@ -1,0 +1,13 @@
+<svg viewBox="0 0 400 160" xmlns="http://www.w3.org/2000/svg" preserveAspectRatio="xMidYMid slice" aria-hidden="true">
+  <defs><!--GRADIENT--></defs>
+  <rect width="400" height="160" fill="url(#gA3)"/>
+  <circle cx="200" cy="80" r="50" fill="none" stroke="rgba(255,255,255,0.15)" stroke-width="1"/>
+  <circle cx="200" cy="80" r="38" fill="none" stroke="rgba(255,255,255,0.25)" stroke-width="1"/>
+  <circle cx="200" cy="80" r="26" fill="none" stroke="rgba(255,255,255,0.35)" stroke-width="1"/>
+  <circle cx="200" cy="80" r="14" fill="none" stroke="rgba(255,255,255,0.5)" stroke-width="1.5"/>
+  <circle cx="200" cy="80" r="5" fill="white"/>
+  <line x1="200" y1="25" x2="200" y2="55" stroke="white" stroke-width="2.5" stroke-linecap="round"/>
+  <line x1="200" y1="105" x2="200" y2="135" stroke="white" stroke-width="2.5" stroke-linecap="round"/>
+  <line x1="145" y1="80" x2="175" y2="80" stroke="white" stroke-width="2.5" stroke-linecap="round"/>
+  <line x1="225" y1="80" x2="255" y2="80" stroke="white" stroke-width="2.5" stroke-linecap="round"/>
+</svg>

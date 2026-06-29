@@ -1,0 +1,160 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>EPD Competitor Viewer — All Divisions</title>
+  <link rel="stylesheet" href="competitor_style.css" />
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+</head>
+<body>
+  <div class="ambient ambient-1"></div>
+  <div class="ambient ambient-2"></div>
+
+  <div class="page-shell">
+    <header class="topbar card">
+      <div class="brand-wrap">
+        <h1>EPD Competitor Viewer — All Divisions</h1>
+      </div>
+      <div class="header-actions">
+        <button id="exportPdfBtn" class="action-btn export-pdf-btn disabled" type="button" aria-disabled="true">Export PDF</button>
+        <button id="themeToggle" class="theme-toggle" type="button" aria-label="Toggle color theme">
+          <span class="theme-toggle-track"><span class="theme-toggle-thumb"></span></span>
+          <span id="themeLabel">Light mode</span>
+        </button>
+      </div>
+    </header>
+
+    <section class="config-panel card">
+      <div class="filters-grid">
+        <label class="form-field">
+          <span>Division</span>
+          <select id="divisionSelect">
+            <option value="">Select division</option>
+          </select>
+        </label>
+        <label class="form-field">
+          <span>Product Family</span>
+          <select id="productFamilySelect" disabled>
+            <option value="">Select product family</option>
+          </select>
+        </label>
+        <label class="form-field">
+          <span>Competitor</span>
+          <select id="competitorSelect" disabled>
+            <option value="">Select competitor</option>
+          </select>
+        </label>
+        <label class="form-field">
+          <span>Product Variant</span>
+          <select id="productVariantSelect" disabled>
+            <option value="">Select product variant</option>
+          </select>
+        </label>
+      </div>
+      <div id="selectionSummary" class="selection-summary">
+        Select a competitor to begin.
+      </div>
+    </section>
+
+    <main class="main-layout">
+      <section class="left-column">
+        <article class="card product-card">
+          <div class="section-head">
+            <div>
+              <p class="section-kicker">Overview</p>
+              <h3>Product Profile</h3>
+            </div>
+          </div>
+          <div class="product-layout">
+            <div class="product-visual-frame">
+              <img id="productImage" src="" alt="Selected product" />
+              <div id="productImagePlaceholder" class="image-placeholder">Product image will appear here</div>
+            </div>
+            <div class="product-meta-stack">
+              <div class="meta-card">
+                <span class="meta-kicker">Selected product</span>
+                <h4 id="selectedCompetitor">—</h4>
+                <p id="selectedProductVariant">Select a product variant to load its profile.</p>
+              </div>
+              <div class="meta-pill-grid">
+                <div class="meta-pill">
+                  <span>EPD issue date</span>
+                  <strong id="issueDateValue">—</strong>
+                </div>
+                <div class="meta-pill">
+                  <span>EPD valid to</span>
+                  <strong id="validToValue">—</strong>
+                </div>
+              </div>
+            </div>
+          </div>
+        </article>
+
+        <article class="card technical-card">
+          <div class="section-head">
+            <div>
+              <p class="section-kicker">Key Product Details</p>
+              <h3>Technical data</h3>
+            </div>
+          </div>
+          <div id="technicalGrid" class="metrics-grid empty-grid">
+            <div class="empty-panel">Technical details will load here.</div>
+          </div>
+        </article>
+
+        <article class="card scenario-card">
+          <div class="section-head">
+            <div>
+              <p class="section-kicker">Available scenarios</p>
+              <h3>Scenario Selection</h3>
+            </div>
+          </div>
+          <div id="scenarioList" class="scenario-list empty-grid">
+            <div class="empty-panel">Scenario details will appear here.</div>
+          </div>
+        </article>
+      </section>
+
+      <section class="right-column">
+        <article class="card results-card">
+          <div class="section-head">
+            <div>
+              <p class="section-kicker">Lifecycle results</p>
+              <h3>Module Results</h3>
+            </div>
+          </div>
+          <div id="scenarioPicker" class="scenario-picker"></div>
+          <div id="resultsLifecycleGrid" class="results-lifecycle-grid empty-grid">
+            <div class="empty-panel">Choose a product variant to display lifecycle results.</div>
+          </div>
+        </article>
+      </section>
+    </main>
+
+    <!-- Full-width graph -->
+    <section id="bottomSection" class="bottom-section hidden-until-ready">
+      <article class="card chart-card">
+        <div class="chart-card-head">
+          <div class="chart-head-row">
+            <div>
+              <p class="section-kicker">Dynamic graph</p>
+              <h3>Module Bar Graph</h3>
+            </div>
+            <div class="chart-view-toggle">
+              <button class="chart-view-btn active" data-view="modules">Modules</button>
+              <button class="chart-view-btn" data-view="a1c4">A1-C4 View</button>
+              <button class="chart-view-btn" data-view="netcarbon">Net Carbon</button>
+            </div>
+          </div>
+        </div>
+        <div id="mainBarChart" class="module-bar-chart empty-grid">
+          <div class="empty-panel">Choose a product variant to display the graph.</div>
+        </div>
+      </article>
+    </section>
+  </div>
+
+  <script src="competitor_script.js"></script>
+</body>
+</html>

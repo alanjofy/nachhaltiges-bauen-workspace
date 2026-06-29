@@ -1,0 +1,259 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>LCA Product Selector - KPI Version</title>
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
+<link rel="stylesheet" href="style.css">
+</head>
+
+<body class="app-metal">
+
+<header>
+  <span data-i18n="title">LCA Product Selector - Lindner Metal Ceilings</span>
+  <div class="lang-switch">
+    <button id="btnEN">EN</button> |
+    <button id="btnDE">DE</button>
+  </div>
+</header>
+
+<div class="container">
+
+<div class="filters">
+  <div>
+    <label data-i18n="family">Produktfamilie</label>
+    <select id="familie"></select>
+  </div>
+  <div>
+    <label data-i18n="type">Produkttyp</label>
+    <select id="typ"></select>
+  </div>
+  <div>
+    <label data-i18n="weight">Gewicht</label>
+    <select id="gewicht"></select>
+  </div>
+</div>
+
+<div id="productTitle"></div>
+<div id="duBox"></div>
+
+<div id="linkBox">
+  <a href="https://my.lindner-group.com/content/page/68248e8c5c2d7b047f006c46"
+     target="_blank" class="linkBtn" data-i18n="moreInfo">More Product Information</a>
+
+  <a href="https://epd-online.com/PublishedEpd/Download/21971"
+     target="_blank" class="linkBtn epd" data-i18n="viewEPD">View EPD</a>
+
+  <button id="lcaPdfBtn" class="linkBtn" data-i18n="lcaPdf">LCA Specific PDF</button>
+  <button id="exportBtn" class="linkBtn export">Export Chart (PNG)</button>
+</div>
+
+<div class="results" id="resultTable"></div>
+
+<div class="summary-container" id="kpiBox" style="display:none;">
+  <h3 data-i18n="summary">A1-C4 Scenario Summary</h3>
+  <div style="display:flex;justify-content:space-around">
+    <div><strong> <span id="kpiRecLabel"></span></strong><div id="kpiRec"></div></div>
+    <div><strong><span id="kpiReuseLabel"></span></strong><div id="kpiReuse"></div></div>
+  </div>
+</div>
+
+<div class="chart-container">
+  <h3 data-i18n="comparison">Module Comparison (A1-D)</h3>
+  <canvas id="impactChart"></canvas>
+</div>
+
+</div>
+
+<footer data-i18n="footer">LCA Visualization Tool</footer>
+
+<!-- LANGUAGE SCRIPT -->
+<script>
+const i18n={
+  en:{
+    title:"LCA Product Selector - Lindner Metal Ceilings",
+    family:"Product family",
+    type:"Product type",
+    weight:"Weight",
+    moreInfo:"More Product Information",
+    viewEPD:"View EPD",
+    lcaPdf:"LCA Specific PDF",
+    summary:"A1-C4 Scenario Summary",
+    comparison:"Module Comparison (A1-D)",
+    footer:"LCA Visualization Tool",
+    recyclingLabel:"Recycling",
+    reuseLabel:"Reuse"
+  },
+  de:{
+    title:"LCA-Produktselektor - Lindner Metalldecken",
+    family:"Produktfamilie",
+    type:"Produkttyp",
+    weight:"Gewicht",
+    moreInfo:"Weitere Produktinformationen",
+    viewEPD:"EPD anzeigen",
+    lcaPdf:"LCA-spezifisches PDF",
+    summary:"A1-C4 Szenarienuebersicht",
+    comparison:"Modulvergleich (A1-D)",
+    footer:"LCA-Visualisierungstool",
+    recyclingLabel:"Recycling",
+    reuseLabel:"Wiederverwendung"
+  }
+};
+
+function applyLanguage(l){
+  document.querySelectorAll("[data-i18n]").forEach(e=>{
+    const k=e.dataset.i18n;
+    if(i18n[l][k]) e.textContent=i18n[l][k];
+  });
+  document.getElementById("kpiRecLabel").textContent=i18n[l].recyclingLabel;
+  document.getElementById("kpiReuseLabel").textContent=i18n[l].reuseLabel;
+  btnEN.classList.toggle("active",l==="en");
+  btnDE.classList.toggle("active",l==="de");
+  localStorage.setItem("lang",l);
+  if(chart) chart.update();
+}
+btnEN.onclick=()=>applyLanguage("en");
+btnDE.onclick=()=>applyLanguage("de");
+applyLanguage(localStorage.getItem("lang")||"en");
+</script>
+
+<!-- CORE LOGIC -->
+<script>
+const clean=v=>String(v||"").trim();
+const num=v=>Number(String(v).replace(",","."));
+const t=k=>i18n[localStorage.getItem("lang")||"en"][k]||k;
+
+function getPdfName(row){
+  return row["lca-specific"]||row["LCA specific"]||row["LCA_specific"]||null;
+}
+
+const familie=document.getElementById("familie");
+const typ=document.getElementById("typ");
+const gewicht=document.getElementById("gewicht");
+const duBox=document.getElementById("duBox");
+const productTitle=document.getElementById("productTitle");
+const linkBox=document.getElementById("linkBox");
+const exportBtn=document.getElementById("exportBtn");
+const resultTable=document.getElementById("resultTable");
+const kpiBox=document.getElementById("kpiBox");
+const kpiRec=document.getElementById("kpiRec");
+const kpiReuse=document.getElementById("kpiReuse");
+const lcaPdfBtn=document.getElementById("lcaPdfBtn");
+
+let data=[],lcaFiles=[],weightKey=null,chart=null;
+
+fetch("products.csv").then(r=>r.text()).then(csv=>{
+  const sep=csv.includes(";")?";":",";
+  const rows=csv.trim().split("\n").map(r=>r.split(sep));
+  const headers=rows.shift().map(clean);
+  weightKey=headers.find(h=>h.toLowerCase().includes("gewicht"));
+  data=rows.map(r=>Object.fromEntries(headers.map((h,i)=>[h,clean(r[i])])));
+  initFamilie();
+});
+
+fetch("filename.csv").then(r=>r.text()).then(csv=>{
+  const sep=csv.includes(";")?";":",";
+  const rows=csv.trim().split("\n").map(r=>r.split(sep));
+  const headers=rows.shift().map(clean);
+  lcaFiles=rows.map(r=>Object.fromEntries(headers.map((h,i)=>[h,clean(r[i])])));
+});
+
+function resetUI(){
+  productTitle.style.display=duBox.style.display=linkBox.style.display="none";
+  resultTable.innerHTML="";
+  kpiBox.style.display="none";
+  if(chart){chart.destroy();chart=null;}
+}
+
+function initFamilie(){
+  familie.innerHTML="<option></option>";
+  [...new Set(data.map(d=>d.Produktfamilie))].forEach(v=>familie.innerHTML+=`<option>${v}</option>`);
+  familie.onchange=()=>{resetUI();initTyp();}
+}
+
+function initTyp(){
+  typ.innerHTML=gewicht.innerHTML="<option></option>";
+  [...new Set(data.filter(d=>d.Produktfamilie===familie.value).map(d=>d.Produkttyp))]
+    .forEach(v=>typ.innerHTML+=`<option>${v}</option>`);
+  typ.onchange=()=>{resetUI();initGewicht();}
+}
+
+function initGewicht(){
+  gewicht.innerHTML="<option></option>";
+  [...new Set(data.filter(d=>d.Produktfamilie===familie.value&&d.Produkttyp===typ.value)
+    .map(d=>num(d[weightKey])))]
+    .forEach(v=>gewicht.innerHTML+=`<option>${v}</option>`);
+  gewicht.onchange=()=>{resetUI();showResult();}
+}
+
+function showResult(){
+  const p=data.find(d=>d.Produktfamilie===familie.value&&d.Produkttyp===typ.value&&Math.abs(num(d[weightKey])-num(gewicht.value))<0.0001);
+  if(!p)return;
+
+  productTitle.style.display="block";
+  productTitle.innerText=`${familie.value} | ${typ.value} | ${num(gewicht.value).toFixed(2)} kg/m2`;
+
+  duBox.style.display="block";
+  duBox.innerText=`DU: ${num(gewicht.value).toFixed(2)} kg/m2`;
+  linkBox.style.display="block";
+
+  const rec=["A1-A3","A4","A5","C1","C2","C3","C4","D"];
+  const reuse=["A1-A3","A4","A5","C1","C2/1","C3/1","C4/1","D/1"];
+
+  const r=rec.map(k=>+p[k]||0);
+  const u=reuse.map(k=>+p[k]||0);
+
+  resultTable.innerHTML=
+    `<h3> ${t("recyclingLabel")}</h3>${mkTable(rec,r)}
+     <h3>${t("reuseLabel")}</h3>${mkTable(reuse,u)}`;
+
+  kpiBox.style.display="block";
+  kpiRec.innerText=r.slice(0,7).reduce((a,b)=>a+b,0).toFixed(2);
+  kpiReuse.innerText=u.slice(0,7).reduce((a,b)=>a+b,0).toFixed(2);
+
+  drawChart(rec,r,u);
+}
+
+function mkTable(k,d){
+  return `<table><tr>${k.map(x=>`<th>${x}</th>`).join("")}</tr>
+          <tr>${d.map(v=>`<td>${v.toFixed(2)}</td>`).join("")}</tr></table>`;
+}
+
+function drawChart(l,r,u){
+  chart=new Chart(impactChart,{
+    type:"bar",
+    data:{labels:l,datasets:[
+      {label:t("recyclingLabel"),data:r,backgroundColor:"#0077cc"},
+      {label:t("reuseLabel"),data:u,backgroundColor:"#00aaff"}]},
+    options:{responsive:true,scales:{y:{beginAtZero:true}}}
+  });
+}
+
+exportBtn.onclick=()=>{
+  const a=document.createElement("a");
+  a.href=impactChart.toDataURL("image/png");
+  a.download="LCA_Chart.png";
+  a.click();
+};
+
+lcaPdfBtn.onclick=()=>{
+  const m=lcaFiles.find(d=>
+    clean(d.Produktfamilie)===clean(familie.value) &&
+    clean(d.Produkttyp)===clean(typ.value) &&
+    Math.abs(num(d.Gewicht)-num(gewicht.value))<0.0001
+  );
+  const pdf=m?getPdfName(m):null;
+  if(!pdf){alert("No LCA specific PDF available for this product variant.");return;}
+  const file=pdf.toLowerCase().endsWith(".pdf")?pdf:`${pdf}.pdf`;
+  window.open(`lca-specific/${encodeURIComponent(file)}`,"_blank");
+};
+</script>
+
+</body>
+</html>
+
+
+
+
+

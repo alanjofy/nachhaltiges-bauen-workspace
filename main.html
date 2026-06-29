@@ -1,0 +1,625 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>CO₂ Compass — Lindner Nachhaltiges Bauen</title>
+<meta name="description" content="CO₂ Compass — Understand, Navigate, Reduce. Life Cycle Assessment for sustainable building products.">
+<meta property="og:title" content="CO₂ Compass — Lindner Nachhaltiges Bauen">
+<meta property="og:description" content="Understand · Navigate · Reduce. Life Cycle Assessment dashboard for sustainable building products.">
+<meta property="og:image" content="compass-body.png">
+<meta property="og:type" content="website">
+<link rel="icon" href="compass-body.png">
+<link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Montserrat:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="lindner-theme.css">
+<link rel="stylesheet" href="aria/aria.css">   <!-- ← NEW -->
+<style>
+  body { overflow-x: hidden; }
+
+  /* ====== HEADER — substantial, matches tool.html authority ====== */
+  .lindner-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 22px 52px 22px 40px;
+    opacity: 0;
+    animation: fadeIn 0.6s ease 0.1s forwards;
+    position: relative;
+    z-index: 20;
+  }
+  .header-left {
+    display: flex;
+    align-items: center;
+    gap: 26px;
+  }
+
+  /* FIX: Lindner logo bumped to 40px — matches tool.html visual weight */
+  .lindner-header-logo img {
+    height: 40px;
+    width: auto;
+    display: block;
+    transition: opacity 0.3s ease;
+  }
+  .lindner-header-logo:hover img { opacity: 0.85; }
+
+  /* FIX: Divider slightly more visible, taller to match logo height */
+  .header-divider {
+    width: 1px;
+    height: 36px;
+    background: rgba(255, 255, 255, 0.28);
+  }
+
+  /* FIX: Compass mark bumped to 48px + brightness boost so it actually reads */
+  .header-compass {
+    position: relative;
+    width: 48px;
+    height: 48px;
+    flex-shrink: 0;
+    display: block;
+    transition: transform 0.4s ease;
+  }
+  .header-compass:hover { transform: rotate(8deg); }
+  .header-compass img {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: contain;
+    object-position: center center;
+    /* FIX: Brighter + better drop-shadow so it doesn't disappear on dark bg */
+    filter: drop-shadow(0 3px 6px rgba(0, 0, 0, 0.6))
+            drop-shadow(0 0 4px rgba(255, 255, 255, 0.15))
+            brightness(1.12)
+            contrast(1.05);
+  }
+  .header-compass .needle-mini {
+  z-index: 2;
+  transform: scale(0.7);
+  transform-origin: center center;
+}
+  .header-compass .body-mini { z-index: 1; }
+
+  .lindner-header-tag {
+    font-size: 13px;
+    letter-spacing: 6px;
+    text-transform: uppercase;
+    color: var(--text-primary);
+    font-weight: 500;
+  }
+
+  /* ====== PAGE LAYOUT ====== */
+  .page {
+    position: relative;
+    z-index: 10;
+    min-height: calc(100vh - 88px - 56px);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding: 40px 24px 60px;
+  }
+
+  /* ====== INTRO / HERO — wordmark + motto stacked block (Option B) ====== */
+  .intro {
+    text-align: center;
+    margin-bottom: 28px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+
+  /* FIX #3: Wordmark + motto bonded as ONE block, like the original clean stack */
+  .wordmark-block {
+    display: inline-flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 12px;
+  }
+
+  .wordmark {
+    opacity: 0;
+    transform: translateY(12px);
+    animation: wordmarkIn 0.9s cubic-bezier(0.22, 1, 0.36, 1) 0.3s forwards;
+    display: inline-block;
+  }
+  @keyframes wordmarkIn {
+    to { opacity: 1; transform: translateY(0); }
+  }
+  .wordmark img {
+    height: 130px;
+    width: auto;
+    display: block;
+    filter: drop-shadow(0 6px 16px rgba(0, 0, 0, 0.4))
+            brightness(1.05);
+  }
+
+  /* Motto: directly under wordmark, same visual block */
+  .motto {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 14px;
+    font-family: var(--font-display);
+    font-size: 18px;
+    letter-spacing: 5px;
+    color: var(--text-primary);
+    text-transform: uppercase;
+    padding-top: 10px;
+    border-top: 1px solid rgba(255, 255, 255, 0.18);
+    /* Match the wordmark's visual width — looks like a bonded block */
+    align-self: stretch;
+    justify-self: center;
+  }
+  .motto-word {
+    opacity: 0;
+    transform: translateY(8px);
+    display: inline-block;
+    animation: mottoIn 0.5s var(--ease-smooth) forwards;
+  }
+  .motto-dot {
+    opacity: 0;
+    color: var(--text-dim);
+    font-size: 13px;
+    animation: mottoIn 0.4s ease forwards;
+  }
+  .motto-word.w1 { animation-delay: 1.1s; }
+  .motto-dot.d1  { animation-delay: 1.3s; }
+
+  .motto-word.w2 {
+    color: var(--accent-red-bright);
+    animation: mottoIn 0.5s var(--ease-smooth) 1.5s forwards,
+               navigateGlow 3.5s ease-in-out 3s infinite alternate;
+  }
+  @keyframes navigateGlow {
+    from { text-shadow: 0 0 8px rgba(232, 0, 31, 0.2); }
+    to   { text-shadow: 0 0 16px rgba(232, 0, 31, 0.4),
+                        0 0 28px rgba(232, 0, 31, 0.15); }
+  }
+
+  .motto-dot.d2  { animation-delay: 1.7s; }
+  .motto-word.w3 { animation-delay: 1.9s; }
+  @keyframes mottoIn { to { opacity: 1; transform: translateY(0); } }
+
+  /* ====== SECTION LABEL ====== */
+  .section-label {
+    margin-top: 40px;
+    font-size: 10px;
+    letter-spacing: 4px;
+    text-transform: uppercase;
+    color: var(--text-muted);
+    font-weight: 500;
+    opacity: 0;
+    animation: fadeUp 0.6s ease 2.4s forwards;
+  }
+
+  /* ====== TOOLS LIST ====== */
+  .tools-list {
+    width: min(900px, 92vw);
+    display: flex;
+    flex-direction: column;
+    gap: 14px;
+    margin-top: 16px;
+  }
+
+  .tool {
+    position: relative;
+    display: flex;
+    align-items: center;
+    gap: 18px;
+    padding: 18px 22px 18px 24px;
+    background: var(--surface-glass);
+    backdrop-filter: blur(22px) saturate(1.4);
+    -webkit-backdrop-filter: blur(22px) saturate(1.4);
+    border: 1px solid var(--border-soft);
+    border-radius: 16px;
+    color: var(--text-primary);
+    cursor: pointer;
+    overflow: hidden;
+    transition: transform 0.35s var(--ease-smooth),
+                background 0.3s ease,
+                border-color 0.3s ease,
+                box-shadow 0.4s ease;
+    opacity: 0;
+    transform: translateY(20px);
+    animation: toolIn 0.6s var(--ease-smooth) forwards;
+  }
+  .tool:nth-child(1) { animation-delay: 2.6s; }
+  .tool:nth-child(2) { animation-delay: 2.72s; }
+  .tool:nth-child(3) { animation-delay: 2.84s; }
+  .tool:nth-child(4) { animation-delay: 2.96s; }
+  .tool:nth-child(5) { animation-delay: 3.08s; }
+  @keyframes toolIn { to { opacity: 1; transform: translateY(0); } }
+
+  .tool::before {
+    content: "";
+    position: absolute;
+    left: 0; top: 0; bottom: 0;
+    width: 3px;
+    background: linear-gradient(180deg, var(--accent-red), var(--accent-red-bright));
+    transform: scaleY(0);
+    transform-origin: center;
+    transition: transform 0.35s var(--ease-smooth);
+  }
+  .tool::after {
+    content: "";
+    position: absolute;
+    top: -50%; left: -100%;
+    width: 50%; height: 200%;
+    background: linear-gradient(108deg, rgba(255, 255, 255, 0.1) 0%, transparent 55%);
+    transition: left 0.7s var(--ease-smooth);
+    pointer-events: none;
+  }
+  .tool:hover {
+    transform: translateX(6px);
+    background: var(--surface-glass-hover);
+    border-color: rgba(192, 0, 26, 0.4);
+    box-shadow: 0 12px 32px rgba(192, 0, 26, 0.18),
+                0 0 0 1px rgba(255, 255, 255, 0.08) inset;
+  }
+  .tool:hover::before { transform: scaleY(1); }
+  .tool:hover::after { left: 100%; }
+  .tool:focus-visible {
+    outline: 2px solid var(--accent-red-bright);
+    outline-offset: 4px;
+  }
+
+  .tool-icon {
+    width: 46px; height: 46px;
+    flex-shrink: 0;
+    background: linear-gradient(135deg, var(--accent-red-soft), rgba(255, 45, 45, 0.08));
+    border: 1px solid rgba(192, 0, 26, 0.3);
+    border-radius: 12px;
+    display: flex; align-items: center; justify-content: center;
+    transition: transform 0.35s var(--ease-smooth),
+                background 0.3s ease, border-color 0.3s ease;
+  }
+  .tool:hover .tool-icon {
+    transform: scale(1.06);
+    background: linear-gradient(135deg, rgba(192, 0, 26, 0.32), rgba(255, 45, 45, 0.15));
+    border-color: rgba(255, 45, 45, 0.55);
+  }
+  .tool-icon svg {
+    width: 20px; height: 20px;
+    stroke: var(--text-primary); fill: none;
+    stroke-width: 1.7; stroke-linecap: round; stroke-linejoin: round;
+    filter: drop-shadow(0 2px 4px var(--accent-red-glow));
+  }
+
+  .tool-info { flex: 1; min-width: 0; }
+  .tool-name {
+    font-family: var(--font-display);
+    font-size: 19px;
+    letter-spacing: 1.5px;
+    color: var(--text-primary);
+    line-height: 1.15;
+    margin-bottom: 4px;
+  }
+  .tool-desc {
+    font-size: 11px;
+    font-weight: 300;
+    color: var(--text-muted);
+    letter-spacing: 1.2px;
+    text-transform: uppercase;
+  }
+
+  .tool-arrow {
+    width: 36px; height: 36px;
+    border: 1px solid rgba(255, 255, 255, 0.18);
+    border-radius: 50%;
+    display: flex; align-items: center; justify-content: center;
+    flex-shrink: 0;
+    transition: background 0.3s ease, border-color 0.3s ease;
+  }
+  .tool:hover .tool-arrow {
+    background: var(--accent-red);
+    border-color: var(--accent-red-bright);
+  }
+  .tool-arrow svg {
+    width: 13px; height: 13px;
+    stroke: rgba(255, 255, 255, 0.5); fill: none;
+    stroke-width: 2; stroke-linecap: round; stroke-linejoin: round;
+    transition: stroke 0.3s ease, transform 0.3s ease;
+  }
+  .tool:hover .tool-arrow svg {
+    stroke: #ffffff;
+    transform: translateX(2px);
+  }
+
+  /* ====== BACK LINK ====== */
+  .back-link {
+    margin-top: 36px;
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    font-size: 11px;
+    letter-spacing: 3px;
+    text-transform: uppercase;
+    color: var(--text-dim);
+    transition: color 0.3s ease, gap 0.3s ease;
+    opacity: 0;
+    animation: fadeUp 0.6s ease 3.3s forwards;
+  }
+  .back-link:hover { color: var(--text-primary); gap: 12px; }
+  .back-link:focus-visible {
+    color: var(--text-primary);
+    outline: 1px solid var(--accent-red-bright);
+    outline-offset: 4px;
+    border-radius: 4px;
+  }
+  .back-link svg {
+    width: 12px; height: 12px;
+    stroke: currentColor; fill: none;
+    stroke-width: 2; stroke-linecap: round; stroke-linejoin: round;
+  }
+
+  /* ====== FOOTER ====== */
+  .lindner-footer {
+    position: relative; z-index: 10;
+    width: 100%;
+    padding: 18px 48px;
+    border-top: 1px solid rgba(255, 255, 255, 0.08);
+    opacity: 0;
+    animation: fadeIn 0.7s ease 3.5s forwards;
+    display: flex; align-items: center; justify-content: space-between;
+    gap: 24px;
+  }
+  .lindner-footer-tag {
+    font-size: 10px;
+    letter-spacing: 4px;
+    text-transform: uppercase;
+    color: var(--text-dim);
+    font-weight: 500;
+  }
+  .footer-status {
+    display: inline-flex; align-items: center;
+    gap: 8px;
+    font-size: 10px;
+    letter-spacing: 3px;
+    text-transform: uppercase;
+    color: var(--text-dim);
+    font-weight: 500;
+  }
+  .footer-status-dot {
+    width: 6px; height: 6px;
+    border-radius: 50%;
+    background: var(--accent-red-bright);
+    box-shadow: 0 0 8px var(--accent-red-glow);
+    animation: statusPulse 2.4s ease-in-out infinite;
+  }
+  @keyframes statusPulse {
+    0%, 100% { opacity: 1; transform: scale(1); }
+    50%      { opacity: 0.5; transform: scale(0.85); }
+  }
+
+  /* ====== HANDOFF: header compass fades in to feel continuous ====== */
+  body.fresh-handoff .header-compass {
+    opacity: 0;
+    animation: compassLand 0.5s ease 0.1s forwards;
+  }
+  @keyframes compassLand {
+    from { opacity: 0; transform: scale(1.4); }
+    to   { opacity: 1; transform: scale(1); }
+  }
+
+  /* ====== MOBILE ====== */
+  @media (max-width: 900px) {
+    .lindner-header { padding: 18px 32px; }
+    .lindner-header-logo img { height: 34px; }
+    .header-compass { width: 42px; height: 42px; }
+    .header-divider { height: 30px; }
+    .lindner-header-tag { font-size: 12px; letter-spacing: 5px; } /* ← ADD THIS LINE */
+    .wordmark img { height: 100px; }
+    .motto { font-size: 14px; letter-spacing: 4px; gap: 10px; }
+  }
+  @media (max-width: 600px) {
+    .lindner-header { padding: 14px 20px; }
+    .lindner-header-tag { display: none; }
+    .lindner-header-logo img { height: 28px; }
+    .header-compass { width: 36px; height: 36px; }
+    .header-divider { height: 26px; }
+    .header-left { gap: 18px; }
+    .wordmark img { height: 80px; }
+    .motto { font-size: 13px; letter-spacing: 3px; gap: 10px; }
+    .lindner-footer { flex-direction: column; gap: 10px; padding: 16px 20px; text-align: center; }
+  }
+  @media (max-width: 480px) {
+    .page { padding: 30px 18px 40px; }
+    .intro { margin-bottom: 20px; }
+    .wordmark img { height: 64px; }
+    .motto { font-size: 11px; letter-spacing: 2px; gap: 8px; }
+    .tool { padding: 14px 16px; gap: 14px; }
+    .tool-icon { width: 40px; height: 40px; }
+    .tool-icon svg { width: 18px; height: 18px; }
+    .tool-name { font-size: 16px; }
+    .tool-arrow { width: 30px; height: 30px; }
+    .lindner-footer-tag { font-size: 9px; letter-spacing: 3px; }
+    .footer-status { font-size: 9px; letter-spacing: 2px; }
+    .header-compass { width: 32px; height: 32px; }
+  }
+</style>
+</head>
+<body>
+
+<div class="lindner-bg"></div>
+<div class="lindner-grain"></div>
+
+<!-- HEADER: Lindner + Compass mark + tag -->
+<header class="lindner-header">
+  <div class="header-left">
+    <a class="lindner-header-logo" href="tool/tool.html" aria-label="Back to Workspace">
+      <img src="tool/lindner-logo.png" alt="Lindner">
+    </a>
+    <div class="header-divider" aria-hidden="true"></div>
+    <a class="header-compass" href="compass-loading.html" aria-label="CO₂ Compass">
+      <img class="body-mini" src="compass-body.png" alt="">
+      <img class="needle-mini" src="compass-needle.png" alt="">
+    </a>
+  </div>
+  <span class="lindner-header-tag">Nachhaltiges Bauen · CO₂ Compass</span>
+</header>
+
+<!-- MAIN PAGE -->
+<main class="page">
+
+  <div class="intro">
+
+    <!-- Option B: Wordmark + Motto stacked block, centered -->
+    <div class="wordmark-block">
+      <div class="wordmark">
+        <img src="co2-compass-wordmark.png" alt="CO₂ Compass">
+      </div>
+
+      <div class="motto" aria-label="Understand, Navigate, Reduce">
+        <span class="motto-word w1">Understand</span>
+        <span class="motto-dot d1">·</span>
+        <span class="motto-word w2">Navigate</span>
+        <span class="motto-dot d2">·</span>
+        <span class="motto-word w3">Reduce</span>
+      </div>
+    </div>
+
+    <div class="section-label">Select a Product Category</div>
+  </div>
+
+  <!-- TOOLS LIST -->
+  <div class="tools-list">
+
+    <a class="tool" href="boden/index.html" aria-label="Open Raised and Hollow Floor Panels LCA Tool">
+      <div class="tool-icon">
+        <svg viewBox="0 0 24 24">
+          <rect x="3" y="14" width="18" height="6" rx="1"/>
+          <rect x="3" y="4" width="18" height="6" rx="1"/>
+        </svg>
+      </div>
+      <div class="tool-info">
+        <div class="tool-name">Raised &amp; Hollow Floor Panels</div>
+        <div class="tool-desc">Floor LCA Tool</div>
+      </div>
+      <div class="tool-arrow">
+        <svg viewBox="0 0 24 24"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
+      </div>
+    </a>
+
+    <a class="tool" href="ceiling/index.html" aria-label="Open Metal Ceilings LCA Tool">
+      <div class="tool-icon">
+        <svg viewBox="0 0 24 24">
+          <rect x="2" y="3" width="20" height="4" rx="1"/>
+          <line x1="4" y1="7" x2="4" y2="21"/>
+          <line x1="12" y1="7" x2="12" y2="21"/>
+          <line x1="20" y1="7" x2="20" y2="21"/>
+          <line x1="2" y1="14" x2="22" y2="14"/>
+        </svg>
+      </div>
+      <div class="tool-info">
+        <div class="tool-name">Metal Ceilings</div>
+        <div class="tool-desc">Ceiling LCA Tool</div>
+      </div>
+      <div class="tool-arrow">
+        <svg viewBox="0 0 24 24"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
+      </div>
+    </a>
+
+    <a class="tool" href="wall/index.html" aria-label="Open Partition Wall Systems LCA Tool">
+      <div class="tool-icon">
+        <svg viewBox="0 0 24 24">
+          <rect x="2" y="3" width="20" height="18" rx="1"/>
+          <line x1="12" y1="3" x2="12" y2="21"/>
+          <line x1="2" y1="10" x2="12" y2="10"/>
+          <line x1="12" y1="15" x2="22" y2="15"/>
+        </svg>
+      </div>
+      <div class="tool-info">
+        <div class="tool-name">Partition Wall Systems</div>
+        <div class="tool-desc">Partition Wall LCA Tool</div>
+      </div>
+      <div class="tool-arrow">
+        <svg viewBox="0 0 24 24"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
+      </div>
+    </a>
+
+    <a class="tool" href="stutzen/index.html" aria-label="Open Floor Pedestals LCA Tool">
+      <div class="tool-icon">
+        <svg viewBox="0 0 24 24">
+          <line x1="12" y1="2" x2="12" y2="16"/>
+          <rect x="6" y="16" width="12" height="3" rx="1"/>
+          <rect x="3" y="19" width="18" height="2" rx="1"/>
+          <circle cx="12" cy="6" r="2"/>
+        </svg>
+      </div>
+      <div class="tool-info">
+        <div class="tool-name">Floor Pedestals</div>
+        <div class="tool-desc">Pedestal System Tool</div>
+      </div>
+      <div class="tool-arrow">
+        <svg viewBox="0 0 24 24"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
+      </div>
+    </a>
+
+    <a class="tool" href="competitor/competitor_index.html" aria-label="Open Competitor Result Viewer" style="display:none;">
+      <div class="tool-icon">
+        <svg viewBox="0 0 24 24">
+          <path d="M18 20V10M12 20V4M6 20v-6"/>
+        </svg>
+      </div>
+      <div class="tool-info">
+        <div class="tool-name">Competitor Result Viewer</div>
+        <div class="tool-desc">Competitor Result LCA Tool</div>
+      </div>
+      <div class="tool-arrow">
+        <svg viewBox="0 0 24 24"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
+      </div>
+    </a>
+
+  </div>
+
+  <a class="back-link" href="tool/tool.html">
+    <svg viewBox="0 0 24 24"><path d="M19 12H5M11 18l-6-6 6-6"/></svg>
+    Back to Workspace
+  </a>
+
+</main>
+
+<!-- FOOTER -->
+<footer class="lindner-footer">
+  <span class="lindner-footer-tag">Lindner · Nachhaltiges Bauen · v1.0 · 2026</span>
+  <span class="footer-status">
+    <span class="footer-status-dot"></span>
+    4 Tools Active
+  </span>
+</footer>
+
+<script>
+  // ====== HANDOFF DETECTION ======
+  (function() {
+    const handoffTime = sessionStorage.getItem('compass-handoff');
+    if (handoffTime) {
+      const elapsed = Date.now() - parseInt(handoffTime, 10);
+      if (elapsed < 2000) {
+        document.body.classList.add('fresh-handoff');
+      }
+      sessionStorage.removeItem('compass-handoff');
+    }
+  })();
+</script>
+<!-- ARIA — Sustainability Intelligence -->
+<div id="aria-mount"></div>
+<script src="aria/aria.js"></script>
+<script>
+  ARIA.init({
+    page: 'main',
+    contextProvider: () => ({
+      location: 'CO2 Compass landing page',
+      availableTools: [
+        'Raised & Hollow Floor Panels (Floor LCA Tool)',
+        'Metal Ceilings (Ceiling LCA Tool)',
+        'Partition Wall Systems (Wall LCA Tool)',
+        'Floor Pedestals (Pedestal System Tool)'
+      ],
+      userState: 'No product selected yet — user is on the tool catalog page',
+      hint: 'User can ask about which tool to pick, EPD basics, LCA terminology, or general sustainability questions.'
+    })
+  });
+</script>
+</body>
+</html>

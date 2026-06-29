@@ -1,0 +1,456 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Lindner Nachhaltiges Bauen</title>
+<link rel="icon" href="lindner-logo.png">
+<link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Montserrat:wght@300;400;600;700&display=swap" rel="stylesheet">
+<style>
+*, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+html, body {
+  width: 100%; height: 100%;
+  overflow: hidden;
+  font-family: "Montserrat", sans-serif;
+}
+
+/* ====== BACKGROUND ====== */
+.bg {
+  position: fixed;
+  inset: 0;
+  background-image: url("background.png");
+  background-size: cover;
+  background-position: center;
+  z-index: 0;
+}
+.bg::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: radial-gradient(ellipse at 60% 50%, rgba(0,0,0,0.15) 0%, rgba(0,0,0,0.45) 100%);
+}
+
+/* ====== GLASS CARD ====== */
+.card {
+  position: fixed;
+  top: 50%; left: 50%;
+  transform: translate(-50%, -50%) scale(0.88);
+  opacity: 0;
+  animation: floatIn 1.1s cubic-bezier(0.22, 1, 0.36, 1) 0.3s forwards;
+  z-index: 10;
+  background: rgba(255,255,255,0.08);
+  backdrop-filter: blur(22px) saturate(1.4);
+  -webkit-backdrop-filter: blur(22px) saturate(1.4);
+  border: 1px solid rgba(255,255,255,0.18);
+  border-radius: 24px;
+  padding: 56px 64px 52px;
+  width: min(600px, 90vw);
+  text-align: center;
+  box-shadow:
+    0 32px 80px rgba(0,0,0,0.45),
+    0 0 0 1px rgba(255,255,255,0.06) inset,
+    0 2px 0 rgba(255,255,255,0.15) inset;
+  transition: box-shadow 0.4s ease, transform 0.4s ease;
+}
+.card:hover {
+  box-shadow:
+    0 40px 100px rgba(0,0,0,0.55),
+    0 0 0 1px rgba(255,255,255,0.1) inset,
+    0 2px 0 rgba(255,255,255,0.2) inset;
+}
+@keyframes floatIn {
+  to { opacity: 1; transform: translate(-50%, -50%) scale(1); }
+}
+
+.card-inner {
+  animation: gentleFloat 6s ease-in-out 7.5s infinite alternate;
+}
+@keyframes gentleFloat {
+  from { transform: translateY(0px); }
+  to { transform: translateY(-8px); }
+}
+
+/* ====== LOGO ====== */
+.logo-wrap {
+  display: flex;
+  justify-content: center;
+  margin-bottom: 28px;
+  opacity: 0;
+  animation: fadeUp 0.8s ease 0.5s forwards;
+}
+.logo-wrap img {
+  width: 280px;
+  height: auto;
+  max-width: 70%;
+  filter: drop-shadow(0 6px 16px rgba(0,0,0,0.4));
+}
+
+/* ====== TEAMWORK ANIMATION (ONE-SHOT) ====== */
+.teamwork {
+  position: relative;
+  width: 90%;
+  height: 60px;
+  margin: 0 auto 24px;
+  opacity: 0;
+  animation: fadeUp 0.7s ease 1.2s forwards;
+}
+
+/* The divider line that takes over after animation */
+.teamwork::before {
+  content: "";
+  position: absolute;
+  bottom: 8px;
+  left: 50%;
+  width: 0;
+  height: 1px;
+  background: linear-gradient(90deg, transparent, rgba(255,255,255,0.55), transparent);
+  transform: translateX(-50%);
+  animation: dividerEmerge 1.2s ease 5.0s forwards;
+}
+@keyframes dividerEmerge {
+  to { width: 100%; }
+}
+
+.teamwork svg {
+  position: absolute;
+  bottom: 0; left: 0;
+  width: 100%; height: 100%;
+  overflow: visible;
+}
+
+/* Figures — one-shot animation */
+.person {
+  opacity: 0;
+  transform-box: fill-box;
+  transform-origin: center bottom;
+}
+.p1 { animation: walkFromLeft 4.0s ease-in-out 1.5s forwards; }
+.p2 { animation: walkFromLeft 4.0s ease-in-out 1.65s forwards; }
+.p3 { animation: walkFromLeft 4.0s ease-in-out 1.8s forwards; }
+.p4 { animation: walkFromRight 4.0s ease-in-out 1.8s forwards; }
+.p5 { animation: walkFromRight 4.0s ease-in-out 1.65s forwards; }
+.p6 { animation: walkFromRight 4.0s ease-in-out 1.5s forwards; }
+
+@keyframes walkFromLeft {
+  0%   { opacity: 0; transform: translateX(-180px); }
+  20%  { opacity: 1; }
+  55%  { transform: translateX(0); }
+  65%  { transform: translateX(0) translateY(-2px); }
+  80%  { opacity: 1; transform: translateX(0); }
+  95%  { opacity: 0; transform: translateX(0) scale(0.5); }
+  100% { opacity: 0; transform: translateX(0) scale(0.5); }
+}
+@keyframes walkFromRight {
+  0%   { opacity: 0; transform: translateX(180px); }
+  20%  { opacity: 1; }
+  55%  { transform: translateX(0); }
+  65%  { transform: translateX(0) translateY(-2px); }
+  80%  { opacity: 1; transform: translateX(0); }
+  95%  { opacity: 0; transform: translateX(0) scale(0.5); }
+  100% { opacity: 0; transform: translateX(0) scale(0.5); }
+}
+
+/* Hand-holding bonds */
+.bond {
+  stroke: rgba(255,255,255,0.9);
+  stroke-width: 1.3;
+  stroke-linecap: round;
+  opacity: 0;
+  animation: bondAppear 4.0s ease-in-out 1.5s forwards;
+  filter: drop-shadow(0 0 4px rgba(255,255,255,0.7));
+}
+@keyframes bondAppear {
+  0%, 60%  { opacity: 0; }
+  72%      { opacity: 1; }
+  85%      { opacity: 1; }
+  95%      { opacity: 0; }
+  100%     { opacity: 0; }
+}
+
+/* Unity glow */
+.unityGlow {
+  fill: rgba(255,255,255,0.95);
+  opacity: 0;
+  animation: unityPulse 4.0s ease-in-out 1.5s forwards;
+  filter: drop-shadow(0 0 12px rgba(255,255,255,0.9));
+}
+@keyframes unityPulse {
+  0%, 70%  { opacity: 0; r: 0; }
+  80%      { opacity: 1; r: 7; }
+  88%      { opacity: 0.7; r: 10; }
+  95%      { opacity: 0; r: 13; }
+  100%     { opacity: 0; }
+}
+
+/* Falling particles */
+.particle {
+  fill: rgba(255,255,255,0.9);
+  opacity: 0;
+  animation: particleFall 1.5s ease-in 4.0s forwards;
+  filter: drop-shadow(0 0 4px rgba(255,255,255,0.8));
+}
+@keyframes particleFall {
+  0%   { opacity: 0; transform: translateY(0); }
+  15%  { opacity: 1; transform: translateY(4px); }
+  60%  { opacity: 1; transform: translateY(28px); }
+  100% { opacity: 0; transform: translateY(45px); }
+}
+.particle.pa { animation-delay: 4.0s; }
+.particle.pb { animation-delay: 4.05s; }
+.particle.pc { animation-delay: 4.1s; }
+.particle.pd { animation-delay: 4.15s; }
+.particle.pe { animation-delay: 4.2s; }
+.particle.pf { animation-delay: 4.25s; }
+
+/* ====== TEXT CONTENT (sequential reveal AFTER animation) ====== */
+.welcome {
+  font-size: 12px;
+  letter-spacing: 4px;
+  text-transform: uppercase;
+  color: rgba(255,255,255,0.95);
+  margin-bottom: 12px;
+  opacity: 0;
+  animation: fadeUp 0.7s ease 5.6s forwards;
+}
+
+/* Headline — draws into existence at 4.5s */
+.headline {
+  font-family: "Bebas Neue", sans-serif;
+  font-size: clamp(52px, 6vw, 68px);
+  letter-spacing: 3px;
+  line-height: 1.05;
+  color: #ffffff;
+  margin-bottom: 8px;
+  opacity: 0;
+  filter: blur(8px);
+  text-shadow: 0 0 0 rgba(255,255,255,0);
+  animation: textReveal 1.5s ease-out 4.5s forwards;
+}
+.headline span {
+  display: block;
+  color: rgba(255,255,255,0.95);
+  font-size: 0.62em;
+  letter-spacing: 6px;
+}
+
+@keyframes textReveal {
+  0% {
+    opacity: 0;
+    filter: blur(8px);
+    text-shadow: 0 0 0 rgba(255,255,255,0);
+  }
+  40% {
+    opacity: 0.6;
+    filter: blur(3px);
+    text-shadow: 0 0 30px rgba(255,255,255,0.9);
+  }
+  70% {
+    opacity: 1;
+    filter: blur(0);
+    text-shadow: 0 0 40px rgba(255,255,255,1), 0 4px 24px rgba(0,0,0,0.4);
+  }
+  100% {
+    opacity: 1;
+    filter: blur(0);
+    text-shadow: 0 4px 24px rgba(0,0,0,0.4);
+  }
+}
+
+.subtitle {
+  font-size: 13px;
+  font-weight: 300;
+  color: rgba(255,255,255,0.95);
+  letter-spacing: 2px;
+  margin-top: 18px;
+  margin-bottom: 40px;
+  opacity: 0;
+  animation: fadeUp 0.7s ease 6.0s forwards;
+}
+
+/* ====== CONFIDENT CTA ====== */
+.cta {
+  display: inline-block;
+  padding: 16px 44px;
+  background: linear-gradient(135deg, rgba(255,255,255,0.18), rgba(255,255,255,0.08));
+  border: 1.5px solid rgba(255,255,255,0.5);
+  border-radius: 100px;
+  color: #ffffff;
+  font-family: "Montserrat", sans-serif;
+  font-size: 13px;
+  font-weight: 700;
+  letter-spacing: 3px;
+  text-transform: uppercase;
+  text-decoration: none;
+  cursor: pointer;
+  transition: background 0.3s ease, transform 0.2s ease, box-shadow 0.3s ease, border-color 0.3s ease;
+  opacity: 0;
+  animation: fadeUp 0.7s ease 6.4s forwards;
+  box-shadow: 0 6px 20px rgba(0,0,0,0.25), 0 0 0 1px rgba(255,255,255,0.08) inset;
+}
+.cta:hover {
+  background: linear-gradient(135deg, rgba(255,255,255,0.28), rgba(255,255,255,0.15));
+  border-color: rgba(255,255,255,0.75);
+  transform: translateY(-2px);
+  box-shadow: 0 14px 36px rgba(0,0,0,0.35), 0 0 0 1px rgba(255,255,255,0.15) inset;
+}
+
+/* ====== CORNER LOGO ====== */
+.corner-logo {
+  position: fixed;
+  bottom: 32px; right: 36px;
+  z-index: 20;
+  opacity: 0;
+  animation: fadeIn 1s ease 7.0s forwards;
+}
+.corner-logo img {
+  height: 56px;
+  opacity: 0.9;
+  filter: drop-shadow(0 2px 8px rgba(0, 0, 0, 0.3));
+}
+
+/* ====== UTILITIES ====== */
+@keyframes fadeUp {
+  from { opacity: 0; transform: translateY(16px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+@keyframes fadeIn {
+  to { opacity: 1; }
+}
+
+/* ====== GRAIN OVERLAY ====== */
+.grain {
+  position: fixed;
+  inset: 0;
+  z-index: 5;
+  pointer-events: none;
+  opacity: 0.04;
+  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+  background-size: 200px 200px;
+}
+
+/* ====== MOBILE TUNING ====== */
+@media (max-width: 480px) {
+  .card {
+    padding: 40px 28px 36px;
+    border-radius: 18px;
+  }
+  .logo-wrap img { width: 220px; }
+  .corner-logo { bottom: 20px; right: 20px; }
+  .corner-logo img { height: 44px; }
+  .cta { padding: 14px 32px; font-size: 12px; }
+}
+
+/* ====== ACCESSIBILITY ====== */
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after {
+    animation-duration: 0.01s !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01s !important;
+  }
+}
+</style>
+</head>
+<body>
+
+<div class="bg"></div>
+<div class="grain"></div>
+
+<div class="card">
+  <div class="card-inner">
+
+    <div class="logo-wrap">
+      <img src="lindner-logo.png" alt="Lindner">
+    </div>
+
+    <!-- TEAMWORK ANIMATION -->
+    <div class="teamwork">
+      <svg viewBox="0 0 400 60" preserveAspectRatio="xMidYMax meet">
+
+        <!-- LEFT TEAM -->
+        <g class="person p1" transform="translate(160, 0)">
+          <circle cx="0" cy="32" r="3" fill="rgba(255,255,255,0.95)"/>
+          <line x1="0" y1="35" x2="0" y2="45" stroke="rgba(255,255,255,0.95)" stroke-width="1.6" stroke-linecap="round"/>
+          <line x1="0" y1="38" x2="-3" y2="42" stroke="rgba(255,255,255,0.95)" stroke-width="1.3" stroke-linecap="round"/>
+          <line x1="0" y1="38" x2="3" y2="42" stroke="rgba(255,255,255,0.95)" stroke-width="1.3" stroke-linecap="round"/>
+          <line x1="0" y1="45" x2="-2" y2="50" stroke="rgba(255,255,255,0.95)" stroke-width="1.3" stroke-linecap="round"/>
+          <line x1="0" y1="45" x2="2" y2="50" stroke="rgba(255,255,255,0.95)" stroke-width="1.3" stroke-linecap="round"/>
+        </g>
+        <g class="person p2" transform="translate(176, 0)">
+          <circle cx="0" cy="32" r="3" fill="rgba(255,255,255,0.95)"/>
+          <line x1="0" y1="35" x2="0" y2="45" stroke="rgba(255,255,255,0.95)" stroke-width="1.6" stroke-linecap="round"/>
+          <line x1="0" y1="38" x2="-3" y2="42" stroke="rgba(255,255,255,0.95)" stroke-width="1.3" stroke-linecap="round"/>
+          <line x1="0" y1="38" x2="3" y2="42" stroke="rgba(255,255,255,0.95)" stroke-width="1.3" stroke-linecap="round"/>
+          <line x1="0" y1="45" x2="-2" y2="50" stroke="rgba(255,255,255,0.95)" stroke-width="1.3" stroke-linecap="round"/>
+          <line x1="0" y1="45" x2="2" y2="50" stroke="rgba(255,255,255,0.95)" stroke-width="1.3" stroke-linecap="round"/>
+        </g>
+        <g class="person p3" transform="translate(192, 0)">
+          <circle cx="0" cy="32" r="3" fill="rgba(255,255,255,0.95)"/>
+          <line x1="0" y1="35" x2="0" y2="45" stroke="rgba(255,255,255,0.95)" stroke-width="1.6" stroke-linecap="round"/>
+          <line x1="0" y1="38" x2="-3" y2="42" stroke="rgba(255,255,255,0.95)" stroke-width="1.3" stroke-linecap="round"/>
+          <line x1="0" y1="38" x2="3" y2="42" stroke="rgba(255,255,255,0.95)" stroke-width="1.3" stroke-linecap="round"/>
+          <line x1="0" y1="45" x2="-2" y2="50" stroke="rgba(255,255,255,0.95)" stroke-width="1.3" stroke-linecap="round"/>
+          <line x1="0" y1="45" x2="2" y2="50" stroke="rgba(255,255,255,0.95)" stroke-width="1.3" stroke-linecap="round"/>
+        </g>
+
+        <!-- RIGHT TEAM -->
+        <g class="person p4" transform="translate(208, 0)">
+          <circle cx="0" cy="32" r="3" fill="rgba(255,255,255,0.95)"/>
+          <line x1="0" y1="35" x2="0" y2="45" stroke="rgba(255,255,255,0.95)" stroke-width="1.6" stroke-linecap="round"/>
+          <line x1="0" y1="38" x2="-3" y2="42" stroke="rgba(255,255,255,0.95)" stroke-width="1.3" stroke-linecap="round"/>
+          <line x1="0" y1="38" x2="3" y2="42" stroke="rgba(255,255,255,0.95)" stroke-width="1.3" stroke-linecap="round"/>
+          <line x1="0" y1="45" x2="-2" y2="50" stroke="rgba(255,255,255,0.95)" stroke-width="1.3" stroke-linecap="round"/>
+          <line x1="0" y1="45" x2="2" y2="50" stroke="rgba(255,255,255,0.95)" stroke-width="1.3" stroke-linecap="round"/>
+        </g>
+        <g class="person p5" transform="translate(224, 0)">
+          <circle cx="0" cy="32" r="3" fill="rgba(255,255,255,0.95)"/>
+          <line x1="0" y1="35" x2="0" y2="45" stroke="rgba(255,255,255,0.95)" stroke-width="1.6" stroke-linecap="round"/>
+          <line x1="0" y1="38" x2="-3" y2="42" stroke="rgba(255,255,255,0.95)" stroke-width="1.3" stroke-linecap="round"/>
+          <line x1="0" y1="38" x2="3" y2="42" stroke="rgba(255,255,255,0.95)" stroke-width="1.3" stroke-linecap="round"/>
+          <line x1="0" y1="45" x2="-2" y2="50" stroke="rgba(255,255,255,0.95)" stroke-width="1.3" stroke-linecap="round"/>
+          <line x1="0" y1="45" x2="2" y2="50" stroke="rgba(255,255,255,0.95)" stroke-width="1.3" stroke-linecap="round"/>
+        </g>
+        <g class="person p6" transform="translate(240, 0)">
+          <circle cx="0" cy="32" r="3" fill="rgba(255,255,255,0.95)"/>
+          <line x1="0" y1="35" x2="0" y2="45" stroke="rgba(255,255,255,0.95)" stroke-width="1.6" stroke-linecap="round"/>
+          <line x1="0" y1="38" x2="-3" y2="42" stroke="rgba(255,255,255,0.95)" stroke-width="1.3" stroke-linecap="round"/>
+          <line x1="0" y1="38" x2="3" y2="42" stroke="rgba(255,255,255,0.95)" stroke-width="1.3" stroke-linecap="round"/>
+          <line x1="0" y1="45" x2="-2" y2="50" stroke="rgba(255,255,255,0.95)" stroke-width="1.3" stroke-linecap="round"/>
+          <line x1="0" y1="45" x2="2" y2="50" stroke="rgba(255,255,255,0.95)" stroke-width="1.3" stroke-linecap="round"/>
+        </g>
+
+        <!-- Hand-holding bonds -->
+        <line class="bond" x1="160" y1="40" x2="176" y2="40"/>
+        <line class="bond" x1="176" y1="40" x2="192" y2="40"/>
+        <line class="bond" x1="192" y1="40" x2="208" y2="40"/>
+        <line class="bond" x1="208" y1="40" x2="224" y2="40"/>
+        <line class="bond" x1="224" y1="40" x2="240" y2="40"/>
+
+        <!-- Unity glow -->
+        <circle class="unityGlow" cx="200" cy="40" r="0"/>
+
+        <!-- Falling particles -->
+        <circle class="particle pa" cx="180" cy="44" r="1.5"/>
+        <circle class="particle pb" cx="190" cy="44" r="1.5"/>
+        <circle class="particle pc" cx="200" cy="44" r="1.8"/>
+        <circle class="particle pd" cx="210" cy="44" r="1.5"/>
+        <circle class="particle pe" cx="220" cy="44" r="1.5"/>
+        <circle class="particle pf" cx="200" cy="44" r="2"/>
+      </svg>
+    </div>
+
+    <p class="welcome">Welcome to</p>
+    <h1 class="headline">
+      Nachhaltiges<span>Bauen</span>
+    </h1>
+    <p class="subtitle">Life Cycle Assessment &amp; Sustainability Workspace</p>
+    <a class="cta" href="../tool/tool.html">Enter Workspace</a>
+
+  </div>
+</div>
+
+<div class="corner-logo">
+  <img src="../tool/lindner-logo-grey-removebg-preview.png" alt="Lindner">
+</div>
+
+</body>
+</html>

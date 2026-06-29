@@ -1,0 +1,242 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="description" content="Lindner Group: Nachhaltiges Bauen mit DGNB, LEED, BIM, CSRD. Zirkuläre Planung, Ökobilanzierung und digitale Bestandsaufnahme.">
+<title>Lindner Group Nachhaltiges Bauen</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;500;700;800&display=swap" rel="stylesheet">
+<style>
+/* {{STYLES}} */
+</style>
+</head>
+<body>
+<header>
+  <div class="header-symbol">
+    <svg viewBox="0 0 600 600" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+      <circle cx="200" cy="250" r="180"/>
+      <circle cx="200" cy="250" r="165"/>
+      <circle cx="200" cy="250" r="150"/>
+      <circle cx="200" cy="250" r="135"/>
+      <circle cx="200" cy="250" r="120"/>
+      <circle cx="200" cy="250" r="105"/>
+      <circle cx="430" cy="380" r="180"/>
+      <circle cx="430" cy="380" r="165"/>
+      <circle cx="430" cy="380" r="150"/>
+      <circle cx="430" cy="380" r="135"/>
+      <circle cx="430" cy="380" r="120"/>
+      <circle cx="430" cy="380" r="105"/>
+    </svg>
+  </div>
+  <div class="hero-eyebrow">
+    <span class="dot"></span>
+    Lindner Group · Nachhaltiges Bauen 2026
+  </div>
+  <h1>
+    <span lang="en">Future of Construction:</span>
+    <strong lang="en">Circular. Digital. Innovative.</strong>
+  </h1>
+  <div class="lindner-logo">
+    <img src="https://www.lindner-group.com/lindner-group/brand/lindner_logo_white.svg" alt="Lindner" />
+  </div>
+</header>
+<button class="cart-fab" id="cartFab" onclick="openCartDrawer()" type="button" aria-label="Merkliste öffnen">
+  <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+    <path d="M6 2L3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4z"/>
+    <line x1="3" y1="6" x2="21" y2="6"/>
+    <path d="M16 10a4 4 0 0 1-8 0"/>
+  </svg>
+  <span>Merkliste</span>
+  <span class="fab-count" id="fabCount">0</span>
+</button>
+<main id="mainContent">
+<section class="hero-intro">
+  <p class="lead">Von der digitalen Bestandsaufnahme über Ökobilanzierung bis zur Zertifizierung – ein ganzheitliches Leistungsportfolio für zirkuläres und ESG-konformes Bauen.</p>
+  <div class="hero-stats">
+    <div class="stat">
+      <div class="stat-num">27</div>
+      <div class="stat-label">Leistungen</div>
+    </div>
+    <div class="stat">
+      <div class="stat-num">5</div>
+      <div class="stat-label">Kompetenzfelder</div>
+    </div>
+    <div class="stat">
+      <div class="stat-num">∞</div>
+      <div class="stat-label">Kreisläufe</div>
+    </div>
+  </div>
+</section>
+<div class="container">
+  <div class="section-intro reveal">
+    <h2>Unser Leistungsspektrum</h2>
+    <p>Filtern Sie nach Kompetenzfeld oder erkunden Sie alle Leistungen im Überblick.</p>
+  </div>
+  <div class="filter-bar reveal" role="group" aria-label="Leistungen filtern">
+    <button class="filter-btn active" type="button" aria-pressed="true" data-filter="all">Alle</button>
+    <button class="filter-btn" type="button" aria-pressed="false" data-filter="A">Bestandsaufnahme</button>
+    <button class="filter-btn" type="button" aria-pressed="false" data-filter="B">Dokumentation</button>
+    <button class="filter-btn" type="button" aria-pressed="false" data-filter="C">Ökobilanzierung</button>
+    <button class="filter-btn" type="button" aria-pressed="false" data-filter="D">Zirkuläre Planung</button>
+    <button class="filter-btn" type="button" aria-pressed="false" data-filter="E">Zertifizierung</button>
+  </div>
+  <div id="content"></div>
+</div>
+</main>
+<section class="page-view" id="overviewPage" aria-hidden="true">
+  <div class="container" style="padding-top: 40px;">
+    <button class="back-btn" onclick="hideOverview()" type="button">← Zurück zur Leistungsübersicht</button>
+    <div class="section-intro">
+      <h2>Ihre Auswahl</h2>
+      <p id="overviewSubtitle">Sie haben noch keine Leistungen vorgemerkt.</p>
+    </div>
+    <div class="overview-summary" id="overviewSummary"></div>
+    <div class="grid" id="overviewGrid"></div>
+    <div class="overview-actions" id="overviewActions" style="display:none;">
+      <button class="form-submit" onclick="openCartModal()" type="button">Anfrage senden</button>
+      <button class="action-btn" onclick="hideOverview()" type="button" style="color: var(--petrol);">
+        <span class="action-btn-icon" style="background: rgba(95,124,126,0.12); color: var(--petrol);">+</span>
+        <span>Weitere Leistungen hinzufügen</span>
+      </button>
+      <button class="action-btn action-btn--pdf" onclick="exportCartToPDF(event)" type="button">
+        <span class="action-btn-icon">📄</span>
+        <span>PDF-Export</span>
+      </button>
+      <button class="action-btn" onclick="clearCart(); hideOverview();" type="button" style="color: var(--text-muted);">
+        <span class="action-btn-icon" style="background: rgba(0,0,0,0.05); color: var(--text-muted);">×</span>
+        <span>Auswahl löschen</span>
+      </button>
+    </div>
+  </div>
+</section>
+<footer id="mainFooter">
+  <div class="footer-top">
+    <h3>Lassen Sie uns <em>gemeinsam</em> bauen.</h3>
+    <p>Nachhaltigkeit ist kein Zusatz – sie ist die Grundlage jeder zukunftsfähigen Architektur.</p>
+  </div>
+  <div class="footer-tags">
+    <span class="footer-tag">DGNB</span>
+    <span class="footer-tag">LEED</span>
+    <span class="footer-tag">BIM</span>
+    <span class="footer-tag">CSRD</span>
+    <span class="footer-tag">EU-Taxonomie</span>
+    <span class="footer-tag">Cradle to Cradle</span>
+    <span class="footer-tag">Re-Use</span>
+  </div>
+  <div class="footer-contact">
+    <div class="contact-block">
+      <h4>Adresse</h4>
+      <p>Lindner Group KG<br>Bahnhofstraße 29<br>94424 Arnstorf<br>Deutschland</p>
+    </div>
+    <div class="contact-block">
+      <h4>Kontakt</h4>
+      <a href="tel:+4987232000"><span class="contact-icon" aria-hidden="true">📞</span>+49 8723 20-0</a>
+      <a href="mailto:info@lindner-group.com"><span class="contact-icon" aria-hidden="true">✉</span>info@lindner-group.com</a>
+      <a href="https://www.lindner-group.com" target="_blank" rel="noopener noreferrer"><span class="contact-icon" aria-hidden="true">🌐</span>www.lindner-group.com</a>
+    </div>
+    <div class="contact-block">
+      <h4>Ansprechpartner</h4>
+      <p>Marcel Gröpler<br>Nachhaltiges Bauen</p>
+      <a href="mailto:nachhaltiges.bauen@lindner-group.com"><span class="contact-icon" aria-hidden="true">✉</span>nachhaltiges.bauen@lindner-group.com</a>
+    </div>
+    <div class="contact-block">
+      <h4>Folgen Sie uns</h4>
+      <a href="https://www.linkedin.com/company/lindner-group" target="_blank" rel="noopener noreferrer"><span class="contact-icon" aria-hidden="true">in</span>LinkedIn</a>
+      <a href="https://www.instagram.com/lindner_group" target="_blank" rel="noopener noreferrer"><span class="contact-icon" aria-hidden="true">◉</span>Instagram</a>
+      <a href="https://www.youtube.com/@lindnergroup" target="_blank" rel="noopener noreferrer"><span class="contact-icon" aria-hidden="true">▶</span>YouTube</a>
+    </div>
+  </div>
+  <div class="footer-copy">© 2026 Lindner Group – Nachhaltiges Bauen</div>
+</footer>
+<div class="drawer-wrap" id="cartDrawerWrap" onclick="if(event.target===this||event.target.classList.contains('drawer-backdrop'))closeCartDrawer()">
+  <div class="drawer-backdrop"></div>
+  <div class="drawer" id="cartDrawer" role="dialog" aria-modal="true" aria-labelledby="drawerTitle">
+    <div class="drawer-header">
+      <h2 id="drawerTitle">Ihre Merkliste</h2>
+      <button class="drawer-close" onclick="closeCartDrawer()" type="button" aria-label="Schließen">×</button>
+    </div>
+    <div class="drawer-body" id="drawerBody">
+      <div class="drawer-empty"><p>Ihre Merkliste ist leer.</p><p style="font-size:0.9rem;margin-top:8px;">Wählen Sie Leistungen aus, um sie hier zu sammeln.</p></div>
+    </div>
+    <div class="drawer-footer">
+      <button class="drawer-btn-ghost" onclick="clearCart()" type="button">Alle löschen</button>
+      <button class="action-btn action-btn--pdf" onclick="exportCartToPDF(event)" type="button">
+        <span class="action-btn-icon">📄</span>
+        <span>PDF</span>
+      </button>
+      <button class="drawer-btn-primary" onclick="showOverview()" type="button">Zur Auswahl →</button>
+    </div>
+  </div>
+</div>
+<div class="cart-bar" id="cartBar" aria-live="polite">
+  <div class="cart-info">
+    <div class="cart-count" id="cartCount">0</div>
+    <span>Leistung(en) vorgemerkt</span>
+  </div>
+  <div class="cart-list" id="cartList"></div>
+  <button class="cart-show-list" onclick="openCartDrawer()" type="button" aria-label="Merkliste anzeigen">Liste ansehen</button>
+  <button class="cart-btn-primary" onclick="showOverview()" type="button">Zur Auswahl →</button>
+  <button class="cart-btn-ghost" onclick="clearCart()" type="button">Zurücksetzen</button>
+</div>
+<div class="modal-overlay" id="cartModal" role="dialog" aria-modal="true" aria-labelledby="modalTitle" onclick="if(event.target===this)closeCartModal()">
+  <div class="modal">
+    <button class="modal-close" onclick="closeCartModal()" type="button" aria-label="Schließen">×</button>
+    <div id="modalFormWrap">
+      <h2 id="modalTitle">Anfrage stellen</h2>
+      <p class="modal-sub">Wir erstellen Ihnen gerne ein maßgeschneidertes Angebot.</p>
+      <div class="modal-selected">
+        <h4>Gewählte Leistungen</h4>
+        <ul id="modalCartList"></ul>
+      </div>
+      <form onsubmit="submitInquiry(event)">
+        <div class="form-row">
+          <div class="form-group">
+            <label for="inqName">Name *</label>
+            <input type="text" id="inqName" name="name" required placeholder="Max Mustermann" autocomplete="name">
+          </div>
+          <div class="form-group">
+            <label for="inqCompany">Firma *</label>
+            <input type="text" id="inqCompany" name="company" required placeholder="Muster GmbH" autocomplete="organization">
+          </div>
+        </div>
+        <div class="form-row">
+          <div class="form-group">
+            <label for="inqEmail">E-Mail *</label>
+            <input type="email" id="inqEmail" name="email" required placeholder="max@firma.de" autocomplete="email">
+          </div>
+          <div class="form-group">
+            <label for="inqPhone">Telefon</label>
+            <input type="tel" id="inqPhone" name="phone" placeholder="+49 123 456789" autocomplete="tel">
+          </div>
+        </div>
+        <div class="form-group">
+          <label for="inqMessage">Nachricht</label>
+          <textarea id="inqMessage" name="message" placeholder="Ihre Projektdetails oder Fragen..."></textarea>
+        </div>
+        <button type="submit" class="form-submit">Anfrage per E-Mail senden</button>
+      </form>
+    </div>
+    <div class="modal-success" id="modalSuccess">
+      <div class="big-check">✓</div>
+      <h3>Anfrage vorbereitet</h3>
+      <p>Ihr E-Mail-Programm wurde geöffnet. Sollte dies nicht funktioniert haben, wenden Sie sich gerne direkt an <a href="mailto:nachhaltiges.bauen@lindner-group.com">nachhaltiges.bauen@lindner-group.com</a>.</p>
+      <button class="cart-btn-primary" onclick="closeCartModal()" type="button">Schließen</button>
+    </div>
+  </div>
+</div>
+<script>
+/* {{FONT}} */
+</script>
+<script>
+/* {{LOGO}} */
+</script>
+<script>
+/* {{DATA}} */
+</script>
+<script>
+/* {{APP}} */
+</script>
+</body>
+</html>

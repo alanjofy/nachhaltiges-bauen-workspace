@@ -1,0 +1,170 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>PDF Engine — Smoke Test</title>
+<style>
+  body {
+    font-family: system-ui, sans-serif;
+    background: #1a1f26;
+    color: #fff;
+    padding: 40px;
+    line-height: 1.6;
+  }
+  .check { color: #4ade80; }
+  .fail { color: #ef4444; }
+  .pending { color: #fbbf24; }
+  code {
+    background: #2a3036;
+    padding: 2px 6px;
+    border-radius: 4px;
+    font-size: 13px;
+  }
+  button {
+    padding: 12px 24px;
+    background: #c0001a;
+    color: #fff;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+    font-size: 14px;
+    margin-top: 16px;
+  }
+  button:hover { background: #e8001f; }
+  pre {
+    background: #0f1419;
+    padding: 14px;
+    border-radius: 8px;
+    overflow: auto;
+    font-size: 12px;
+  }
+  h1 { color: #e8001f; }
+  h2 { color: #fbbf24; margin-top: 32px; }
+</style>
+</head>
+<body>
+
+<h1>🧪 Lindner PDF Engine — Smoke Test</h1>
+<p>This page verifies the engine loads correctly. It does NOT replace boden's PDF — boden is untouched.</p>
+
+<h2>1. Dependency Check</h2>
+<div id="dep-check">Running…</div>
+
+<h2>2. Generate Test PDF</h2>
+<p>Click the button below to generate a sample PDF with dummy data. If a PDF downloads, the engine works!</p>
+<button id="test-btn">📄 Generate Test PDF</button>
+<div id="test-result" style="margin-top: 12px;"></div>
+
+<h2>3. Asset Loading</h2>
+<div id="asset-check">Pending — click button above first</div>
+
+<h2>Console Output</h2>
+<pre id="console-out">Open DevTools (F12) to see detailed logs.</pre>
+
+<!-- jsPDF (copy from boden/jspdf.umd.min.js) -->
+<script src="../boden/jspdf.umd.min.js"></script>
+
+<!-- The 3 engine files -->
+<script src="pdf-assets.js"></script>
+<script src="pdf-insight.js"></script>
+<script src="pdf-engine.js"></script>
+
+<script>
+  // ─── Test 1: Dependency check ───
+  const depDiv = document.getElementById('dep-check');
+  const checks = [
+    { name: 'jsPDF library', test: () => !!window.jspdf },
+    { name: 'LindnerPDFAssets module', test: () => !!window.LindnerPDFAssets },
+    { name: 'LindnerPDFInsight module', test: () => !!window.LindnerPDFInsight },
+    { name: 'LindnerPDF main engine', test: () => !!window.LindnerPDF },
+    { name: 'LindnerPDF.export function', test: () => typeof window.LindnerPDF?.export === 'function' }
+  ];
+  
+  depDiv.innerHTML = checks.map(c => {
+    const ok = c.test();
+    return `<div class="${ok ? 'check' : 'fail'}">${ok ? '✅' : '❌'} ${c.name}</div>`;
+  }).join('');
+
+  // ─── Test 2: Asset loading ───
+  document.getElementById('test-btn').addEventListener('click', async () => {
+    const resultDiv = document.getElementById('test-result');
+    const assetDiv = document.getElementById('asset-check');
+    
+    resultDiv.innerHTML = '<span class="pending">⏳ Generating PDF…</span>';
+    
+    try {
+      // Check assets
+      const assets = await window.LindnerPDFAssets.load();
+      assetDiv.innerHTML = `
+        <div class="${assets.headerCompass ? 'check' : 'fail'}">${assets.headerCompass ? '✅' : '⚠️'} Compass icon (watermark)</div>
+        <div class="${assets.lindnerWhite ? 'check' : 'fail'}">${assets.lindnerWhite ? '✅' : '⚠️'} Lindner white logo</div>
+        <div class="${assets.lindner ? 'check' : 'fail'}">${assets.lindner ? '✅' : '⚠️'} Lindner fallback logo</div>
+        <div class="${assets.wordmark ? 'check' : 'fail'}">${assets.wordmark ? '✅' : '⚠️'} CO2 Compass wordmark</div>
+        <p style="font-size:12px;color:#888;margin-top:8px">⚠️ = missing asset (PDF will still work with text fallback)</p>
+      `;
+
+      // Build dummy data
+      const dummyScenarios = [
+        { id: 1, name: '100% Reuse' },
+        { id: 2, name: '100% Recycling' },
+        { id: 3, name: '100% Landfilling' }
+      ];
+
+      const dummyValues = {
+        'A1-A3': 4.43,
+        'A4': 0.31,
+        'A5': 1.47,
+        'C1': { 1: 0.12, 2: 0.18, 3: 0.25 },
+        'C2': { 1: 0.05, 2: 0.08, 3: 0.10 },
+        'C3': { 1: 0.02, 2: 0.04, 3: 0.06 },
+        'C4': { 1: 0.01, 2: 0.03, 3: 0.05 },
+        'D': { 1: -11.20, 2: -3.35, 3: -0.41 },
+        '(A1-C4)': { 1: 6.41, 2: 6.51, 3: 6.61 }
+      };
+
+      // Generate PDF using public API
+      await window.LindnerPDF.export({
+        titleLine1: 'NORTEC (TEST)',
+        titleLine2: 'NORTEC L34 & aurum L34 — Smoke Test',
+        floorType: 'Raised floor',
+        today: new Date().toLocaleDateString('en-GB'),
+        issueD: '28.07.2021',
+        validD: '11.05.2026',
+        techItems: [
+          ['Floor type', 'Raised floor'],
+          ['Product type', 'NORTEC (TEST)'],
+          ['Layer thickness', '34 mm'],
+          ['Density', '644.92 kg/m²'],
+          ['Declared unit', '53.86 kg/m²']
+        ],
+        selected: dummyScenarios,
+        impact: dummyValues,
+        getA1c4: s => dummyValues['(A1-C4)'][s.id],
+        getD: s => dummyValues.D[s.id],
+        getModule: (col, s) => dummyValues[col]?.[s.id] ?? null,
+        getFixed: col => typeof dummyValues[col] === 'number' ? dummyValues[col] : null,
+        buildModGroups: () => [
+          { key: 'A1-A3', label: 'A1-A3', sub: 'Product', tone: 'production',
+            bars: dummyScenarios.map((s, i) => ({ label: s.name, value: 4.43, seriesIndex: i })) },
+          { key: 'A4', label: 'A4', sub: 'Transport', tone: 'construction',
+            bars: dummyScenarios.map((s, i) => ({ label: s.name, value: 0.31, seriesIndex: i })) },
+          { key: 'C1', label: 'C1', sub: 'Deconstruction', tone: 'endlife',
+            bars: dummyScenarios.map((s, i) => ({ label: s.name, value: dummyValues.C1[s.id], seriesIndex: i })) },
+          { key: 'D', label: 'D', sub: 'Benefits', tone: 'benefits',
+            bars: dummyScenarios.map((s, i) => ({ label: s.name, value: dummyValues.D[s.id], seriesIndex: i })) }
+        ],
+        getScenarioDesc: s => `Test description for ${s.name}.`,
+        filename: 'PDFEngine_SmokeTest.pdf'
+      });
+
+      resultDiv.innerHTML = '<span class="check">✅ PDF generated! Check your Downloads folder for <code>PDFEngine_SmokeTest.pdf</code></span>';
+      
+    } catch (err) {
+      resultDiv.innerHTML = `<span class="fail">❌ Failed: ${err.message}</span>`;
+      console.error('Smoke test failed:', err);
+    }
+  });
+</script>
+
+</body>
+</html>

@@ -1,0 +1,13 @@
+<svg viewBox="0 0 400 160" xmlns="http://www.w3.org/2000/svg" preserveAspectRatio="xMidYMid slice" aria-hidden="true">
+  <defs><!--GRADIENT--></defs>
+  <rect width="400" height="160" fill="url(#gB2)"/>
+  <rect x="170" y="45" width="60" height="20" rx="10" fill="rgba(255,255,255,0.12)" stroke="rgba(255,255,255,0.45)" stroke-width="1.5"/>
+  <rect x="170" y="72" width="60" height="20" rx="10" fill="rgba(255,255,255,0.12)" stroke="rgba(255,255,255,0.45)" stroke-width="1.5"/>
+  <rect x="170" y="99" width="60" height="20" rx="10" fill="rgba(255,255,255,0.12)" stroke="rgba(255,255,255,0.45)" stroke-width="1.5"/>
+  <circle cx="238" cy="55" r="3" fill="white"/>
+  <circle cx="238" cy="82" r="3" fill="white"/>
+  <circle cx="238" cy="109" r="3" fill="white"/>
+  <text x="200" y="58" text-anchor="middle" fill="rgba(255,255,255,0.85)" font-size="8" font-family="sans-serif" font-weight="700">IFC</text>
+  <text x="200" y="85" text-anchor="middle" fill="rgba(255,255,255,0.85)" font-size="8" font-family="sans-serif" font-weight="700">EPD</text>
+  <text x="200" y="112" text-anchor="middle" fill="rgba(255,255,255,0.85)" font-size="8" font-family="sans-serif" font-weight="700">REVIT</text>
+</svg>

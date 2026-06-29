@@ -1,0 +1,1135 @@
+﻿/* Shared LCA Theme */
+
+:root {
+  --brand-700: #8b0000;
+  --brand-600: #b41f1b;
+  --brand-500: #d12b2b;
+  --brand-300: #d98a87;
+  --brand-100: #f6e9e8;
+  --accent-500: #ff2d2d;
+  --grey-900: #1a1a1a;
+  --grey-700: #4a4f54;
+  --grey-200: #e3e6e8;
+  --grey-150: #eceff1;
+  --grey-100: #f6f7f8;
+  --shadow-1: 0 8px 22px rgba(0, 0, 0, 0.08);
+  --shadow-2: 0 18px 50px rgba(0, 0, 0, 0.15);
+  --focus-ring: rgba(180, 31, 27, 0.35);
+}
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  font-family: "Segoe UI", Arial, sans-serif;
+  color: var(--grey-900);
+  background: var(--grey-100);
+}
+
+img {
+  max-width: 100%;
+  display: block;
+}
+
+a {
+  color: inherit;
+  text-decoration: none;
+}
+
+button,
+input,
+select {
+  font-family: inherit;
+}
+
+select,
+input {
+  border: 1px solid var(--grey-200);
+  padding: 10px;
+  border-radius: 8px;
+  background: #ffffff;
+}
+
+select:focus,
+input:focus,
+button:focus-visible {
+  outline: none;
+  box-shadow: 0 0 0 3px var(--focus-ring);
+  border-color: var(--brand-600);
+}
+
+table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 14px;
+}
+
+th,
+td {
+  padding: 10px;
+  border-bottom: 1px solid var(--grey-200);
+  text-align: center;
+}
+
+thead {
+  background: #f1ecec;
+  font-weight: 600;
+}
+
+/* ========================= */
+/* DASHBOARD (main.html)     */
+/* ========================= */
+
+.dashboard {
+  min-height: 100vh;
+  background: radial-gradient(circle at top left, #ffffff 0%, #f6f7f8 45%, #f0f2f4 100%);
+}
+
+
+.dashboard .container {
+  background: #ffffff;
+  padding: 32px 40px 32px;
+  border-radius: 20px;
+  width: min(720px, 92vw);
+  box-shadow: 0 30px 80px rgba(0, 0, 0, 0.12);
+  text-align: left;
+  margin: 16px auto 40px;
+}
+
+
+.dashboard h1 {
+  color: var(--brand-700);
+  margin-bottom: 40px;
+  font-size: 26px;
+}
+
+.dashboard .card {
+  display: block;
+  background: var(--brand-700);
+  color: #ffffff;
+  padding: 20px;
+  margin: 20px 0;
+  border-radius: 12px;
+  font-size: 18px;
+  font-weight: 600;
+  transition: 0.25s ease;
+}
+
+.dashboard .card:hover {
+  background: var(--accent-500);
+  transform: translateY(-5px);
+  box-shadow: 0 15px 30px rgba(139, 0, 0, 0.35);
+}
+
+.dashboard .subtitle {
+  display: block;
+  font-size: 14px;
+  font-weight: 400;
+  margin-top: 6px;
+  opacity: 0.9;
+}
+
+.dashboard .footer {
+  margin-top: 30px;
+  font-size: 13px;
+  color: #777777;
+}
+
+/* ========================= */
+/* BODEN                     */
+/* ========================= */
+
+.app-boden .page-bg {
+  position: fixed;
+  inset: 0;
+  background: linear-gradient(135deg, #ffffff, #f4f5f6);
+  z-index: -1;
+}
+
+.app-boden .content {
+  max-width: 960px;
+  margin: auto;
+  padding: 20px;
+}
+
+.app-boden .epd-header {
+  background: var(--brand-600);
+  color: #ffffff;
+  padding: 20px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 20px;
+}
+
+.app-boden .header-actions button {
+  margin-left: 10px;
+}
+
+.app-boden .card {
+  background: #ffffff;
+  margin: 20px 0;
+  padding: 20px;
+  border-radius: 8px;
+  border: 1px solid var(--grey-200);
+  box-shadow: var(--shadow-1);
+}
+
+.app-boden .form-row {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 20px;
+}
+
+.app-boden .table-scroll {
+  width: 100%;
+  overflow-x: auto;
+  overflow-y: hidden;
+}
+
+.app-boden table {
+  font-size: 14px;
+}
+
+.app-boden th,
+.app-boden td {
+  border: 1px solid var(--grey-200);
+  padding: 6px;
+}
+
+.app-boden thead {
+  background: #f1ecec;
+}
+
+.app-boden tbody tr:nth-child(even) {
+  background: #faf7f7;
+}
+
+.app-boden .table-scroll table {
+  min-width: 1100px;
+  white-space: nowrap;
+}
+
+.app-boden .table-scroll th,
+.app-boden .table-scroll td {
+  min-width: 90px;
+}
+
+.app-boden .epd-meta {
+  border-left: 6px solid var(--brand-600);
+  background: var(--brand-100);
+  padding: 12px 16px;
+  border-radius: 4px;
+}
+
+.app-boden .epd-meta-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 30px;
+}
+
+.app-boden .epd-meta div > strong {
+  display: inline-block;
+  min-width: 110px;
+  color: var(--grey-700);
+}
+
+.app-boden .epd-footer {
+  text-align: center;
+  font-size: 12px;
+  margin: 30px 0;
+  color: var(--grey-700);
+}
+
+.app-boden .btn {
+  background: #ffffff;
+  color: var(--grey-900);
+  font-size: 14px;
+  border-radius: 6px;
+  padding: 6px 14px;
+  border: 1px solid var(--grey-200);
+  cursor: pointer;
+  font-weight: 500;
+  transition: all 0.15s ease;
+}
+
+.app-boden .btn.primary {
+  background: var(--brand-600);
+  color: #ffffff;
+  border-color: var(--brand-600);
+}
+
+.app-boden .btn.primary:hover:not(:disabled) {
+  background: var(--brand-700);
+}
+
+.app-boden .btn.interactive:hover:not(:disabled) {
+  background: var(--brand-100);
+  border-color: var(--brand-300);
+}
+
+.app-boden .btn.interactive:active:not(:disabled) {
+  transform: translateY(1px) scale(0.98);
+}
+
+.app-boden .btn:focus-visible {
+  outline: none;
+  box-shadow: 0 0 0 3px var(--focus-ring);
+}
+
+.app-boden .btn:disabled {
+  opacity: 0.45;
+  cursor: not-allowed;
+}
+
+.app-boden .lang-label {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: 500;
+  cursor: pointer;
+  transition: transform 0.25s ease, opacity 0.25s ease;
+}
+
+.app-boden .lang-label.flip {
+  transform: rotateX(360deg);
+}
+
+.app-boden .lang-label span {
+  margin-right: 6px;
+  font-size: 20px;
+  line-height: 1;
+  vertical-align: middle;
+}
+
+@media print {
+  .app-boden .header-actions,
+  .app-boden .form-row {
+    display: none;
+  }
+
+  .app-boden .card {
+    box-shadow: none;
+  }
+
+  .app-boden table {
+    min-width: unset;
+    white-space: normal;
+  }
+}
+
+/* ========================= */
+/* NORTEC                    */
+/* ========================= */
+
+.app-nortec .app {
+  min-height: 100vh;
+  background: var(--grey-100);
+}
+
+
+.app-nortec .sidebar {
+  width: 270px;
+  background: #1a1a1a;
+  color: #ffffff;
+  padding: 34px;
+}
+
+.app-nortec .logo {
+  font-size: 22px;
+  font-weight: 700;
+  margin-bottom: 60px;
+}
+
+.app-nortec .logo span {
+  display: block;
+  font-size: 13px;
+  opacity: 0.6;
+  margin-top: 4px;
+}
+
+.app-nortec .nav {
+  padding: 13px;
+  border-radius: 8px;
+  margin-bottom: 6px;
+  cursor: pointer;
+  opacity: 0.85;
+}
+
+.app-nortec .nav:hover {
+  background: #2a2a2a;
+}
+
+.app-nortec .nav.active {
+  background: var(--brand-700);
+  opacity: 1;
+}
+
+.app-nortec .main {
+  flex: 1;
+  padding: 48px 64px;
+  max-width: 1100px;
+  margin: 0 auto;
+}
+
+
+.app-nortec .command {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 30px;
+  gap: 20px;
+}
+
+.app-nortec .command h1 {
+  font-size: 30px;
+  font-weight: 700;
+}
+
+.app-nortec .command p {
+  color: var(--grey-700);
+  margin-top: 6px;
+}
+
+.app-nortec .filters {
+  display: flex;
+  gap: 22px;
+  margin-bottom: 26px;
+  flex-wrap: wrap;
+}
+
+.app-nortec .filter {
+  display: flex;
+  flex-direction: column;
+  position: relative;
+  z-index: 50;
+  min-width: 260px;
+}
+
+.app-nortec label {
+  font-size: 12px;
+  font-weight: 600;
+  color: var(--brand-700);
+  margin-bottom: 6px;
+}
+
+.app-nortec select {
+  min-width: 260px;
+}
+
+.app-nortec select:focus {
+  position: relative;
+  z-index: 9999;
+}
+
+.app-nortec .kpis {
+  display: flex;
+  gap: 18px;
+  margin-bottom: 28px;
+  flex-wrap: wrap;
+}
+
+.app-nortec .kpi {
+  flex: 1;
+  background: #ffffff;
+  padding: 20px;
+  border-radius: 14px;
+  box-shadow: var(--shadow-1);
+  min-width: 180px;
+}
+
+.app-nortec .label {
+  font-size: 13px;
+  color: var(--grey-700);
+}
+
+.app-nortec .value {
+  font-size: 26px;
+  font-weight: 700;
+  margin-top: 4px;
+}
+
+.app-nortec .table-card {
+  background: #ffffff;
+  padding: 26px;
+  border-radius: 16px;
+  box-shadow: var(--shadow-1);
+  overflow: visible;
+}
+
+.app-nortec thead {
+  background: var(--brand-700);
+  color: #ffffff;
+}
+
+.app-nortec th {
+  padding: 14px;
+}
+
+.app-nortec td {
+  padding: 11px;
+}
+
+.app-nortec td:first-child {
+  text-align: left;
+  font-weight: 500;
+  max-width: 420px;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.app-nortec tbody tr:hover {
+  background: #f8fafc;
+}
+
+.app-nortec .primary {
+  background: var(--brand-700);
+  color: #ffffff;
+  border: none;
+  padding: 10px 22px;
+  border-radius: 10px;
+  font-weight: 600;
+  cursor: pointer;
+}
+
+.app-nortec .primary:hover {
+  background: var(--brand-600);
+}
+
+.app-nortec .secondary {
+  background: #ffffff;
+  border: 1px solid var(--grey-200);
+  padding: 10px 18px;
+  border-radius: 8px;
+  cursor: pointer;
+  font-weight: 600;
+}
+
+.app-nortec .secondary:hover {
+  background: #f1f5f9;
+}
+
+.elite-graph-body {
+  background: linear-gradient(180deg, #f3f4f6, #fafafa);
+  font-family: "Segoe UI", Arial, sans-serif;
+}
+
+.elite-container {
+  max-width: 1500px;
+  margin: auto;
+  padding: 70px 60px;
+}
+
+.elite-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 55px;
+}
+
+.header-left h1 {
+  font-size: 40px;
+  letter-spacing: -1px;
+  font-weight: 700;
+  color: var(--grey-900);
+}
+
+.header-left p {
+  margin-top: 8px;
+  color: #64748b;
+}
+
+.header-actions {
+  display: flex;
+  gap: 14px;
+}
+
+.elite-back-btn {
+  background: var(--brand-700);
+  color: #ffffff;
+  border: none;
+  padding: 13px 26px;
+  border-radius: 12px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: 0.25s;
+}
+
+.elite-back-btn:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 10px 25px rgba(139, 0, 0, 0.25);
+}
+
+.ghost-btn {
+  background: #ffffff;
+  border: 1px solid #e2e8f0;
+  padding: 13px 22px;
+  border-radius: 12px;
+  font-weight: 600;
+  cursor: pointer;
+}
+
+.ghost-btn:hover {
+  background: #f1f5f9;
+}
+
+.elite-scenarios {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  gap: 26px;
+  margin-bottom: 60px;
+}
+
+.kpi-card {
+  background: linear-gradient(160deg, #ffffff, #f9fbff);
+  border-radius: 20px;
+  padding: 30px;
+  box-shadow: 0 30px 60px rgba(2, 6, 23, 0.06);
+  border: 1px solid rgba(148, 163, 184, 0.14);
+  transition: 0.35s;
+}
+
+.kpi-card:hover {
+  transform: translateY(-8px);
+}
+
+.kpi-card h3 {
+  font-size: 20px;
+  margin-bottom: 17px;
+}
+
+.kpi-card p {
+  margin: 6px 0;
+  color: #475569;
+  font-weight: 500;
+}
+
+.kpi-card::before {
+  content: "";
+  display: block;
+  height: 6px;
+  width: 55px;
+  border-radius: 4px;
+  margin-bottom: 18px;
+}
+
+.kpi-card.reuse::before {
+  background: var(--brand-700);
+}
+
+.kpi-card.landfill::before {
+  background: #475569;
+}
+
+.kpi-card.recycling::before {
+  background: #059669;
+}
+
+.elite-chart-card {
+  background: linear-gradient(180deg, #ffffff, #f8fbff);
+  border-radius: 24px;
+  padding: 60px;
+  box-shadow: 0 30px 80px rgba(2, 6, 23, 0.08);
+  border: 1px solid rgba(148, 163, 184, 0.12);
+  transition: 0.25s;
+}
+
+.elite-chart-card:hover {
+  transform: translateY(-4px);
+}
+
+.chart-title {
+  font-size: 20px;
+  font-weight: 600;
+  margin-bottom: 26px;
+}
+
+#gwpChart {
+  height: 520px !important;
+}
+
+.chart-switch {
+  display: flex;
+  gap: 10px;
+  margin-bottom: 24px;
+}
+
+.switch-btn {
+  padding: 10px 18px;
+  border-radius: 10px;
+  border: 1px solid #e2e8f0;
+  background: #ffffff;
+  font-weight: 600;
+  cursor: pointer;
+}
+
+.switch-btn.active {
+  background: var(--brand-700);
+  color: #ffffff;
+  border: none;
+}
+
+.hotspot-panel {
+  background: linear-gradient(135deg, #1a1a1a, #2a2e34);
+  color: #ffffff;
+  padding: 26px 32px;
+  border-radius: 18px;
+  margin-bottom: 34px;
+  box-shadow: 0 20px 60px rgba(2, 6, 23, 0.25);
+}
+
+.hotspot-title {
+  font-size: 15px;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  opacity: 0.7;
+  margin-bottom: 12px;
+}
+
+.hotspot-text {
+  font-size: 18px;
+  font-weight: 500;
+  line-height: 1.6;
+}
+
+.scenario-flat-block {
+  margin-bottom: 24px;
+  background: #ffffff;
+  padding: 18px 20px;
+  border-radius: 14px;
+  box-shadow: var(--shadow-1);
+}
+
+.scenario-title {
+  font-weight: 700;
+  font-size: 16px;
+  margin-bottom: 12px;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.scenario-table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 13px;
+}
+
+.scenario-table thead {
+  background: #f1ecec;
+}
+
+.scenario-table th {
+  padding: 10px;
+  font-weight: 600;
+  text-align: center;
+  color: var(--grey-900);
+}
+
+.scenario-table td {
+  padding: 10px;
+  text-align: center;
+  border-top: 1px solid #e5e7eb;
+}
+
+.module-indicator-title {
+  font-size: 15px;
+  font-weight: 600;
+  color: var(--grey-900);
+  margin-bottom: 20px;
+}
+
+/* ========================= */
+/* METAL LCA (lca-WebApp)    */
+/* ========================= */
+
+.app-metal header {
+  background: linear-gradient(90deg, var(--brand-700), var(--accent-500));
+  color: #ffffff;
+  padding: 20px;
+  font-size: 22px;
+  font-weight: 700;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 20px;
+}
+
+.app-metal .lang-switch button {
+  background: none;
+  border: none;
+  color: #ffffff;
+  font-weight: 700;
+  margin-left: 8px;
+  cursor: pointer;
+  opacity: 0.7;
+}
+
+.app-metal .lang-switch button.active {
+  opacity: 1;
+  text-decoration: underline;
+}
+
+.app-metal .container {
+  max-width: 1100px;
+  margin: auto;
+  padding: 30px;
+}
+
+.app-metal .filters {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 20px;
+  background: #ffffff;
+  padding: 20px;
+  border-radius: 12px;
+  box-shadow: var(--shadow-1);
+}
+
+.app-metal label {
+  font-weight: 600;
+  color: var(--brand-700);
+}
+
+.app-metal #productTitle,
+.app-metal #duBox {
+  display: none;
+  background: linear-gradient(90deg, var(--brand-700), var(--accent-500));
+  color: #ffffff;
+  padding: 18px;
+  border-radius: 10px;
+  font-size: 18px;
+  font-weight: 600;
+  margin: 20px 0;
+  text-align: center;
+}
+
+.app-metal #linkBox {
+  display: none;
+  text-align: center;
+  margin: 20px 0;
+}
+
+.app-metal .linkBtn {
+  margin: 10px;
+  padding: 12px 20px;
+  background: var(--brand-700);
+  color: #ffffff;
+  border-radius: 8px;
+  font-weight: 600;
+  border: none;
+  cursor: pointer;
+}
+
+.app-metal .linkBtn.epd {
+  background: var(--accent-500);
+}
+
+.app-metal .linkBtn.export {
+  background: #444444;
+}
+
+.app-metal .results,
+.app-metal .chart-container,
+.app-metal .summary-container {
+  background: #ffffff;
+  padding: 25px;
+  border-radius: 12px;
+  box-shadow: var(--shadow-1);
+  margin-bottom: 25px;
+}
+
+.app-metal th {
+  background: #f1ecec;
+}
+
+.app-metal footer {
+  text-align: center;
+  padding: 20px;
+  color: #777777;
+}
+
+/* ========================= */
+/* STUTZEN                   */
+/* ========================= */
+
+.app-stutzen {
+  min-height: 100vh;
+  background: linear-gradient(135deg, #ffffff, #f4f5f6);
+  padding-bottom: 40px;
+}
+
+.app-stutzen .logo {
+  width: 180px;
+  margin: 16px auto 8px;
+}
+
+.app-stutzen .header {
+  height: 6px;
+  background: var(--brand-600);
+  border-radius: 999px;
+  margin: 10px 0 20px;
+}
+
+.app-stutzen .container {
+  max-width: 900px;
+  margin: 24px auto 60px;
+  background: #ffffff;
+  padding: 24px;
+  border-radius: 14px;
+  box-shadow: var(--shadow-2);
+}
+
+.app-stutzen h2 {
+  margin: 8px 0 18px;
+  color: var(--brand-700);
+}
+
+.app-stutzen h3 {
+  margin-top: 18px;
+  color: var(--grey-900);
+}
+
+.app-stutzen label {
+  display: block;
+  margin-top: 14px;
+  font-weight: 600;
+  color: var(--grey-700);
+}
+
+.app-stutzen select {
+  width: 100%;
+  margin-top: 6px;
+}
+
+.app-stutzen table {
+  margin: 12px 0 24px;
+}
+
+.app-stutzen th {
+  background: #f1ecec;
+}
+
+.app-stutzen td:first-child {
+  text-align: left;
+}
+
+
+
+/* ========================= */
+/* ALIGNMENT TUNING          */
+/* ========================= */
+
+/* Metal ceilings filters alignment */
+.app-metal .filters {
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  align-items: end;
+}
+
+.app-metal .filters > div {
+  min-width: 0;
+}
+
+.app-metal label {
+  display: block;
+  margin-bottom: 6px;
+}
+
+.app-metal select {
+  width: 100%;
+}
+
+/* Nortec dashboard spacing */
+.app-nortec .app {
+  min-height: 100vh;
+  background: var(--grey-100);
+}
+
+.app-nortec .main {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 32px;
+}
+
+/* Boden filter alignment */
+.app-boden .form-row {
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  align-items: end;
+}
+
+.app-boden select {
+  width: 100%;
+}
+
+/* Stutzen header/logo alignment */
+.app-stutzen .logo-link {
+  display: block;
+  max-width: 900px;
+  margin: 16px auto 8px;
+  padding-left: 24px;
+}
+
+.app-stutzen .logo {
+  margin: 0;
+  width: 180px;
+}
+
+.app-stutzen .header {
+  height: 8px;
+  background: var(--brand-600);
+  border-radius: 999px;
+  margin: 10px 0 24px;
+}
+
+
+
+/* ========================= */
+/* DASHBOARD PREMIUM         */
+/* ========================= */
+
+.dashboard {
+  min-height: 100vh;
+  background: radial-gradient(circle at top left, #ffffff 0%, #f6f7f8 45%, #f0f2f4 100%);
+}
+
+
+.dashboard .container {
+  background: #ffffff;
+  padding: 32px 40px 32px;
+  border-radius: 20px;
+  width: min(720px, 92vw);
+  box-shadow: 0 30px 80px rgba(0, 0, 0, 0.12);
+  text-align: left;
+  margin: 16px auto 40px;
+}
+
+
+.dashboard .dashboard-header {
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+  gap: 24px;
+  margin-bottom: 24px;
+  border-bottom: 1px solid var(--grey-200);
+  padding-bottom: 18px;
+}
+
+
+.dashboard .dashboard-logo {
+  width: 160px;
+  margin: 0;
+}
+
+.dashboard .dashboard-title h1 {
+  font-size: 26px;
+  color: var(--brand-700);
+  margin-bottom: 6px;
+}
+
+.dashboard .dashboard-subtitle {
+  color: var(--grey-700);
+  font-size: 14px;
+}
+
+.dashboard .card {
+  display: block;
+  background: #ffffff;
+  color: var(--grey-900);
+  padding: 18px 20px;
+  margin: 14px 0;
+  border-radius: 14px;
+  font-size: 17px;
+  font-weight: 600;
+  border: 1px solid var(--grey-200);
+  box-shadow: var(--shadow-1);
+  transition: 0.2s ease;
+}
+
+.dashboard .card:hover {
+  border-color: var(--brand-300);
+  transform: translateY(-3px);
+  box-shadow: 0 18px 40px rgba(139, 0, 0, 0.12);
+}
+
+.dashboard .subtitle {
+  display: block;
+  font-size: 13px;
+  font-weight: 400;
+  margin-top: 6px;
+  color: var(--grey-700);
+}
+
+.dashboard .footer {
+  margin-top: 18px;
+  font-size: 12px;
+  color: #8a8f94;
+  text-align: right;
+}
+
+.visually-hidden {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  border: 0;
+}
+
+
+.dashboard-topbar {
+  width: 100%;
+  padding: 16px 24px 0;
+}
+
+.dashboard-topbar .dashboard-logo {
+  width: 160px;
+  margin: 0;
+}
+
+.dashboard .dashboard-title {
+  margin-bottom: 18px;
+}
+
+
+
+/* ========================= */
+/* SHARED RED TOP BAR        */
+/* ========================= */
+
+.app-boden .epd-header,
+.app-metal header,
+.app-nortec .command,
+.app-stutzen .topbar,
+.dashboard .dashboard-topbar {
+  background: linear-gradient(90deg, var(--brand-700), var(--accent-500));
+  color: #ffffff;
+}
+
+.app-boden .epd-header,
+.app-metal header,
+.app-nortec .command,
+.dashboard .dashboard-topbar,
+.app-stutzen .topbar {
+  padding: 14px 24px;
+}
+
+.app-boden .epd-header h1,
+.app-metal header span,
+.app-nortec .command h1,
+.dashboard .dashboard-topbar h1,
+.app-stutzen .topbar h1 {
+  color: #ffffff;
+}
+
+.app-nortec .command p,
+.dashboard .dashboard-topbar span,
+.app-boden .epd-header p {
+  color: rgba(255, 255, 255, 0.85);
+}
+

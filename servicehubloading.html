@@ -1,0 +1,188 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Service Hub — Loading</title>
+<link rel="icon" href="tool/lindner-logo.png">
+<link rel="stylesheet" href="lindner-theme.css">
+
+<!-- Prefetch the real app while ceremony plays -->
+<link rel="prefetch" href="services/dist/index.html">
+
+<style>
+  body { overflow: hidden; }
+
+  .loading-stage {
+    position: fixed;
+    inset: 0;
+    z-index: 10;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 30px;
+    transition: opacity 0.5s ease;
+  }
+  .loading-stage.exit-bg { opacity: 0; }
+
+  /* ─── Icon — animated grid tiles ─── */
+  .hub-mark {
+    width: 120px; height: 120px;
+    position: relative;
+  }
+  .hub-tile {
+    position: absolute;
+    width: 50px; height: 50px;
+    border-radius: 14px;
+    background: linear-gradient(135deg, var(--accent-red-soft), rgba(255,45,45,0.12));
+    border: 1px solid rgba(192,0,26,0.35);
+    opacity: 0;
+    transform: scale(0.5);
+  }
+  .hub-tile.t1 { top: 0; left: 0; animation: tileIn 0.5s var(--ease-smooth) 0.2s forwards; }
+  .hub-tile.t2 { top: 0; right: 0; animation: tileIn 0.5s var(--ease-smooth) 0.35s forwards; }
+  .hub-tile.t3 { bottom: 0; left: 0; animation: tileIn 0.5s var(--ease-smooth) 0.5s forwards; }
+  .hub-tile.t4 { bottom: 0; right: 0; animation: tileIn 0.5s var(--ease-smooth) 0.65s forwards; }
+  @keyframes tileIn {
+    to { opacity: 1; transform: scale(1); }
+  }
+
+  /* Centre pulse */
+  .hub-mark::after {
+    content: "";
+    position: absolute;
+    top: 50%; left: 50%;
+    width: 20px; height: 20px;
+    border-radius: 50%;
+    background: radial-gradient(circle, rgba(232,0,31,0.7) 0%, transparent 70%);
+    transform: translate(-50%,-50%) scale(0);
+    animation: hubPulse 1s ease-out 0.9s forwards;
+  }
+  @keyframes hubPulse {
+    0% { opacity: 0; transform: translate(-50%,-50%) scale(0); }
+    50% { opacity: 1; transform: translate(-50%,-50%) scale(1); }
+    100% { opacity: 0; transform: translate(-50%,-50%) scale(2.2); }
+  }
+
+  /* ─── Title ─── */
+  .hub-title {
+    font-family: var(--font-display);
+    font-size: clamp(30px, 4vw, 44px);
+    letter-spacing: 4px;
+    color: var(--text-primary);
+    opacity: 0;
+    transform: translateY(8px);
+    animation: hubTextIn 0.6s var(--ease-smooth) 1.1s forwards;
+  }
+  .hub-sub {
+    font-size: 11px;
+    letter-spacing: 4px;
+    color: var(--text-dim);
+    text-transform: uppercase;
+    opacity: 0;
+    transform: translateY(6px);
+    animation: hubTextIn 0.6s var(--ease-smooth) 1.4s forwards;
+  }
+  @keyframes hubTextIn {
+    to { opacity: 1; transform: translateY(0); }
+  }
+
+  /* ─── Skip / Replay ─── */
+  .skip-link {
+    position: fixed;
+    bottom: 28px; right: 32px;
+    z-index: 20;
+    display: inline-flex; align-items: center; gap: 8px;
+    font-size: 10px; letter-spacing: 3px; text-transform: uppercase;
+    color: var(--text-dim);
+    background: none; border: none; cursor: pointer;
+    font-family: var(--font-body);
+    opacity: 0; animation: fadeIn 0.5s ease 1s forwards;
+    transition: color 0.3s ease, gap 0.3s ease;
+  }
+  .skip-link:hover { color: var(--text-primary); gap: 12px; }
+  .skip-link svg { width: 10px; height: 10px; stroke: currentColor; fill: none; stroke-width: 2; stroke-linecap: round; stroke-linejoin: round; }
+
+  @media (prefers-reduced-motion: reduce) {
+    .hub-tile, .hub-mark::after, .hub-title, .hub-sub, .skip-link {
+      animation: none !important;
+      opacity: 1 !important;
+      transform: none !important;
+    }
+  }
+
+  @media (max-width: 600px) {
+    .hub-mark { width: 100px; height: 100px; }
+    .hub-tile { width: 42px; height: 42px; }
+    .skip-link { bottom: 20px; right: 20px; }
+  }
+</style>
+</head>
+<body>
+
+<div class="lindner-bg"></div>
+<div class="lindner-grain"></div>
+
+<div class="loading-stage" id="stage">
+  <div class="hub-mark" aria-hidden="true">
+    <div class="hub-tile t1"></div>
+    <div class="hub-tile t2"></div>
+    <div class="hub-tile t3"></div>
+    <div class="hub-tile t4"></div>
+  </div>
+  <div class="hub-title">Service Hub</div>
+  <div class="hub-sub">Lindner · Nachhaltiges Bauen</div>
+</div>
+
+<button class="skip-link" id="skipBtn" aria-label="Skip and continue">
+  Skip
+  <svg viewBox="0 0 24 24"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
+</button>
+
+<script>
+  /* ─── Service Hub redirect — play once per session (matches Compass/RE-Tool) ─── */
+  (function () {
+    const DESTINATION = "services/dist/index.html";
+    const AUTO_EXIT_MS = 2400;
+
+    const stage = document.getElementById("stage");
+    const skipBtn = document.getElementById("skipBtn");
+
+    // FAST PATH — already seen this session
+    const seen = sessionStorage.getItem("servicehub-introduced");
+    if (seen) {
+      sessionStorage.setItem("servicehub-handoff", Date.now().toString());
+      window.location.replace(DESTINATION);
+      return;
+    }
+
+    let exited = false;
+    function go() {
+      if (exited) return;
+      exited = true;
+      sessionStorage.setItem("servicehub-introduced", "1");
+      sessionStorage.setItem("servicehub-handoff", Date.now().toString());
+      stage.classList.add("exit-bg");
+      if (skipBtn) { skipBtn.style.opacity = "0"; skipBtn.style.pointerEvents = "none"; }
+      setTimeout(() => window.location.replace(DESTINATION), 500);
+    }
+
+    const timer = setTimeout(go, AUTO_EXIT_MS);
+
+    if (skipBtn) skipBtn.addEventListener("click", () => { clearTimeout(timer); go(); });
+    document.addEventListener("keydown", e => {
+      if (e.key === "Enter" || e.key === " " || e.key === "Escape") { clearTimeout(timer); go(); }
+    });
+
+    if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) {
+      clearTimeout(timer);
+      sessionStorage.setItem("servicehub-introduced", "1");
+      sessionStorage.setItem("servicehub-handoff", Date.now().toString());
+      setTimeout(go, 600);
+    }
+  })();
+</script>
+
+</body>
+</html>

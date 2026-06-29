@@ -1,0 +1,13 @@
+﻿type,product,Scenario 1,Scenario 2,Scenario 3,lca,Grammage  (kg/m2),dU (m2),Layer thickness (mm) ,image
+Glass partition walls,Lindner Life Stereo 125,100% landfilling,,,lca-nb-b-145-Lindner-life-stereo-125.pdf,45.5,1,100,lifestereo125.jpg
+Glass partition walls,Lindner Life Contour 126 ,100% landfilling,,,lca-nb-b-146-Lindner-life-contour-126.pdf,45.1,1,100,lifecontour126.jpg
+Glass partition walls,Lindner Life Freeze 137,100% landfilling,,,lca-nb-b-147-Lindner-life-freeze-137.pdf,45.8,1,100,lifefreeze137.jpg
+Glass partition walls,Multiclean LVT 437,100% landfilling,,,lca-nb-b-148-Lindner-Multiclean-LVT-437.pdf,45.8,1,100,multicleanlvt437.png
+Glass partition walls,Multiclean CLVT 437,100% landfilling,,,lca-nb-b-149-Lindner-Multiclean-CLVT-437.pdf,45.8,1,100,multicleanclvt437.png
+Glass partition walls,Multiclean CPH 448,100% landfilling,,,lca-nb-b-150-Lindner-Multiclean-CPH-448.pdf,45.8,1,100,multicleancph448.png
+Timber partition walls,Logic 100 Timber 49dB 82mm substructure,Conventional,Reuse,Repurpose,,33.64,1,125,logic100timber.jpg
+Timber partition walls,Logic 100 Timber 52dB 82mm substructure,Conventional,Reuse,Repurpose,,44.51,1,125,logic100timber.jpg
+Timber partition walls,Logic 100 Timber 53dB 82mm substructure,Conventional,Reuse,Repurpose,,49.42,1,125,logic100timber.jpg
+Timber partition walls,Logic 100 Timber 55dB 82mm substructure,Conventional,Reuse,Repurpose,,56.05,1,125,logic100timber.jpg
+Timber partition walls,Logic 100 Timber F30-EI30 82mm substructure,Conventional,Reuse,Repurpose,,38.19,1,125,logic100timber.jpg
+Timber partition walls,Logic 100 Timber EI60 82mm substructure,Conventional,Reuse,Repurpose,,42.96,1,125,logic100timber.jpg

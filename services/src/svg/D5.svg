@@ -1,0 +1,9 @@
+<svg viewBox="0 0 400 160" xmlns="http://www.w3.org/2000/svg" preserveAspectRatio="xMidYMid slice" aria-hidden="true">
+  <defs><!--GRADIENT--></defs>
+  <rect width="400" height="160" fill="url(#gD5)"/>
+  <rect x="150" y="50" width="42" height="42" rx="8" fill="rgba(255,255,255,0.08)" stroke="rgba(255,255,255,0.45)" stroke-width="2"/>
+  <rect x="208" y="50" width="42" height="42" rx="8" fill="rgba(255,255,255,0.08)" stroke="rgba(255,255,255,0.45)" stroke-width="2"/>
+  <path d="M171,71 L192,71 M181,65 L192,71 L181,77" fill="none" stroke="white" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/>
+  <path d="M208,71 L229,71 M219,65 L208,71 L219,77" fill="none" stroke="white" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/>
+  <text x="200" y="118" text-anchor="middle" fill="rgba(255,255,255,0.6)" font-size="10" font-family="sans-serif" font-weight="700">VERKAUF</text>
+</svg>

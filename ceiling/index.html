@@ -1,0 +1,363 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Metal Ceilings — CO₂ Compass — Lindner Nachhaltiges Bauen</title>
+<meta name="description" content="LCA analysis for Lindner metal ceiling systems. Part of CO₂ Compass.">
+<meta property="og:title" content="Metal Ceilings — CO₂ Compass">
+<meta property="og:description" content="Lifecycle assessment dashboard for sustainable metal ceiling systems.">
+<meta property="og:image" content="../compass-body.png">
+<link rel="icon" href="../compass-body.png">
+<link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Montserrat:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+
+<!-- Lindner Design System -->
+<link rel="stylesheet" href="../lindner-theme.css">
+<link rel="stylesheet" href="../lindner-dashboard.css">
+
+<!-- Ceiling-specific styles -->
+<link rel="stylesheet" href="style.css">
+
+<!-- ARIA styles -->
+<link rel="stylesheet" href="../aria/aria.css">
+
+<!-- PDF library -->
+<script src="jspdf.umd.min.js"></script>
+</head>
+<body class="lindner-dashboard">
+
+<!-- Lindner shared background -->
+<div class="lindner-bg"></div>
+<div class="lindner-grain"></div>
+
+<div class="page-shell">
+
+  <!-- ════════════════════════════════════════════════════════════
+       HEADER — matches boden / main.html
+       ════════════════════════════════════════════════════════════ -->
+  <header class="lindner-header">
+    <div class="header-left">
+      <a class="lindner-header-logo" href="../main.html" aria-label="Back to CO₂ Compass">
+        <img src="../tool/lindner-logo.png" alt="Lindner">
+      </a>
+      <div class="header-divider" aria-hidden="true"></div>
+      <a class="header-compass" href="../main.html" aria-label="Back to CO₂ Compass">
+        <img class="body-mini" src="../compass-body.png" alt="">
+        <img class="needle-mini" src="../compass-needle.png" alt="">
+      </a>
+    </div>
+    <div class="header-right">
+      <span class="lindner-header-tag">Nachhaltiges Bauen · Metal Ceilings</span>
+      <button id="themeToggle" class="dash-theme-toggle" type="button" aria-label="Toggle color theme">
+        <span class="dash-theme-toggle-track"><span class="dash-theme-toggle-thumb"></span></span>
+        <span id="themeLabel">Light</span>
+      </button>
+    </div>
+  </header>
+
+  <!-- ════════════════════════════════════════════════════════════
+       ACTION BAR
+       ════════════════════════════════════════════════════════════ -->
+  <section class="dash-action-bar-wrap">
+    <div class="dash-action-bar dash-action-bar-split">
+      <!-- LEFT: competitor toggle -->
+      <button id="cmpToggleBtn" class="dash-btn dash-btn-ghost" type="button" aria-pressed="false">
+        <svg viewBox="0 0 20 20" width="14" height="14" fill="none">
+          <circle cx="10" cy="10" r="8" stroke="currentColor" stroke-width="1.6" opacity=".8"/>
+          <path d="M10 6v4l3 3" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" opacity=".8"/>
+        </svg>
+        <span id="cmpToggleLabel">Competitor Analysis</span>
+      </button>
+
+      <!-- RIGHT: existing buttons -->
+      <div class="dash-action-bar-right">
+        <a id="epdDownloadBtn" class="dash-btn dash-btn-secondary disabled" href="#" aria-disabled="true">
+          <svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4M7 10l5 5 5-5M12 15V3"/></svg>
+          Download EPD
+        </a>
+        <a id="reportDownloadBtn" class="dash-btn dash-btn-secondary disabled" href="#" aria-disabled="true">
+          <svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><path d="M14 2v6h6M16 13H8M16 17H8M10 9H8"/></svg>
+          Download LCA Report
+        </a>
+        <button id="exportPdfBtn" class="dash-btn dash-btn-primary disabled" type="button" aria-disabled="true">
+          <svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><path d="M14 2v6h6"/></svg>
+          Export Custom PDF
+        </button>
+      </div>
+    </div>
+  </section>
+
+  <!-- ════════════════════════════════════════════════════════════
+       TOOL SWITCHER
+       ════════════════════════════════════════════════════════════ -->
+  <div class="tool-switcher" id="toolSwitcher" style="display:none;">
+    <div class="tool-switcher-inner">
+      <div class="tool-tab tool-tab-active">
+        <svg class="tool-tab-icon" viewBox="0 0 20 20" width="20" height="20" fill="none">
+          <rect x="2" y="2" width="7" height="7" rx="1.5" fill="currentColor" opacity=".9"/>
+          <rect x="11" y="2" width="7" height="7" rx="1.5" fill="currentColor" opacity=".5"/>
+          <rect x="2" y="11" width="7" height="7" rx="1.5" fill="currentColor" opacity=".5"/>
+          <rect x="11" y="11" width="7" height="7" rx="1.5" fill="currentColor" opacity=".3"/>
+        </svg>
+        <div class="tool-tab-text">
+          <span class="tool-tab-label">Lindner Products</span>
+          <span class="tool-tab-sub">EPD Viewer — Metal Ceilings</span>
+        </div>
+        <span class="tool-tab-badge">Active</span>
+      </div>
+      <button type="button" id="competitorTabBtn" class="tool-tab tool-tab-link" aria-pressed="false" style="display:none;">
+        <svg class="tool-tab-icon" viewBox="0 0 20 20" width="20" height="20" fill="none">
+          <circle cx="10" cy="10" r="8" stroke="currentColor" stroke-width="1.6" opacity=".7"/>
+          <path d="M10 6v4l3 3" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" opacity=".7"/>
+        </svg>
+        <div class="tool-tab-text">
+          <span class="tool-tab-label">Competitor Analysis</span>
+          <span class="tool-tab-sub">Metal Ceilings — Market Comparison</span>
+        </div>
+        <svg class="tool-tab-arrow" viewBox="0 0 24 24" width="18" height="18" fill="none">
+          <path d="M5 12h14M13 6l6 6-6 6" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+        </svg>
+      </button>
+    </div>
+  </div>
+
+  <!-- ════════════════════════════════════════════════════════════
+       COMPETITOR PANEL (shell — wired in B.6)
+       ════════════════════════════════════════════════════════════ -->
+  <section id="competitorPanel" class="competitor-panel" style="display:none">
+    <div class="dash-card config-panel">
+      <div class="competitor-panel-head">
+        <div>
+          <p class="dash-kicker">Competitor Analysis</p>
+          <h3 class="dash-heading">Metal Ceilings — Market Comparison</h3>
+        </div>
+        <span class="competitor-division-badge">Division: Metal Ceilings</span>
+      </div>
+      <div class="filters-grid">
+        <label class="dash-form-field">
+          <span class="dash-form-label">Product Family</span>
+          <select id="cmp_productFamilySelect" class="dash-select"><option value="">Select product family</option></select>
+        </label>
+        <label class="dash-form-field">
+          <span class="dash-form-label">Competitor</span>
+          <select id="cmp_competitorSelect" class="dash-select" disabled><option value="">Select competitor</option></select>
+        </label>
+        <label class="dash-form-field">
+          <span class="dash-form-label">Product Variant</span>
+          <select id="cmp_productVariantSelect" class="dash-select" disabled><option value="">Select product variant</option></select>
+        </label>
+      </div>
+      <div id="cmp_selectionSummary" class="dash-summary">Select a product family to begin.</div>
+    </div>
+    <main id="cmp_mainLayout" class="main-layout" style="display:none">
+      <section class="left-column">
+        <article class="dash-card product-card">
+          <div class="section-head"><div><p class="dash-kicker">Overview</p><h3 class="dash-heading-sm">Product Profile</h3></div></div>
+          <div class="product-layout">
+            <div class="product-visual-frame">
+              <img id="cmp_productImage" src="" alt="" />
+              <div id="cmp_productImagePlaceholder" class="image-placeholder">Product image will appear here</div>
+            </div>
+            <div class="product-meta-stack">
+              <div class="meta-card">
+                <span class="meta-kicker">Selected product</span>
+                <h4 id="cmp_selectedCompetitor">—</h4>
+                <p id="cmp_selectedVariant">Select a variant to load its profile.</p>
+              </div>
+              <div class="meta-pill-grid">
+                <div class="meta-pill"><span>EPD issue date</span><strong id="cmp_issueDateValue">—</strong></div>
+                <div class="meta-pill"><span>EPD valid to</span><strong id="cmp_validToValue">—</strong></div>
+              </div>
+            </div>
+          </div>
+        </article>
+        <article class="dash-card technical-card">
+          <div class="section-head"><div><p class="dash-kicker">Key Product Details</p><h3 class="dash-heading-sm">Technical data</h3></div></div>
+          <div id="cmp_technicalGrid" class="metrics-grid empty-grid"><div class="dash-empty">Technical details will load here.</div></div>
+        </article>
+        <article class="dash-card scenario-card">
+          <div class="section-head"><div><p class="dash-kicker">Available scenarios</p><h3 class="dash-heading-sm">Scenario Selection</h3></div></div>
+          <div id="cmp_scenarioList" class="scenario-list empty-grid"><div class="dash-empty">Scenario details will appear here.</div></div>
+        </article>
+      </section>
+      <section class="right-column">
+        <article class="dash-card results-card">
+          <div class="section-head"><div><p class="dash-kicker">Lifecycle results</p><h3 class="dash-heading-sm">Module Results</h3></div></div>
+          <div id="cmp_scenarioPicker" class="scenario-picker"></div>
+          <div id="cmp_resultsLifecycleGrid" class="results-lifecycle-grid empty-grid">
+            <div class="dash-empty">Choose a product variant to display lifecycle results.</div>
+          </div>
+        </article>
+      </section>
+    </main>
+    <section id="cmp_bottomSection" class="bottom-section" style="display:none">
+      <article class="dash-card chart-card">
+        <div class="chart-card-head">
+          <div class="chart-head-row">
+            <div><p class="dash-kicker">Dynamic graph</p><h3 class="dash-heading-sm">Module Bar Graph</h3></div>
+            <div class="chart-view-toggle">
+              <button class="chart-view-btn active" data-cmp-view="modules">Modules</button>
+              <button class="chart-view-btn" data-cmp-view="a1c4">A1-C4 &amp; Net Carbon</button>
+            </div>
+          </div>
+        </div>
+        <div id="cmp_mainBarChart" class="module-bar-chart empty-grid">
+          <div class="dash-empty">Choose a product variant to display the graph.</div>
+        </div>
+      </article>
+    </section>
+  </section>
+    <!-- ════════════════════════════════════════════════════════════
+       MAIN CONFIG PANEL — Product Family / Product Type / Weight
+       (existing IDs preserved: productFamilySelect, productTypeSelect, gewichtSelect)
+       ════════════════════════════════════════════════════════════ -->
+  <section class="dash-card config-panel" id="mainConfigPanel">
+    <div class="filters-grid">
+      <label class="dash-form-field">
+        <span class="dash-form-label">Product Family</span>
+        <select id="productFamilySelect" class="dash-select">
+          <option value="">Select product family</option>
+        </select>
+      </label>
+      <label class="dash-form-field">
+        <span class="dash-form-label">Product Type</span>
+        <select id="productTypeSelect" class="dash-select" disabled>
+          <option value="">Select product type</option>
+        </select>
+      </label>
+      <label class="dash-form-field">
+        <span class="dash-form-label">Weight kg/m² (Dimensions in mm)</span>
+        <select id="gewichtSelect" class="dash-select" disabled>
+          <option value="">Select weight</option>
+        </select>
+      </label>
+    </div>
+    <div id="selectionSummary" class="dash-summary hidden-until-ready">Configuration loaded.</div>
+  </section>
+
+  <!-- ════════════════════════════════════════════════════════════
+       MAIN DASHBOARD — Lindner products
+       ════════════════════════════════════════════════════════════ -->
+  <div id="lindnerView">
+
+    <!-- Welcome / empty-state panel -->
+    <section id="welcomePanel" class="dash-card welcome-panel">
+      <div class="welcome-icon" aria-hidden="true">
+        <svg viewBox="0 0 64 64" width="56" height="56" fill="none">
+          <circle cx="32" cy="32" r="28" stroke="#23B9D6" stroke-width="2" opacity="0.5"/>
+          <circle cx="32" cy="32" r="20" stroke="#E40428" stroke-width="2" opacity="0.7"/>
+          <path d="M32 18 L38 32 L32 46 L26 32 Z" fill="#E40428" opacity="0.9"/>
+          <circle cx="32" cy="32" r="3" fill="#23B9D6"/>
+        </svg>
+      </div>
+      <h3 class="welcome-title">Start your lifecycle analysis</h3>
+      <p class="welcome-text">Select a product family, product type and weight above to load the dashboard.</p>
+      <div class="welcome-steps">
+        <span class="welcome-step"><span class="welcome-step-num">1</span> Product Family</span>
+        <svg class="welcome-step-arrow" viewBox="0 0 24 24" width="16" height="16" fill="none"><path d="M5 12h14M13 6l6 6-6 6" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        <span class="welcome-step"><span class="welcome-step-num">2</span> Product Type</span>
+        <svg class="welcome-step-arrow" viewBox="0 0 24 24" width="16" height="16" fill="none"><path d="M5 12h14M13 6l6 6-6 6" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        <span class="welcome-step"><span class="welcome-step-num">3</span> Weight</span>
+      </div>
+    </section>
+
+    <main class="main-layout hidden-until-ready">
+      <section class="left-column">
+        <article class="dash-card product-card">
+          <div class="section-head"><div><p class="dash-kicker">Overview</p><h3 class="dash-heading-sm">Product Profile</h3></div></div>
+          <div class="product-layout">
+            <div class="product-visual-frame">
+              <img id="productImage" src="" alt="Selected product" />
+              <div id="productImagePlaceholder" class="image-placeholder">No product image mapped</div>
+            </div>
+            <div class="product-meta-stack">
+              <div class="meta-card">
+                <span class="meta-kicker">Selected product</span>
+                <h4 id="selectedProductType">—</h4>
+                <p id="selectedProductVariant">Choose product family, product type and weight.</p>
+              </div>
+              <div class="meta-pill-grid">
+                <div class="meta-pill"><span>EPD issue date</span><strong id="issueDateValue">—</strong></div>
+                <div class="meta-pill"><span>EPD valid to</span><strong id="validToValue">—</strong></div>
+              </div>
+            </div>
+          </div>
+        </article>
+
+        <article class="dash-card technical-card">
+          <div class="section-head"><div><p class="dash-kicker">Key Product Details</p><h3 class="dash-heading-sm">Technical data</h3></div></div>
+          <div id="technicalGrid" class="metrics-grid empty-grid"><div class="dash-empty">Technical details will load here.</div></div>
+        </article>
+
+        <article class="dash-card scenario-card">
+          <div class="section-head"><div><p class="dash-kicker">Available scenarios</p><h3 class="dash-heading-sm">Scenario Selection</h3></div></div>
+          <div id="scenarioList" class="scenario-list empty-grid"><div class="dash-empty">Scenario details will appear here.</div></div>
+        </article>
+      </section>
+
+      <section class="right-column">
+        <article class="dash-card results-card">
+          <div class="section-head"><div><p class="dash-kicker">Lifecycle results</p><h3 class="dash-heading-sm">Module Results</h3></div></div>
+          <div id="scenarioPicker" class="scenario-picker"></div>
+          <div id="resultsLifecycleGrid" class="results-lifecycle-grid empty-grid">
+            <div class="dash-empty">Choose product family, product type and weight to display lifecycle results.</div>
+          </div>
+        </article>
+      </section>
+    </main>
+
+    <!-- Dynamic graph — own full-width card (matches competitor side) -->
+    <section id="bottomSection" class="bottom-section hidden-until-ready">
+      <article class="dash-card chart-card">
+        <div class="chart-card-head">
+          <div class="chart-head-row">
+            <div><p class="dash-kicker">Dynamic graph</p><h3 class="dash-heading-sm">Module Bar Graph</h3></div>
+            <div class="chart-view-toggle">
+              <button class="chart-view-btn active" data-view="modules">Modules</button>
+              <button class="chart-view-btn" data-view="a1c4">A1-C4 &amp; Net Carbon</button>
+            </div>
+          </div>
+        </div>
+        <div id="moduleBarChart" class="module-bar-chart empty-grid">
+          <div class="dash-empty">Choose product family, product type and weight to display the graph.</div>
+        </div>
+      </article>
+    </section>
+  </div>
+
+</div>
+<!-- /.page-shell -->
+
+<!-- ════════════════════════════════════════════════════════════
+     FOOTER
+     ════════════════════════════════════════════════════════════ -->
+<footer class="lindner-footer">
+  <span class="lindner-footer-tag">Lindner · Nachhaltiges Bauen · v1.0 · 2026</span>
+  <span class="footer-status">
+    <span class="footer-status-dot"></span>
+    Metal Ceilings Tool Active
+  </span>
+</footer>
+
+<!-- ════════════════════════════════════════════════════════════
+     LINDNER PDF ENGINE (global) — loads BEFORE script.js
+     ════════════════════════════════════════════════════════════ -->
+<script src="../pdf-engine/pdf-assets.js"></script>
+<script src="../pdf-engine/pdf-insight.js"></script>
+<script src="../pdf-engine/pdf-engine.js"></script>
+
+<!-- Main app script -->
+<script src="script.js"></script>
+
+<!-- ARIA — Sustainability Intelligence -->
+<div id="aria-mount"></div>
+<script src="../aria/aria.js"></script>
+<script>
+  ARIA.init({
+    page: 'ceiling',
+    contextProvider: () => (typeof buildCeilingAriaContext === 'function' ? buildCeilingAriaContext() : { page: 'Metal Ceilings' })
+  });
+</script>
+
+</body>
+</html>

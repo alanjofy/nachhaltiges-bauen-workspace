@@ -1,0 +1,10 @@
+<svg viewBox="0 0 400 160" xmlns="http://www.w3.org/2000/svg" preserveAspectRatio="xMidYMid slice" aria-hidden="true">
+  <defs><!--GRADIENT--></defs>
+  <rect width="400" height="160" fill="url(#gC3)"/>
+  <circle cx="200" cy="80" r="50" fill="none" stroke="rgba(255,255,255,0.2)" stroke-width="8"/>
+  <circle cx="200" cy="80" r="34" fill="none" stroke="rgba(255,255,255,0.4)" stroke-width="8"/>
+  <circle cx="200" cy="80" r="18" fill="none" stroke="rgba(255,255,255,0.7)" stroke-width="8"/>
+  <text x="266" y="50" fill="rgba(255,255,255,0.7)" font-size="9" font-family="sans-serif" font-weight="700">1</text>
+  <text x="266" y="84" fill="rgba(255,255,255,0.7)" font-size="9" font-family="sans-serif" font-weight="700">2</text>
+  <text x="266" y="118" fill="rgba(255,255,255,0.7)" font-size="9" font-family="sans-serif" font-weight="700">3</text>
+</svg>

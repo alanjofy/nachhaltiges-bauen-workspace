@@ -1,0 +1,10 @@
+<svg viewBox="0 0 400 160" xmlns="http://www.w3.org/2000/svg" preserveAspectRatio="xMidYMid slice" aria-hidden="true">
+  <defs><!--GRADIENT--></defs>
+  <rect width="400" height="160" fill="url(#gD3_1)"/>
+  <path d="M200,38 Q240,48 240,90 Q240,122 200,122 Q160,122 160,90 Q160,48 200,38" fill="rgba(255,255,255,0.08)" stroke="rgba(255,255,255,0.5)" stroke-width="2"/>
+  <path d="M200,52 Q200,98 200,112" stroke="rgba(255,255,255,0.4)" stroke-width="1.5"/>
+  <path d="M200,72 Q220,62 230,78" fill="none" stroke="rgba(255,255,255,0.4)" stroke-width="1.5"/>
+  <path d="M200,85 Q180,75 170,90" fill="none" stroke="rgba(255,255,255,0.4)" stroke-width="1.5"/>
+  <path d="M200,62 Q215,54 220,64" fill="none" stroke="rgba(255,255,255,0.4)" stroke-width="1.5"/>
+  <text x="200" y="138" text-anchor="middle" fill="rgba(255,255,255,0.6)" font-size="9" font-family="sans-serif" font-weight="700">BIO / ECO</text>
+</svg>

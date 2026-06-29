@@ -1,0 +1,371 @@
+[
+  {
+    "code": "A1",
+    "group": "Bestandsaufnahme",
+    "icon": "◐",
+    "title": "Pre-Demolition Audit",
+    "details": [
+      "Systematische Vor-Ort-Erfassung aller Bauteile vor dem Rückbau gemäß EU-Leitlinien für Abfallaudits (EU Construction & Demolition Waste Management Protocol)",
+      "Identifikation und Inventarisierung sämtlicher wiederverwendbarer Bauteile, Materialien und Komponenten",
+      "Bewertung des Wiederverwendungspotenzials nach R-Strategien",
+      "Zustandsbewertung der Bauteile",
+      "Erfassung von Demontagefähigkeit, Verbindungsarten und Ausbauaufwand",
+      "Erstellung eines digitalen Bauteilkatalogs mit Fotodokumentation, Lageplan und Zustandsbewertung",
+      "Grundlage für Bauteilbörsen und Rückbaukonzept"
+    ],
+    "result": "Digitaler Bauteilkatalog mit Fotodokumentation\nBewertungsmatrix Wiederverwendungspotenzial\nCO₂-Einsparpotenzial-Analyse"
+  },
+  {
+    "code": "A2",
+    "group": "Bestandsaufnahme",
+    "icon": "◐",
+    "title": "Digitale Bestandsaufnahme (Scan-to-Plan)",
+    "details": [
+      "Durchführung eines 3D-Scans des gesamten Gebäudes",
+      "Erfassung sämtlicher Räume inkl. Wände, Böden, Decken, Fenster, Türen, Möbel und Öffnungen",
+      "Erfassung von Treppen, Geländern und baulichen Sonderelementen",
+      "Exportmöglichkeiten 3D-Modell (Autodesk, ArchiCAD)",
+      "Unterstützte Formate: IFC, DXF",
+      "Bereitstellung bemaßter 2D-Grundrisse inkl. Wand-, Boden- und Deckenflächen",
+      "Generierung von Aufmaßlisten (Excel/CSV) für Kalkulation und Ausschreibung",
+      "Genauigkeit max. 1 % Abweichung",
+      "Datenverarbeitung und Modellaufbereitung über cloudbasierte Plattform",
+      "Geeignet für schnelle Bestandsaufnahmen mit mittlerer Genauigkeit"
+    ],
+    "result": "2D-Grundriss (PDF, DXF)\n3D-Modell (IFC)\nAufmaßliste (Excel, CSV)\n\nLevel of Geometry (LOG): 200 – 300\nLevel of Information (LOI): 100 – 300"
+  },
+  {
+    "code": "A3",
+    "group": "Bestandsaufnahme",
+    "icon": "◐",
+    "title": "Hochpräzises 3D-Laserscanning (Punktwolke)",
+    "details": [
+      "Durchführung detaillierten 3D-Scans des gesamten Gebäudes/Geschosses mittels 3D-Laserscanning (z. B. Navvis MLX)",
+      "Erstellung digitaler Bestandspläne mit Grundrissen und Ansichten",
+      "Bereitstellung von Panoramabildern und Punktwolken",
+      "Genauigkeit: ± 5 Millimeter",
+      "Erfassung komplexer Geometrien",
+      "Bereitstellung der Punktwolke in offenen Formaten (.e57, .rcp, .pts, .las)",
+      "Grundlage für 3D-Modellierung",
+      "Geeignet für anspruchsvolle Projekte mit hohen Genauigkeitsanforderungen"
+    ],
+    "result": "Punktwolke (.e57 / .rcp)\nPanoramabilder\ndigitale Grundrisse"
+  },
+  {
+    "code": "A4",
+    "group": "Bestandsaufnahme",
+    "icon": "◐",
+    "title": "BIM-Modellierung Bestand",
+    "details": [
+      "Aufbereitung der Punktwolke (aus A3) oder Digitalisierung vorhandener Plandaten",
+      "Erstellung des BIM-Modells in Autodesk Revit mit geometrischen und alphanumerischen Informationen",
+      "Attribuierung jedes Bauteils mit relevanten Parametern (Materialgattung, Bauteilklassifikation, EPD-Verknüpfung)",
+      "Strukturierung nach IFC-Klassen für interoperablen Datenaustausch",
+      "IFC-konformer Export für Planungspartner und Fachplaner",
+      "Grundlage für Ökobilanz, Materialpässe und Ressourcenplanung"
+    ],
+    "result": "BIM-Modell (Revit)\nIFC-Modell (IFC)\nBauteilliste mit Attributen\n\nLevel of Geometry (LOG): 300\nLevel of Information (LOI): 200 – 300"
+  },
+  {
+    "code": "B1",
+    "group": "Dokumentation & Digitaler Produktpass",
+    "icon": "◑",
+    "title": "Ressourcenpass Innenraum",
+    "details": [
+      "Erfassung und Strukturierung aller verbauten Materialien* nach DGNB-Systematik",
+      "Kategorisierung nach Materialgruppen (Bodenbeläge, Wandbeläge, Deckenbekleidungen, Innentüren, Einbauten, Oberflächen)",
+      "Bewertung der Ressourceneffizienz, Trennbarkeit und Wiederverwendbarkeit",
+      "Analyse der Schad- und Risikostoffe gemäß DGNB-Kriterium ENV1.2",
+      "Vorbereitung der Unterlagen zur Integration in den DGNB Gebäuderessourcenpass in der aktuellen Version (vollständig oder reduziert, je nach Datenverfügbarkeit)",
+      "EU-Taxonomie-konformer Nachweis für ESG-Berichterstattung",
+      "*ohne TGA und Rohbau"
+    ],
+    "result": "Digitaler Ressourcenpass (PDF)\nStrukturierte Materialliste (Excel/CSV)\nDGNB-konforme Dokumentation\nBewertungsmatrix Trennbarkeit & Wiederverwendbarkeit\nEU-Taxonomie-Nachweis\nOptional: Verknüpfung mit BIM-Modell, falls 3D Modell vorhanden"
+  },
+  {
+    "code": "B2",
+    "group": "Dokumentation & Digitaler Produktpass",
+    "icon": "◑",
+    "title": "Madaster-Objektanlage",
+    "details": [
+      "Anlage und Abbildung des Objektes in der Madaster-Plattform",
+      "Übertragung der Materialdaten aus BIM (IFC) oder Excel",
+      "Erstellung des Gebäuderessourcenpasses inkl. Restwertberechnung und Materialbank",
+      "Verknüpfung mit EPDs und Herstellern für Pass-Updates"
+    ],
+    "result": "Madaster-Gebäuderessourcenpass\n3D Modell in Madaster abgebildet\ndigitale Materialbank"
+  },
+  {
+    "code": "B3",
+    "group": "Dokumentation & Digitaler Produktpass",
+    "icon": "◑",
+    "title": "Projektspezifischer Materialpass",
+    "details": [
+      "Entwicklung einer projektspezifischen Datenstruktur für Materialdokumentation ohne Plattformbindung",
+      "Erfassung aller relevanten Materialien in Excel-/PDF-Format",
+      "Dokumentation von Merkmalen gemäß aktuellem regulatorischem Stand (ESPR, CPR)",
+      "Flexible Anpassung an projektindividuelle Anforderungen"
+    ],
+    "result": "Projektspezifischer Materialpass (Excel/PDF)"
+  },
+  {
+    "code": "C1.1",
+    "group": "Ökobilanzierung & CO₂",
+    "icon": "◒",
+    "title": "Bauteilbezogener PCF (Product Carbon Footprint)",
+    "details": [
+      "Erstellung eines Product Carbon Footprint für ausgewählte einzelne Bauteile (z. B. Trennwände, Bodenbeläge, Deckenkonstruktionen, Fassadenelemente)",
+      "Berechnung der treibhausgasbedingten Emissionen je Bauteil über den Lebenszyklus (A1–A3, optional C1–C4) auf Basis von DIN EN 15804+A2",
+      "Verwendung produktspezifischer EPDs als Datengrundlage (statt generischer Werte)",
+      "Ermittlung der Funktionseinheit je Bauteil (z. B. kg CO₂-Äquivalent pro m² Wand oder pro lfm Träger)",
+      "Direkter Vergleich verschiedener Bauteilvarianten auf gleicher Funktionseinheit (z. B. Gipskartonwand vs. modulare Glaswand)",
+      "Ermittlung des konkreten CO₂-Einsparpotenzials je Bauteilalternative",
+      "Bereitstellung der PCF-Werte für Lieferantenanfragen, Vergabeanforderungen und Ausschreibungstexte",
+      "Integration der PCF-Werte in ESG-Reporting und Scope-3-Bilanzierung"
+    ],
+    "result": "PCF-Bericht je Bauteil mit produktspezifischen CO₂-Werten\nCO₂-Vergleichsübersicht zwischen Bauteilvarianten\nDatenbasis für gezielte Bauteiloptimierung und Vergabe\nPCF-Werte zur Verwendung in Ausschreibung und Lieferantenanfragen"
+  },
+  {
+    "code": "C1.2",
+    "group": "Ökobilanzierung & CO₂",
+    "icon": "◒",
+    "title": "Variantenvergleich Re-Use vs. Neubau",
+    "details": [
+      "Vollständiger ökologischer und wirtschaftlicher Vergleich der Varianten",
+      "Quantifizierung von CO₂- und Kosteneinsparpotenzialen",
+      "Darstellung der Ergebnisse in Entscheidungsmatrix für die Bauherrenschaft"
+    ],
+    "result": "Vergleichsstudie Re-Use vs. Neubau\nCO₂- und Kosteneinsparpotenziale\nEntscheidungsmatrix"
+  },
+  {
+    "code": "C1.3",
+    "group": "Ökobilanzierung & CO₂",
+    "icon": "◒",
+    "title": "Variantenvergleich Lindner vs. Fremdprodukte",
+    "details": [
+      "Gegenüberstellung von Lindner-Produkten und Fremdprodukten auf gleicher Funktionseinheit",
+      "Vergleich der CO₂-Bilanz (A1–A3) auf Basis produktspezifischer EPDs",
+      "Bewertung ökologischer und wirtschaftlicher Vorteile der jeweiligen Produktlösung",
+      "Darstellung der Ergebnisse in einer übersichtlichen Vergleichsmatrix"
+    ],
+    "result": "CO₂-Vergleichsübersicht Lindner vs. Fremdprodukte\nEntscheidungsgrundlage für die Produktauswahl"
+  },
+  {
+    "code": "C1.4",
+    "group": "Ökobilanzierung & CO₂",
+    "icon": "◒",
+    "title": "Bauteilbezogene EPD erstellen (sofern noch keine existiert)",
+    "details": [
+      "Erstellung einer Environmental Product Declaration (EPD) nach DIN EN 15804+A2 für ausgewählte Bauteile (produktspezifische oder projektspezifische EPD)",
+      "Erhebung und Aufbereitung produktspezifischer Sachbilanzdaten (LCI)",
+      "Durchführung der Ökobilanzberechnung über die definierten Lebenszyklusphasen",
+      "Vorbereitung der Dokumentation für die externe Verifizierung und Veröffentlichung"
+    ],
+    "result": "Verifizierungsfähige EPD je Bauteil\nDokumentierte Datengrundlage (LCI/LCIA)\nBasis für PCF-Berechnungen und Vergabeanforderungen"
+  },
+  {
+    "code": "C1.5",
+    "group": "Ökobilanzierung & CO₂",
+    "icon": "◒",
+    "title": "Scope-3-Emissionen (vor- und nachgelagerte Wertschöpfungskette)",
+    "details": [
+      "Identifikation und Kategorisierung relevanter Scope-3-Emissionsquellen nach dem GHG Protocol",
+      "Berechnung produktbezogener Emissionen auf Basis spezifischer EPDs, generischer und primärer Daten",
+      "Integration in den Corporate Carbon Footprint (CCF) und das ESG-Reporting",
+      "Identifikation von Hotspots entlang der Wertschöpfungskette (Position C3)"
+    ],
+    "result": "Quantifizierte Wertschöpfungskettenemissionen auf Produkt- und Unternehmensebene\nHotspot-Analyse der größten Treiber\nDatenbasis für CSRD-konforme Berichterstattung"
+  },
+  {
+    "code": "C2.1",
+    "group": "Ökobilanzierung & CO₂",
+    "icon": "◒",
+    "title": "CO₂-Quick-Check (Phase 0 – Vorplanung)",
+    "details": [
+      "Phase 0 – CO₂-Quick-Check (Vorplanung / Grundlagenermittlung): Szenarien entwickeln",
+      "Vereinfachte Bewertung des CO₂-Fußabdrucks auf Gebäudeebene für verschiedene Lindner-Produkte (Wiederverwendung und Neuware) unter Einbeziehung von Wiederverwendungsszenarien",
+      "Anwendung einer vereinfachten Ökobilanz-Methodik und Ermittlung der Gesamtemissionen auf Gebäudeebene gemäß DIN EN 15978 (reduzierter Umfang)"
+    ],
+    "result": "Übersicht der Varianten mit verschiedenen Re-Szenarien\nEmpfehlungen zur Variantenauswahl\nEntscheidungsmatrix für die frühe Planungsphase"
+  },
+  {
+    "code": "C2.2",
+    "group": "Ökobilanzierung & CO₂",
+    "icon": "◒",
+    "title": "Begleitende CO₂-Optimierung (Phase 1 – Planungsbegleitung)",
+    "details": [
+      "Phase 1 – Begleitende CO₂-Optimierung (Planungsbegleitung, INTERN, zur Entscheidung & Optimierung): Szenarien vergleichen",
+      "Opt. 1: Bereitstellung von Lindner-spezifischen BIM-Familien für neue und wiederverwendete Produkte für Architekten und Planer zum Echtzeit-Vergleich alternativer Planungsszenarien und Materialoptionen",
+      "Opt. 2: CO₂-Bewertung planungsbegleitend im Format von entworfenen und geplanten Szenarien",
+      "Vergleich alternativer Planungsszenarien und Materialvarianten",
+      "Identifikation und Bewertung von Optimierungsmaßnahmen je Planungsstand",
+      "Aktualisierung der CO₂-Bilanz bei Planungsänderungen (iterativer Prozess)",
+      "Abstimmung zur Entscheidungsfindung zwischen Planungsvarianten",
+      "Dokumentation der Einsparpotenziale über den Planungsverlauf",
+      "Ermittlung der größten CO₂-Hebel (\"Hotspots\") nach Bauteilkategorien (KG 300/400 nach DIN 276)",
+      "Visualisierung der Ergebnisse in vereinfachten Diagrammen und Heatmaps",
+      "Identifikation von Bauteilen mit hohem Optimierungspotenzial für die weitere Planung",
+      "Vorbereitung für eine spätere vollständige LCA (Position C2.3)"
+    ],
+    "result": "CO₂-Szenarienvergleich über den Planungsverlauf\nOptimierungsempfehlungen je Planungsstand\nDokumentation der erreichten CO₂-Einsparungen"
+  },
+  {
+    "code": "C2.3",
+    "group": "Ökobilanzierung & CO₂",
+    "icon": "◒",
+    "title": "Vollständige Gebäude-Ökobilanzierung (Phase 2 – prüffähig)",
+    "details": [
+      "Phase 2 – Vollständige Gebäude-Ökobilanzierung (EXTERN, prüffähig): Szenarien entscheiden & berechnen",
+      "Vollständige Gebäude-Ökobilanzierung nach DIN EN 15978",
+      "Prüffähige Berechnung über alle relevanten Lebenszyklusphasen (A–C, optional D)",
+      "Verwendung produktspezifischer EPDs und validierter Datensätze",
+      "Erstellung einer prüffähigen Dokumentation für Zertifizierungen (z. B. DGNB, QNG)",
+      "Berechnung der finalen CO₂-Bilanz auf Basis der entschiedenen Variante",
+      "Aufbereitung der Ergebnisse für externe Prüfung und Nachweisführung"
+    ],
+    "result": "Prüffähiger Ökobilanz-Bericht nach DIN EN 15978\nVollständige CO₂-Bilanz über den Lebenszyklus\nDokumentation für Zertifizierung (DGNB/QNG)\nNachweisfähige Ergebnisse für externe Prüfstellen"
+  },
+  {
+    "code": "C3",
+    "group": "Ökobilanzierung & CO₂",
+    "icon": "◒",
+    "title": "Scope 1–3 Emissionen",
+    "details": [
+      "Bilanzierung der direkten und indirekten Treibhausgasemissionen über alle drei Scopes nach GHG Protocol",
+      "Scope 1 – Direkte Emissionen aus eigenen Quellen (z. B. Produktion, Heizung, Fuhrpark)",
+      "Scope 2 – Indirekte Emissionen aus eingekaufter Energie (Strom, Wärme, Dampf)",
+      "Scope 3 – Alle weiteren indirekten Emissionen entlang der Wertschöpfungskette, vorgelagert (z. B. eingekaufte Rohstoffe, Transport) und nachgelagert (z. B. Produktnutzung und -entsorgung)",
+      "Berechnung auf Basis spezifischer EPDs, generischer und primärer Daten",
+      "Integration in den Corporate Carbon Footprint (CCF) und das ESG-Reporting",
+      "Identifikation von Hotspots entlang der gesamten Wertschöpfungskette"
+    ],
+    "result": "Quantifizierte Emissionen über Scope 1, 2 und 3 auf Produkt- und Unternehmensebene\nVollständiger Corporate Carbon Footprint (CCF)\nHotspot-Analyse der größten Emissionstreiber\nDatenbasis für CSRD-konforme Berichterstattung"
+  },
+  {
+    "code": "C4",
+    "group": "Ökobilanzierung & CO₂",
+    "icon": "◒",
+    "title": "CSRD-/EU-Taxonomie-Reporting",
+    "details": [
+      "Aufbereitung der projektbezogenen Nachhaltigkeitsdaten nach CSRD-Anforderungen",
+      "Prüfung der EU-Taxonomie-Konformität (Klima- und Umweltziele)",
+      "Erstellung reportfähiger Kennzahlen und Textbausteine für ESG-Berichte"
+    ],
+    "result": "CSRD-konformer Berichtsbaustein\nTaxonomie-Prüfung\nESG-Kennzahlen"
+  },
+  {
+    "code": "D1",
+    "group": "Zirkuläre Planung",
+    "icon": "◓",
+    "title": "Re-Use-Konzept",
+    "details": [
+      "Erstellung eines Konzeptes der Kreislauffähigkeit gemäß der Re-Strategien",
+      "Analyse der verfügbaren Bestandsbauteile aus dem Pre-Demolition Audit (A1)",
+      "Optional mit Statik, Brandschutz und Bauphysik*"
+    ],
+    "result": "Re-Use-Konzept\nBauteilliste mit Einbauplanung\nVisualisierung der wiederverwendeten Bauteile"
+  },
+  {
+    "code": "D2",
+    "group": "Zirkuläre Planung",
+    "icon": "◓",
+    "title": "Design for Disassembly (DfD)",
+    "details": [
+      "Beratung zur Materialauswahl und Konstruktion mit rückbaufähigen, sortenrein trennbaren Verbindungen",
+      "Planung sortenrein trennbarer Schichtenaufbauten (z. B. Trockenbau, Böden, Decken)",
+      "Erstellung von Demontagedetails und Demontageanleitungen für künftige Rückbauphasen",
+      "Sicherung der Materialwerterhaltung über den gesamten Lebenszyklus"
+    ],
+    "result": "DfD-Konzept\nDetailzeichnungen trennbarer Anschlüsse Demontageanleitung\nRücknahmevereinbarung/-en"
+  },
+  {
+    "code": "D3.1",
+    "group": "Zirkuläre Planung",
+    "icon": "◓",
+    "title": "Materialberatung (Materialökologie)",
+    "details": [
+      "Recherche und Auswahl schadstoffarmer und zirkulärer Produkte für den Innenraum",
+      "Abgleich mit Anforderungen an Raumluftqualität (AgBB, Blauer Engel, EMICODE EC1+)",
+      "Erstellung einer Materialliste mit Nachweisen und Alternativvorschlägen",
+      "Vollständige Beratung der DGNB-Zertifizierung",
+      "*Innenraum"
+    ],
+    "result": "Spezifikation gesunder Materialien\nSchadstoffarme, ökologische Alternativen\nNachweismappe"
+  },
+  {
+    "code": "D3.2",
+    "group": "Zirkuläre Planung",
+    "icon": "◓",
+    "title": "C2C (Cradle-to-Cradle-Zertifizierung)",
+    "details": [
+      "Bei Bedarf Anstreben einer Cradle-to-Cradle-Zertifizierung für Produkte, an denen Lindner-Komponenten beteiligt sind oder für gänzlich fremde Produkte",
+      "Bewertung und Optimierung der Materialien, Produkte und Prozesse im Hinblick auf die Zertifizierungsanforderungen",
+      "Begleitung des Zertifizierungsprozesses in Zusammenarbeit mit akkreditierten Prüfstellen"
+    ],
+    "result": "C2C-Zertifizierungsstrategie je Produkt\nBewertung der Zertifizierungsfähigkeit\nOptimierungsempfehlungen zur Erreichung der Zertifizierungsstufe\nBegleitung bis zur erteilten C2C-Zertifizierung"
+  },
+  {
+    "code": "D4",
+    "group": "Zirkuläre Planung",
+    "icon": "◓",
+    "title": "Bauteilbörse - Einkauf",
+    "details": [
+      "Beschaffung sekundärer Bauprodukte über etablierte Bauteilbörsen",
+      "Qualitätsprüfung, Logistikkoordination und Annahme der Bauteile",
+      "Abstimmung von Garantie, Zustand und Einbauvoraussetzungen",
+      "Integration in Ausschreibung und Vergabe"
+    ],
+    "result": "Beschaffte sekundäre Bauteile\nQualitäts- und Zustandsnachweise\nLogistikplanung"
+  },
+  {
+    "code": "D5",
+    "group": "Zirkuläre Planung",
+    "icon": "◓",
+    "title": "Bauteilbörse - Verkauf",
+    "details": [
+      "Identifikation wiederverwendbarer Bauteile",
+      "Aufbereitung der Bauteildaten für den Re-Use-Marktplatz",
+      "Einpflege und aktive Vermarktung der Bauteile auf der Plattform",
+      "Abwicklungsunterstützung bei Verkauf und Übergabe"
+    ],
+    "result": "Aktive Vermarktung auf Sekundärbauteilbörse\nVerkaufsabwicklung der Bestandsbauteile\nErlösdokumentation"
+  },
+  {
+    "code": "D6",
+    "group": "Zirkuläre Planung",
+    "icon": "◓",
+    "title": "Product as a Service",
+    "details": [
+      "Beratung zu Miet-/Leasingmodellen für Innenausbau-Produkte (Systemböden, Systemtrennwände, Systemdecken, Leuchten, Akustikelemente)",
+      "Analyse der wirtschaftlichen und ökologischen Vor-/Nachteile von Product-as-a-Service gegenüber dem Kaufmodell",
+      "Abstimmung mit Herstellern, die Rücknahme- und Recyclinggarantien übernehmen",
+      "Integration der Leasingstrukturen in die Ausschreibung und Vergabe",
+      "Sicherstellung der Rückgabekriterien (Zustand, Reinigung, Demontage) für den Hersteller"
+    ],
+    "result": "PaaS-Konzept\nHersteller-Shortlist\nVergabeunterlagen mit Leasingstruktur\nVertragsrahmen für Rücknahme"
+  }
+  ,
+  {
+    "code": "E1",
+    "group": "Zertifizierung",
+    "icon": "◔",
+    "title": "DGNB Bestandsgebäude",
+    "details": [
+      "Vollständige Begleitung der DGNB-Zertifizierung",
+      "Vorbereitung aller Nachweise (Ökobilanz, Ressourcenpass, Schadstoffe)",
+      "Koordination mit der Zertifizierungsstelle und Auditbegleitung"
+    ],
+    "result": "DGNB-Zertifizierung für Bestandsgebäude"
+  },
+  {
+    "code": "E2",
+    "group": "Zertifizierung",
+    "icon": "◔",
+    "title": "LEED ID+C",
+    "details": [
+      "Beratung und Begleitung der LEED-Zertifizierung „Interior Design + Construction“",
+      "Ermittlung der Kreditpunkte in den Kategorien Materials & Resources, Indoor Environmental Quality etc."
+    ],
+    "result": "LEED ID+C Zertifizierung (Certified bis Platinum)"
+  }
+]

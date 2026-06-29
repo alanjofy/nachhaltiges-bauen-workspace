@@ -1,0 +1,12 @@
+<svg viewBox="0 0 400 160" xmlns="http://www.w3.org/2000/svg" preserveAspectRatio="xMidYMid slice" aria-hidden="true">
+  <defs><!--GRADIENT--></defs>
+  <rect width="400" height="160" fill="url(#gA2)"/>
+  <path d="M150,120 L150,55 L200,30 L250,55 L250,120" fill="none" stroke="rgba(255,255,255,0.3)" stroke-width="2"/>
+  <path d="M165,120 L165,70 L200,52 L235,70 L235,120" fill="none" stroke="rgba(255,255,255,0.2)" stroke-width="1.5"/>
+  <line x1="140" y1="85" x2="260" y2="85" stroke="rgba(255,255,255,0.15)" stroke-width="1"/>
+  <line x1="140" y1="105" x2="260" y2="105" stroke="rgba(255,255,255,0.15)" stroke-width="1"/>
+  <circle cx="200" cy="80" r="3" fill="white"/>
+  <circle cx="175" cy="95" r="2.5" fill="white"/>
+  <circle cx="225" cy="65" r="2.5" fill="white"/>
+  <path d="M265,55 L280,55 M272,48 L280,55 L272,62" fill="none" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+</svg>

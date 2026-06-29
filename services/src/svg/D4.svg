@@ -1,0 +1,9 @@
+<svg viewBox="0 0 400 160" xmlns="http://www.w3.org/2000/svg" preserveAspectRatio="xMidYMid slice" aria-hidden="true">
+  <defs><!--GRADIENT--></defs>
+  <rect width="400" height="160" fill="url(#gD4)"/>
+  <rect x="148" y="55" width="40" height="40" rx="6" fill="rgba(255,255,255,0.08)" stroke="rgba(255,255,255,0.45)" stroke-width="2"/>
+  <rect x="212" y="55" width="40" height="40" rx="6" fill="rgba(255,255,255,0.08)" stroke="rgba(255,255,255,0.45)" stroke-width="2"/>
+  <path d="M188,75 L212,75 M200,68 L212,75 L200,82" fill="none" stroke="white" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/>
+  <path d="M188,75 L164,75 M176,68 L164,75 L176,82" fill="none" stroke="white" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/>
+  <text x="200" y="118" text-anchor="middle" fill="rgba(255,255,255,0.6)" font-size="10" font-family="sans-serif" font-weight="700">EINKAUF</text>
+</svg>

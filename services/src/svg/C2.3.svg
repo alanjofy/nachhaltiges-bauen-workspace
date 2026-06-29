@@ -1,0 +1,12 @@
+<svg viewBox="0 0 400 160" xmlns="http://www.w3.org/2000/svg" preserveAspectRatio="xMidYMid slice" aria-hidden="true">
+  <defs><!--GRADIENT--></defs>
+  <rect width="400" height="160" fill="url(#gC2_3)"/>
+  <rect x="138" y="100" width="26" height="35" rx="4" fill="rgba(255,255,255,0.35)"/>
+  <rect x="174" y="80" width="26" height="55" rx="4" fill="rgba(255,255,255,0.45)"/>
+  <rect x="210" y="55" width="26" height="80" rx="4" fill="rgba(255,255,255,0.6)"/>
+  <rect x="246" y="90" width="26" height="45" rx="4" fill="rgba(255,255,255,0.4)"/>
+  <text x="151" y="147" fill="rgba(255,255,255,0.7)" font-size="9" text-anchor="middle">A</text>
+  <text x="187" y="147" fill="rgba(255,255,255,0.7)" font-size="9" text-anchor="middle">B</text>
+  <text x="223" y="147" fill="rgba(255,255,255,0.7)" font-size="9" text-anchor="middle">C</text>
+  <text x="259" y="147" fill="rgba(255,255,255,0.7)" font-size="9" text-anchor="middle">D</text>
+</svg>

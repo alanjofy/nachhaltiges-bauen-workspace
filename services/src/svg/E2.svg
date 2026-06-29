@@ -1,0 +1,8 @@
+<svg viewBox="0 0 400 160" xmlns="http://www.w3.org/2000/svg" preserveAspectRatio="xMidYMid slice" aria-hidden="true">
+  <defs><!--GRADIENT--></defs>
+  <rect width="400" height="160" fill="url(#gE2)"/>
+  <circle cx="200" cy="72" r="34" fill="rgba(255,255,255,0.08)" stroke="white" stroke-width="2.5"/>
+  <path d="M200,52 Q218,60 216,82 Q214,92 200,94 Q186,92 184,82 Q182,60 200,52" fill="rgba(255,255,255,0.15)" stroke="white" stroke-width="1.8"/>
+  <path d="M200,60 Q200,86 200,90" stroke="rgba(255,255,255,0.6)" stroke-width="1.5"/>
+  <text x="200" y="138" text-anchor="middle" fill="rgba(255,255,255,0.7)" font-size="10" font-family="sans-serif" font-weight="700">LEED</text>
+</svg>

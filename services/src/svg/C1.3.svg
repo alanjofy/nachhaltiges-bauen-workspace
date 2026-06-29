@@ -1,0 +1,11 @@
+<svg viewBox="0 0 400 160" xmlns="http://www.w3.org/2000/svg" preserveAspectRatio="xMidYMid slice" aria-hidden="true">
+  <defs><!--GRADIENT--></defs>
+  <rect width="400" height="160" fill="url(#gC1_3)"/>
+  <line x1="200" y1="40" x2="200" y2="130" stroke="rgba(255,255,255,0.2)" stroke-width="1" stroke-dasharray="4 4"/>
+  <rect x="120" y="58" width="68" height="16" rx="4" fill="rgba(255,255,255,0.55)"/>
+  <rect x="120" y="86" width="44" height="16" rx="4" fill="rgba(255,255,255,0.35)"/>
+  <rect x="212" y="58" width="40" height="16" rx="4" fill="rgba(255,255,255,0.35)"/>
+  <rect x="212" y="86" width="62" height="16" rx="4" fill="rgba(255,255,255,0.55)"/>
+  <text x="154" y="48" text-anchor="middle" fill="white" font-size="9" font-family="sans-serif" font-weight="700">LINDNER</text>
+  <text x="244" y="48" text-anchor="middle" fill="rgba(255,255,255,0.8)" font-size="9" font-family="sans-serif" font-weight="700">FREMD</text>
+</svg>

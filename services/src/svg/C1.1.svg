@@ -1,0 +1,11 @@
+<svg viewBox="0 0 400 160" xmlns="http://www.w3.org/2000/svg" preserveAspectRatio="xMidYMid slice" aria-hidden="true">
+  <defs><!--GRADIENT--></defs>
+  <rect width="400" height="160" fill="url(#gC1_1)"/>
+  <ellipse cx="170" cy="95" rx="18" ry="34" fill="none" stroke="rgba(255,255,255,0.25)" stroke-width="2" transform="rotate(-20 170 95)"/>
+  <ellipse cx="230" cy="95" rx="18" ry="34" fill="none" stroke="rgba(255,255,255,0.25)" stroke-width="2" transform="rotate(20 230 95)"/>
+  <rect x="185" y="55" width="30" height="55" rx="3" fill="rgba(255,255,255,0.15)"/>
+  <line x1="190" y1="70" x2="210" y2="70" stroke="white" stroke-width="2"/>
+  <line x1="190" y1="82" x2="205" y2="82" stroke="rgba(255,255,255,0.7)" stroke-width="2"/>
+  <line x1="190" y1="94" x2="200" y2="94" stroke="rgba(255,255,255,0.5)" stroke-width="2"/>
+  <text x="200" y="48" text-anchor="middle" fill="white" font-size="9" font-family="sans-serif" font-weight="700">kg CO₂e</text>
+</svg>

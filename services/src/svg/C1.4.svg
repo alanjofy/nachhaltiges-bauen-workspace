@@ -1,0 +1,12 @@
+<svg viewBox="0 0 400 160" xmlns="http://www.w3.org/2000/svg" preserveAspectRatio="xMidYMid slice" aria-hidden="true">
+  <defs><!--GRADIENT--></defs>
+  <rect width="400" height="160" fill="url(#gC1_4)"/>
+  <rect x="158" y="30" width="74" height="98" rx="5" fill="rgba(255,255,255,0.07)" stroke="rgba(255,255,255,0.4)" stroke-width="2"/>
+  <line x1="168" y1="48" x2="222" y2="48" stroke="rgba(255,255,255,0.45)" stroke-width="2"/>
+  <line x1="168" y1="60" x2="212" y2="60" stroke="rgba(255,255,255,0.25)" stroke-width="1.5"/>
+  <line x1="168" y1="70" x2="216" y2="70" stroke="rgba(255,255,255,0.25)" stroke-width="1.5"/>
+  <line x1="168" y1="80" x2="205" y2="80" stroke="rgba(255,255,255,0.25)" stroke-width="1.5"/>
+  <circle cx="232" cy="108" r="18" fill="rgba(255,255,255,0.12)" stroke="white" stroke-width="2"/>
+  <path d="M225,108 L230,113 L240,102" fill="none" stroke="white" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/>
+  <text x="195" y="100" text-anchor="middle" fill="rgba(255,255,255,0.7)" font-size="9" font-family="sans-serif" font-weight="700">EPD</text>
+</svg>

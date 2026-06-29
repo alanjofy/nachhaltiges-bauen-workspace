@@ -1,0 +1,195 @@
+/* ====================================================================
+   LINDNER · NACHHALTIGES BAUEN — Shared Design System
+   Used by: welcome.html, tool.html, and all future pages
+   ==================================================================== */
+
+/* ====== DESIGN TOKENS ====== */
+:root {
+  /* Colors */
+  --bg-overlay: rgba(0, 0, 0, 0.45);
+  --surface-glass: rgba(255, 255, 255, 0.08);
+  --surface-glass-hover: rgba(255, 255, 255, 0.12);
+  --border-soft: rgba(255, 255, 255, 0.18);
+  --border-strong: rgba(255, 255, 255, 0.35);
+
+  --text-primary: #ffffff;
+  --text-secondary: rgba(255, 255, 255, 0.95);
+  --text-muted: rgba(255, 255, 255, 0.7);
+  --text-dim: rgba(255, 255, 255, 0.55);
+
+  --accent-red: #c0001a;
+  --accent-red-bright: #e8001f;
+  --accent-red-glow: rgba(192, 0, 26, 0.4);
+  --accent-red-soft: rgba(192, 0, 26, 0.2);
+
+  /* Typography */
+  --font-display: "Bebas Neue", sans-serif;
+  --font-body: "Montserrat", sans-serif;
+
+  /* Spacing & shape */
+  --radius-card: 22px;
+  --radius-button: 100px;
+
+  /* Shadows */
+  --shadow-card: 0 32px 80px rgba(0, 0, 0, 0.45),
+                 0 0 0 1px rgba(255, 255, 255, 0.06) inset,
+                 0 2px 0 rgba(255, 255, 255, 0.15) inset;
+  --shadow-card-hover: 0 40px 100px rgba(0, 0, 0, 0.55),
+                       0 0 0 1px rgba(255, 255, 255, 0.1) inset,
+                       0 2px 0 rgba(255, 255, 255, 0.2) inset;
+
+  /* Transitions */
+  --ease-smooth: cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+/* ====== RESET ====== */
+*, *::before, *::after {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+html, body {
+  width: 100%;
+  min-height: 100vh;
+  font-family: var(--font-body);
+  color: var(--text-primary);
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+a { color: inherit; text-decoration: none; }
+
+/* ====== SHARED BACKGROUND LAYER ====== */
+.lindner-bg {
+  position: fixed;
+  inset: 0;
+  background-image: var(--bg-image, url("background.png"));
+  background-size: cover;
+  background-position: center;
+  z-index: 0;
+}
+.lindner-bg::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: radial-gradient(ellipse at 60% 50%, rgba(0,0,0,0.15) 0%, rgba(0,0,0,0.45) 100%);
+}
+
+/* ====== GRAIN OVERLAY ====== */
+.lindner-grain {
+  position: fixed;
+  inset: 0;
+  z-index: 5;
+  pointer-events: none;
+  opacity: 0.04;
+  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+  background-size: 200px 200px;
+}
+
+/* ====== TOP HEADER BAR (slim glass) ====== */
+.lindner-header {
+  position: relative;
+  z-index: 20;
+  width: 100%;
+  height: 72px;
+  padding: 0 36px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  background: transparent;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.12);
+}
+.lindner-header-logo img {
+  height: 48px;
+  width: auto;
+  display: block;
+}
+.lindner-header-tag {
+  font-family: var(--font-display);
+  font-size: 15px;
+  letter-spacing: 5px;
+  color: var(--text-secondary);
+  text-transform: uppercase;
+}
+
+/* ====== CORNER LOGO (bottom-right) ====== */
+.lindner-corner-logo {
+  position: fixed;
+  bottom: 32px;
+  right: 36px;
+  z-index: 20;
+}
+.lindner-corner-logo img {
+  height: 44px;
+  opacity: 0.85;
+}
+
+/* ====== GLASS CARD (base style) ====== */
+.lindner-card {
+  background: var(--surface-glass);
+  backdrop-filter: blur(22px) saturate(1.4);
+  -webkit-backdrop-filter: blur(22px) saturate(1.4);
+  border: 1px solid var(--border-soft);
+  border-radius: var(--radius-card);
+  box-shadow: var(--shadow-card);
+}
+
+/* ====== BUTTONS (base style) ====== */
+.lindner-btn {
+  display: inline-block;
+  padding: 16px 44px;
+  background: linear-gradient(135deg,
+    rgba(255, 255, 255, 0.18),
+    rgba(255, 255, 255, 0.08));
+  border: 1.5px solid var(--border-strong);
+  border-radius: var(--radius-button);
+  color: var(--text-primary);
+  font-family: var(--font-body);
+  font-size: 13px;
+  font-weight: 700;
+  letter-spacing: 3px;
+  text-transform: uppercase;
+  cursor: pointer;
+  transition: background 0.3s ease, transform 0.2s ease,
+              box-shadow 0.3s ease, border-color 0.3s ease;
+  box-shadow: 0 6px 20px rgba(0, 0, 0, 0.25),
+              0 0 0 1px rgba(255, 255, 255, 0.08) inset;
+}
+.lindner-btn:hover {
+  background: linear-gradient(135deg,
+    rgba(255, 255, 255, 0.28),
+    rgba(255, 255, 255, 0.15));
+  border-color: rgba(255, 255, 255, 0.75);
+  transform: translateY(-2px);
+  box-shadow: 0 14px 36px rgba(0, 0, 0, 0.35),
+              0 0 0 1px rgba(255, 255, 255, 0.15) inset;
+}
+
+/* ====== UTILITY ANIMATIONS ====== */
+@keyframes fadeUp {
+  from { opacity: 0; transform: translateY(16px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+@keyframes fadeIn {
+  from { opacity: 0; }
+  to   { opacity: 1; }
+}
+
+/* ====== ACCESSIBILITY ====== */
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after {
+    animation-duration: 0.01s !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01s !important;
+  }
+}
+
+/* ====== MOBILE TUNING ====== */
+@media (max-width: 480px) {
+  .lindner-header { padding: 0 20px; height: 64px; }
+  .lindner-header-logo img { height: 30px; }
+  .lindner-header-tag { font-size: 12px; letter-spacing: 3px; }
+  .lindner-corner-logo { bottom: 20px; right: 20px; }
+  .lindner-corner-logo img { height: 34px; }
+}
