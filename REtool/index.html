@@ -11,58 +11,193 @@
 </head>
 
 <body>
+  <!-- ===== SPLASH SCREEN ===== -->
+  <div id="splashScreen">
+    <div class="splash-stage" id="splashStage">
+      <svg class="splash-logo" id="splashLogo" viewBox="0 0 500 560">
+        <defs>
+          <path id="topArc"   d="M 90 250 A 160 160 0 0 1 410 250" fill="none"/>
+          <path id="rightArc" d="M 410 250 A 160 160 0 0 1 250 410" fill="none"/>
+          <path id="leftArc"  d="M 250 410 A 160 160 0 0 1 90 250" fill="none"/>
+          <radialGradient id="gRing" cx="250" cy="250" r="175" gradientUnits="userSpaceOnUse">
+  <stop offset="0%" stop-color="#46555f"/><stop offset="74%" stop-color="#46555f"/>
+  <stop offset="80%" stop-color="#8a9ba6"/><stop offset="89%" stop-color="#6f818d"/>
+  <stop offset="96%" stop-color="#48565f"/><stop offset="100%" stop-color="#37434b"/>
+</radialGradient>
+          <radialGradient id="gRingLight" cx="200" cy="190" r="220" gradientUnits="userSpaceOnUse">
+            <stop offset="0%" stop-color="rgba(255,255,255,0.30)"/>
+            <stop offset="45%" stop-color="rgba(255,255,255,0.06)"/>
+            <stop offset="100%" stop-color="rgba(255,255,255,0)"/>
+          </radialGradient>
+          <linearGradient id="gRoof" x1="0" y1="0" x2="1" y2="1">
+            <stop offset="0%" stop-color="#aebfc9"/><stop offset="100%" stop-color="#8395a1"/>
+          </linearGradient>
+          <linearGradient id="gFront" x1="0" y1="0" x2="0" y2="1">
+            <stop offset="0%" stop-color="#5d7180"/><stop offset="100%" stop-color="#475863"/>
+          </linearGradient>
+          <linearGradient id="gSide" x1="0" y1="0" x2="1" y2="0">
+            <stop offset="0%" stop-color="#33414a"/><stop offset="100%" stop-color="#222c33"/>
+          </linearGradient>
+          <radialGradient id="gShadow" cx="50%" cy="50%" r="50%">
+            <stop offset="0%" stop-color="rgba(0,0,0,0.45)"/><stop offset="100%" stop-color="rgba(0,0,0,0)"/>
+          </radialGradient>
+        </defs>
+
+        <!-- 3D RING -->
+        <g class="ring-group">
+          <g class="ring-fill">
+            <g>
+              <path d="M 75 250 A 175 175 0 0 1 425 250 L 395 250 A 145 145 0 0 0 105 250 Z" fill="url(#gRing)"/>
+              <path d="M 425 250 A 175 175 0 0 1 250 425 L 250 395 A 145 145 0 0 0 395 250 Z" fill="url(#gRing)"/>
+              <path d="M 250 425 A 175 175 0 0 1 75 250 L 105 250 A 145 145 0 0 0 250 395 Z" fill="url(#gRing)"/>
+            </g>
+            <g>
+              <path d="M 75 250 A 175 175 0 0 1 425 250 L 395 250 A 145 145 0 0 0 105 250 Z" fill="url(#gRingLight)"/>
+              <path d="M 425 250 A 175 175 0 0 1 250 425 L 250 395 A 145 145 0 0 0 395 250 Z" fill="url(#gRingLight)"/>
+              <path d="M 250 425 A 175 175 0 0 1 75 250 L 105 250 A 145 145 0 0 0 250 395 Z" fill="url(#gRingLight)"/>
+            </g>
+            <circle cx="250" cy="250" r="175" fill="none" stroke="rgba(255,255,255,0.35)" stroke-width="1"/>
+            <circle cx="250" cy="250" r="174" fill="none" stroke="rgba(0,0,0,0.35)" stroke-width="1.5"/>
+            <circle cx="250" cy="250" r="145" fill="none" stroke="rgba(0,0,0,0.45)" stroke-width="2"/>
+            <circle cx="250" cy="250" r="147" fill="none" stroke="rgba(255,255,255,0.25)" stroke-width="1"/>
+            <g stroke="rgba(0,0,0,0.35)" stroke-width="1.5">
+              <line x1="75" y1="250" x2="105" y2="250"/>
+              <line x1="425" y1="250" x2="395" y2="250"/>
+              <line x1="250" y1="425" x2="250" y2="395"/>
+            </g>
+            <text class="seg-text"><textPath href="#topArc" startOffset="50%" text-anchor="middle">Pre-Use-Design/Herstellung</textPath></text>
+            <text class="seg-text"><textPath href="#rightArc" startOffset="50%" text-anchor="middle">Use-Nutzung</textPath></text>
+            <text class="seg-text"><textPath href="#leftArc" startOffset="50%" text-anchor="middle">Post-Use-Lebensende</textPath></text>
+          </g>
+          <circle class="trace-glow" cx="250" cy="250" r="160" pathLength="1005" transform="rotate(-90 250 250)"/>
+          <circle class="trace" cx="250" cy="250" r="160" pathLength="1005" transform="rotate(-90 250 250)"/>
+        </g>
+
+        <!-- 3D BUILDING -->
+        <!-- 3D BUILDING (new image-based) -->
+<g class="building">
+  <image href="building.png"x="15" y="45" width="470" height="450"
+         preserveAspectRatio="xMidYMid meet"/>
+</g>
+
+        <!-- BRAND TEXT -->
+        <g class="brand">
+          <text class="brand-title" x="250" y="485">RE Tool</text>
+          <text class="brand-sub" x="250" y="512">by Nachhaltiges Bauen</text>
+        </g>
+      </svg>
+      <canvas id="splashParticles"></canvas>
+    </div>
+  </div>
+
   <div class="bg-glow glow-1"></div>
   <div class="bg-glow glow-2"></div>
 
   <div id="appRoot" class="app">
     <aside id="leftPanel" class="panel">
+
+      <!-- ===== PANEL HEADER WITH FULL STATIC LOGO ===== -->
       <div class="panel-header">
-        <h1>Re-Strategies on Building Level</h1>
+        <div id="headerLogo" aria-hidden="true">
+  <svg viewBox="60 60 380 380" class="header-logo-svg">
+    <defs>
+      <!-- ARC PATHS for the curved text -->
+      <path id="hTopArc"   d="M 90 250 A 160 160 0 0 1 410 250" fill="none"/>
+      <path id="hRightArc" d="M 410 250 A 160 160 0 0 1 250 410" fill="none"/>
+      <path id="hLeftArc"  d="M 250 410 A 160 160 0 0 1 90 250" fill="none"/>
+
+      <radialGradient id="hgRing" cx="250" cy="250" r="175" gradientUnits="userSpaceOnUse">
+        <stop offset="0%" stop-color="#46555f"/><stop offset="74%" stop-color="#46555f"/>
+        <stop offset="80%" stop-color="#8a9ba6"/><stop offset="89%" stop-color="#6f818d"/>
+        <stop offset="96%" stop-color="#48565f"/><stop offset="100%" stop-color="#37434b"/>
+      </radialGradient>
+      <radialGradient id="hgRingLight" cx="200" cy="190" r="220" gradientUnits="userSpaceOnUse">
+        <stop offset="0%" stop-color="rgba(255,255,255,0.30)"/>
+        <stop offset="45%" stop-color="rgba(255,255,255,0.06)"/>
+        <stop offset="100%" stop-color="rgba(255,255,255,0)"/>
+      </radialGradient>
+    </defs>
+
+    <!-- RING -->
+    <g>
+      <g>
+        <path d="M 75 250 A 175 175 0 0 1 425 250 L 395 250 A 145 145 0 0 0 105 250 Z" fill="url(#hgRing)"/>
+        <path d="M 425 250 A 175 175 0 0 1 250 425 L 250 395 A 145 145 0 0 0 395 250 Z" fill="url(#hgRing)"/>
+        <path d="M 250 425 A 175 175 0 0 1 75 250 L 105 250 A 145 145 0 0 0 250 395 Z" fill="url(#hgRing)"/>
+      </g>
+      <g>
+        <path d="M 75 250 A 175 175 0 0 1 425 250 L 395 250 A 145 145 0 0 0 105 250 Z" fill="url(#hgRingLight)"/>
+        <path d="M 425 250 A 175 175 0 0 1 250 425 L 250 395 A 145 145 0 0 0 395 250 Z" fill="url(#hgRingLight)"/>
+        <path d="M 250 425 A 175 175 0 0 1 75 250 L 105 250 A 145 145 0 0 0 250 395 Z" fill="url(#hgRingLight)"/>
+      </g>
+      <circle cx="250" cy="250" r="175" fill="none" stroke="rgba(255,255,255,0.35)" stroke-width="1"/>
+      <circle cx="250" cy="250" r="145" fill="none" stroke="rgba(0,0,0,0.45)" stroke-width="2"/>
+      <g stroke="rgba(0,0,0,0.35)" stroke-width="1.5">
+        <line x1="75" y1="250" x2="105" y2="250"/>
+        <line x1="425" y1="250" x2="395" y2="250"/>
+        <line x1="250" y1="425" x2="250" y2="395"/>
+      </g>
+
+      <!-- CURVED RING TEXT (same as splash) -->
+      <text class="hseg-text"><textPath href="#hTopArc" startOffset="50%" text-anchor="middle">Pre-Use-Design/Herstellung</textPath></text>
+      <text class="hseg-text"><textPath href="#hRightArc" startOffset="50%" text-anchor="middle">Use-Nutzung</textPath></text>
+      <text class="hseg-text"><textPath href="#hLeftArc" startOffset="50%" text-anchor="middle">Post-Use-Lebensende</textPath></text>
+    </g>
+
+    <!-- BUILDING IMAGE -->
+    <g>
+      <image href="building.png" x="15" y="45" width="470" height="450"
+             preserveAspectRatio="xMidYMid meet"/>
+    </g>
+  </svg>
+</div>
+
+        <h1>RE Tool</h1>
         <p>CO₂ savings potential</p>
       </div>
 
-        <!-- ===== BUILDING NAVIGATOR ===== -->
-  <section class="card building-nav-card">
-    <div class="card-title">Building Navigator</div>
-    
-    <label class="field field-full">
-      <span>Building Name</span>
-      <input id="buildingNameInput" type="text" value="My Building" placeholder="Building name" />
-    </label>
-    
-    <div class="field-grid">
-      <label class="field">
-        <span>Location</span>
-        <input id="buildingLocationInput" type="text" placeholder="City, Country" />
-      </label>
-      <label class="field">
-        <span>Project Type</span>
-        <select id="buildingTypeSelect">
-          <option value="office">Office</option>
-          <option value="residential">Residential</option>
-          <option value="commercial">Commercial</option>
-          <option value="educational">Educational</option>
-          <option value="other">Other</option>
-        </select>
-      </label>
-    </div>
-    
-    <div class="building-tree" id="buildingTree"></div>
-    
+      <!-- ===== BUILDING NAVIGATOR ===== -->
+      <section class="card building-nav-card">
+        <div class="card-title">Building Navigator</div>
+
+        <label class="field field-full">
+          <span>Building Name</span>
+          <input id="buildingNameInput" type="text" value="My Building" placeholder="Building name" />
+        </label>
+
+        <div class="field-grid">
+          <label class="field">
+            <span>Location</span>
+            <input id="buildingLocationInput" type="text" placeholder="City, Country" />
+          </label>
+          <label class="field">
+            <span>Project Type</span>
+            <select id="buildingTypeSelect">
+              <option value="office">Office</option>
+              <option value="residential">Residential</option>
+              <option value="commercial">Commercial</option>
+              <option value="educational">Educational</option>
+              <option value="other">Other</option>
+            </select>
+          </label>
+        </div>
+
+        <div class="building-tree" id="buildingTree"></div>
+
         <div class="export-import-row">
-      <button id="exportProjectBtn" class="btn">📥 Export</button>
-      <button id="importProjectBtn" class="btn">📤 Import</button>
-      <input id="importFileInput" type="file" accept=".json" style="display:none;" />
-    </div>
-    
-    <button id="addFloorBtn" class="btn">+ Add Floor</button>
-    
-    <div class="view-mode-toggle">
-      <span class="view-mode-label">LCA Mode:</span>
-      <button id="viewModeRoomBtn" class="btn view-mode-btn active">Room</button>
-      <button id="viewModeBuildingBtn" class="btn view-mode-btn">Building</button>
-    </div>
-  </section>
+          <button id="exportProjectBtn" class="btn">📥 Export</button>
+          <button id="importProjectBtn" class="btn">📤 Import</button>
+          <input id="importFileInput" type="file" accept=".json" style="display:none;" />
+        </div>
+
+        <button id="addFloorBtn" class="btn">+ Add Floor</button>
+
+        <div class="view-mode-toggle">
+          <span class="view-mode-label">LCA Mode:</span>
+          <button id="viewModeRoomBtn" class="btn view-mode-btn active">Room</button>
+          <button id="viewModeBuildingBtn" class="btn view-mode-btn">Building</button>
+        </div>
+      </section>
 
       <section class="card">
         <div class="card-title">Room Details</div>

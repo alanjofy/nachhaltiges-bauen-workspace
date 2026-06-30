@@ -217,6 +217,226 @@ init().catch((err) => {
   alert("Failed to load CSV files. If you opened index.html directly, run the project with Live Server.");
 });
 
+// ===== SPLASH ANIMATION =====
+// ===== SPLASH ANIMATION =====
+// ===== SPLASH ANIMATION (first visit only) =====
+function runSplash() {
+  const splash = document.getElementById("splashScreen");
+  const stage = document.getElementById("splashStage");
+  const headerLogo = document.getElementById("headerLogo");
+  if (!splash || !stage) return;
+
+  // Check if splash already played this session
+  const alreadyPlayed = sessionStorage.getItem("splashPlayed") === "true";
+
+  if (alreadyPlayed) {
+    // REFRESH: skip animation, show everything immediately
+    splash.remove();
+    if (headerLogo) headerLogo.classList.add("visible");
+    return;
+  }
+
+  // FIRST VISIT: mark as played, run full animation
+  sessionStorage.setItem("splashPlayed", "true");
+
+  stage.classList.add("reveal-ring");
+  runSplashParticles();
+
+  const DISSOLVE_AT = 6000;
+  const PARTICLE_DURATION = 1200;
+
+  setTimeout(() => {
+    flyParticlesToHeader(splash, stage, headerLogo);
+    stage.style.transition = "opacity 0.4s ease";
+    stage.style.opacity = "0";
+    splash.classList.add("dissolving");
+
+    setTimeout(() => {
+      headerLogo.classList.add("visible");
+    }, PARTICLE_DURATION * 0.85);
+
+    setTimeout(() => {
+      splash.remove();
+    }, PARTICLE_DURATION + 300);
+  }, DISSOLVE_AT);
+}
+
+// ===== Phase 1: intro particles (build the logo) =====
+function runSplashParticles() {
+  const canvas = document.getElementById("splashParticles");
+  if (!canvas) return;
+  const ctx = canvas.getContext("2d");
+  const W = 900, H = 940;
+  const dpr = Math.min(window.devicePixelRatio || 1, 1.5);
+  canvas.width = W * dpr; canvas.height = H * dpr;
+  canvas.style.width = W + "px"; canvas.style.height = H + "px";
+  ctx.scale(dpr, dpr);
+
+  const SCALE = 600 / 500, BX = 150, BY = 175, OFFX = 150, OFFY = 150;
+  const toCanvas = (bx, by) => ({ x: (BX + bx) * SCALE + OFFX, y: (BY + by) * SCALE + OFFY });
+
+  const glow = makeGlowSprite();
+
+  const targets = [];
+  function fillRect(x0, y0, x1, y1, count) {
+    for (let i = 0; i < count; i++)
+      targets.push(toCanvas(x0 + Math.random()*(x1-x0), y0 + Math.random()*(y1-y0)));
+  }
+  fillRect(10,-2,97,150,70); fillRect(97,31,157,150,45); fillRect(135,94,222,150,38);
+  fillRect(10,-2,97,12,12);  fillRect(97,31,157,45,7);   fillRect(135,94,222,108,7);
+
+  const cx = 250*SCALE+OFFX, cy = 280*SCALE+OFFY;
+  const particles = targets.map(t => {
+    const a = Math.random()*Math.PI*2, d = Math.sqrt(Math.random())*465;
+    return { x: cx+Math.cos(a)*d, y: cy+Math.sin(a)*d, tx:t.x, ty:t.y,
+             size: 6+Math.random()*8, delay: Math.random()*0.5 };
+  });
+
+  const easeOut = t => 1 - Math.pow(1-t, 3);
+  const DURATION = 3000;
+  let startTime = null, canvasFade = 1;
+  const stage = document.getElementById("splashStage");
+
+  function frame(now) {
+    if (!startTime) startTime = now;
+    const elapsed = now - startTime;
+    ctx.clearRect(0,0,W,H);
+    const phase = Math.min(elapsed/DURATION, 1);
+    ctx.globalCompositeOperation = "lighter";
+    for (const p of particles) {
+      let local = (phase - p.delay)/(1 - p.delay);
+      local = local<0?0:local>1?1:local;
+      const e = easeOut(local);
+      const x = p.x+(p.tx-p.x)*e, y = p.y+(p.ty-p.y)*e;
+      const alpha = (0.55 + 0.8*(1-Math.abs(local-0.5)*2))*canvasFade;
+      const s = p.size*(1.4+(1-local)*0.7);
+      ctx.globalAlpha = alpha<1?alpha:1;
+      ctx.drawImage(glow, x-s/2, y-s/2, s, s);
+    }
+    ctx.globalAlpha = 1; ctx.globalCompositeOperation = "source-over";
+    if (phase > 0.7) stage?.classList.add("reveal-on");
+    if (phase > 0.85) { canvasFade -= 0.04; if (canvasFade <= 0) { canvas.style.display="none"; return; } }
+    requestAnimationFrame(frame);
+  }
+  requestAnimationFrame(frame);
+}
+
+// ===== Phase 2: particles dissolve from logo and fly to the header =====
+function flyParticlesToHeader(splash, stage, headerLogo) {
+  // create a fresh full-screen canvas overlay for the fly-away
+  const canvas = document.createElement("canvas");
+  canvas.style.position = "fixed";
+  canvas.style.inset = "0";
+  canvas.style.zIndex = "100001";
+  canvas.style.pointerEvents = "none";
+  document.body.appendChild(canvas);
+
+  const ctx = canvas.getContext("2d");
+  const dpr = Math.min(window.devicePixelRatio || 1, 1.5);
+  function sizeCanvas() {
+    canvas.width = window.innerWidth * dpr;
+    canvas.height = window.innerHeight * dpr;
+    canvas.style.width = window.innerWidth + "px";
+    canvas.style.height = window.innerHeight + "px";
+  }
+  sizeCanvas();
+  ctx.scale(dpr, dpr);
+
+  const glow = makeGlowSprite();
+
+  // SOURCE: scatter particles across the splash logo's current screen box
+  const stageRect = stage.getBoundingClientRect();
+  const headerRect = headerLogo.getBoundingClientRect();
+
+  const srcCX = stageRect.left + stageRect.width / 2;
+  const srcCY = stageRect.top + stageRect.height / 2;
+  const tgtCX = headerRect.left + headerRect.width / 2;
+  const tgtCY = headerRect.top + headerRect.height / 2;
+
+  const COUNT = 180;
+  const particles = [];
+  for (let i = 0; i < COUNT; i++) {
+    // start scattered around the logo center (within its radius)
+    const a = Math.random() * Math.PI * 2;
+    const r = Math.sqrt(Math.random()) * (stageRect.width * 0.32);
+    const sx = srcCX + Math.cos(a) * r;
+    const sy = srcCY + Math.sin(a) * r * 1.05;
+
+    // target scattered around header logo (small spread)
+    const ta = Math.random() * Math.PI * 2;
+    const tr = Math.sqrt(Math.random()) * (headerRect.width * 0.4);
+    const tx = tgtCX + Math.cos(ta) * tr;
+    const ty = tgtCY + Math.sin(ta) * tr;
+
+    particles.push({
+      sx, sy, tx, ty,
+      // control point for a slight arc
+      cx: (sx + tx) / 2 + (Math.random() - 0.5) * 120,
+      cy: (sy + ty) / 2 - 80 - Math.random() * 120,
+      size: 4 + Math.random() * 7,
+      delay: Math.random() * 0.25,
+    });
+  }
+
+  const easeInOut = t => t < 0.5 ? 4*t*t*t : 1 - Math.pow(-2*t+2, 3)/2;
+  const DURATION = 1200;
+  let startTime = null;
+
+  function frame(now) {
+    if (!startTime) startTime = now;
+    const elapsed = now - startTime;
+    const phase = Math.min(elapsed / DURATION, 1);
+
+    ctx.clearRect(0, 0, window.innerWidth, window.innerHeight);
+    ctx.globalCompositeOperation = "lighter";
+
+    for (const p of particles) {
+      let local = (phase - p.delay) / (1 - p.delay);
+      local = local < 0 ? 0 : local > 1 ? 1 : local;
+      const e = easeInOut(local);
+
+      // quadratic bezier: src -> control -> target (arc path)
+      const mt = 1 - e;
+      const x = mt*mt*p.sx + 2*mt*e*p.cx + e*e*p.tx;
+      const y = mt*mt*p.sy + 2*mt*e*p.cy + e*e*p.ty;
+
+      // fade: bright in middle, fade as it lands
+      const alpha = local < 0.85 ? 0.9 : 0.9 * (1 - (local - 0.85) / 0.15);
+      const s = p.size * (1 + (1 - local) * 0.6);
+
+      ctx.globalAlpha = alpha;
+      ctx.drawImage(glow, x - s/2, y - s/2, s, s);
+    }
+
+    ctx.globalAlpha = 1;
+    ctx.globalCompositeOperation = "source-over";
+
+    if (phase < 1) {
+      requestAnimationFrame(frame);
+    } else {
+      canvas.remove();
+    }
+  }
+  requestAnimationFrame(frame);
+}
+
+// ===== shared glow sprite =====
+function makeGlowSprite() {
+  const SPRITE = 48;
+  const glow = document.createElement("canvas");
+  glow.width = glow.height = SPRITE;
+  const gctx = glow.getContext("2d");
+  const grad = gctx.createRadialGradient(SPRITE/2, SPRITE/2, 0, SPRITE/2, SPRITE/2, SPRITE/2);
+  grad.addColorStop(0, "rgba(255,255,255,1)");
+  grad.addColorStop(0.1, "rgba(255,255,255,1)");
+  grad.addColorStop(0.3, "rgba(220,242,255,0.85)");
+  grad.addColorStop(0.6, "rgba(150,195,225,0.35)");
+  grad.addColorStop(1, "rgba(150,195,225,0)");
+  gctx.fillStyle = grad;
+  gctx.fillRect(0, 0, SPRITE, SPRITE);
+  return glow;
+}
+
 async function init() {
   await loadCSVData();
   loadFromLocalStorage();
@@ -227,9 +447,14 @@ async function init() {
   setupUI();
   setupBuildingNav();
   scene = new THREE.Scene();
-scene.background = new THREE.Color(0x6b7882);  // light slate grey
-scene.fog = new THREE.Fog(0x6b7882, 20, 60);
-  camera = new THREE.PerspectiveCamera(52, viewerEl.clientWidth / viewerEl.clientHeight, 0.05, 240);
+const bgLoader = new THREE.TextureLoader();
+bgLoader.load("./bg.jpg", (texture) => {
+  texture.colorSpace = THREE.SRGBColorSpace;
+  scene.background = texture;
+  updateBackgroundAspect();
+}); // light slate grey
+scene.fog = new THREE.Fog(0x6b7882, 80, 200);
+  camera = new THREE.PerspectiveCamera(52, viewerEl.clientWidth / viewerEl.clientHeight, 0.05, 1000);
   renderer = new THREE.WebGLRenderer({
     antialias: window.devicePixelRatio < 2,
     alpha: true,
@@ -271,6 +496,7 @@ scene.fog = new THREE.Fog(0x6b7882, 20, 60);
     }
   }
   renderer.setAnimationLoop(renderLoop);
+    runSplash();
 }
 
 function parseScenarioCSVs(chartCSVText, descCSVText) {
@@ -632,10 +858,13 @@ function setViewMode(mode) {
   viewModeRoomBtn.classList.toggle("active", mode === "room");
   viewModeBuildingBtn.classList.toggle("active", mode === "building");
   saveToLocalStorage();
+
   if (mode === "building") {
+    scene.fog = null;                              // no fog for building
     buildBuildingView();
     showBuildingViewInstructions();
   } else {
+    scene.fog = new THREE.Fog(0x6b7882, 30, 80);   // gentle fog for room
     hideBuildingPerformanceNotice();
     const hint = document.getElementById("buildingViewHint");
     if (hint) hint.style.display = "none";
@@ -909,8 +1138,13 @@ function buildDetailedRoomAtPosition(room, offsetX, offsetY, offsetZ) {
 
   const shellGeo = new THREE.BoxGeometry(dims.length, dims.height, dims.width);
   const shellMat = new THREE.MeshStandardMaterial({
-  color: 0xc8d0d8, transparent: true, opacity: 0.06,
-  roughness: 0.2, metalness: 0.1, side: THREE.DoubleSide, depthWrite: false,
+  color: 0xc8d0d8,
+  transparent: true,
+  opacity: 0.02,          // ← was 0.06, much lighter
+  roughness: 0.2,
+  metalness: 0.1,
+  side: THREE.FrontSide,  // ← was DoubleSide (halves the layering)
+  depthWrite: false,
 });
   const shell = new THREE.Mesh(shellGeo, shellMat);
   shell.position.set(0, floorTopY + dims.height / 2, 0);
@@ -993,9 +1227,8 @@ function buildDetailedRoomAtPosition(room, offsetX, offsetY, offsetZ) {
     }
   }
   
-  if (room.selected.has("door") && room.settings.door.area > 0) {
+    if (room.selected.has("door") && room.settings.door.area > 0) {
     const doorH = Math.min(2.2, Math.max(1.9, dims.height * 0.74));
-    const doorCount = Math.min(4, Math.max(1, room.settings.door.count || 1));
     const isDoubleLeaf = isDoorDoubleLeaf(room.settings.door.product);
     const requestedDoorArea = Math.max(0.8, room.settings.door.area || 2.0);
     const doorWidthMultiplier = isDoubleLeaf ? 2.0 : 1.0;
@@ -1004,10 +1237,10 @@ function buildDetailedRoomAtPosition(room, offsetX, offsetY, offsetZ) {
     const productName = room.settings.door.product;
     const product = getProduct(productName);
     const doorY = floorTopY;
-    const doorZ = dims.width / 2;
-    const spacing = dims.length / (doorCount + 1);
-    for (let i = 0; i < doorCount; i++) {
-      const doorX = -dims.length / 2 + spacing * (i + 1);
+
+    const placements = computeDoorPlacementsForRoom(room, dims, doorWidth);
+
+    for (const p of placements) {
       let doorMesh;
       if (product && product.category === "door") {
         doorMesh = product.build({ width: doorWidth, height: doorH });
@@ -1018,8 +1251,21 @@ function buildDetailedRoomAtPosition(room, offsetX, offsetY, offsetZ) {
         );
         doorMesh.position.y = doorH / 2;
       }
-      doorMesh.position.set(doorX, doorY, doorZ);
-      doorMesh.rotation.y = Math.PI;
+
+      // position by side
+      if (p.side === "front") {
+        doorMesh.position.set(p.along, doorY, dims.width / 2);
+        doorMesh.rotation.y = Math.PI;
+      } else if (p.side === "back") {
+        doorMesh.position.set(p.along, doorY, -dims.width / 2);
+        doorMesh.rotation.y = 0;
+      } else if (p.side === "left") {
+        doorMesh.position.set(-dims.length / 2, doorY, p.along);
+        doorMesh.rotation.y = Math.PI / 2;
+      } else if (p.side === "right") {
+        doorMesh.position.set(dims.length / 2, doorY, p.along);
+        doorMesh.rotation.y = -Math.PI / 2;
+      }
       group.add(doorMesh);
     }
   }
@@ -1029,29 +1275,29 @@ function buildDetailedRoomAtPosition(room, offsetX, offsetY, offsetZ) {
 
 function placeWallsForRoomWithDoors(group, room, product, panelH, floorTopY, dims) {
   const hasDoor = room.selected.has("door") && room.settings.door.area > 0;
-  const doorCount = hasDoor ? Math.min(4, Math.max(1, room.settings.door.count || 1)) : 0;
-  let doorWidth = 0, doorH = 0;
-  let doorPlacements = [];
-  if (hasDoor) {
-    doorH = Math.min(2.2, Math.max(1.9, dims.height * 0.74));
-    const isDoubleLeaf = isDoorDoubleLeaf(room.settings.door.product);
-    const requestedDoorArea = Math.max(0.8, room.settings.door.area || 2.0);
-    const doorWidthMultiplier = isDoubleLeaf ? 2.0 : 1.0;
-    const baseDoorWidth = clamp(requestedDoorArea / doorH, 0.75, Math.min(1.6, dims.length * 0.4), 1.0);
-    doorWidth = baseDoorWidth * doorWidthMultiplier;
-    const spacing = dims.length / (doorCount + 1);
-    for (let i = 0; i < doorCount; i++) {
-      doorPlacements.push({ side: "front", along: -dims.length / 2 + spacing * (i + 1) });
-    }
-  }
-  function place(side, span, hasDoorCutout) {
-    if (!hasDoorCutout) {
+  const doorH = Math.min(2.2, Math.max(1.9, dims.height * 0.74));
+  const isDoubleLeaf = isDoorDoubleLeaf(room.settings.door.product);
+  const requestedDoorArea = Math.max(0.8, room.settings.door.area || 2.0);
+  const doorWidthMultiplier = isDoubleLeaf ? 2.0 : 1.0;
+  const baseDoorWidth = clamp(requestedDoorArea / doorH, 0.75, Math.min(1.6, dims.length * 0.4), 1.0);
+  const doorWidth = baseDoorWidth * doorWidthMultiplier;
+
+  const doorPlacements = hasDoor
+    ? computeDoorPlacementsForRoom(room, dims, doorWidth)
+    : [];
+
+  function place(side, span) {
+    const sideDoors = doorPlacements
+      .filter(p => p.side === side)
+      .sort((a, b) => a.along - b.along);
+
+    if (sideDoors.length === 0) {
       const inst = product.build({ width: span, height: panelH });
       positionWall(inst, side, 0, floorTopY, dims);
       group.add(inst);
       return;
     }
-    const sideDoors = doorPlacements.filter(p => p.side === side).sort((a, b) => a.along - b.along);
+
     let cursorStart = -span / 2;
     for (const door of sideDoors) {
       const segEnd = door.along - doorWidth / 2;
@@ -1071,6 +1317,8 @@ function placeWallsForRoomWithDoors(group, room, product, panelH, floorTopY, dim
       positionWall(inst, side, segCenter, floorTopY, dims);
       group.add(inst);
     }
+
+    // transom above each door
     const transomH = panelH - doorH;
     if (transomH > 0.05) {
       for (const door of sideDoors) {
@@ -1080,6 +1328,7 @@ function placeWallsForRoomWithDoors(group, room, product, panelH, floorTopY, dim
       }
     }
   }
+
   function positionWall(inst, side, centerAlong, yOffset, dims) {
     if (side === "back") {
       inst.position.set(centerAlong, yOffset, -dims.width / 2);
@@ -1095,10 +1344,11 @@ function placeWallsForRoomWithDoors(group, room, product, panelH, floorTopY, dim
       inst.rotation.y = -Math.PI / 2;
     }
   }
-  place("front", dims.length, hasDoor);
-  place("back", dims.length, false);
-  place("left", dims.width, false);
-  place("right", dims.width, false);
+
+  place("front", dims.length);
+  place("back", dims.length);
+  place("left", dims.width);
+  place("right", dims.width);
 }
 
 function buildSimplifiedRoom(room, offsetX, offsetY, offsetZ) {
@@ -1127,53 +1377,194 @@ if (room.id === state.currentRoomId) color = 0xe2e7ec;
 }
 
 function addBuildingFloorLabel(text, y, totalWidth, totalDepth) {
-  const sprite = makeTextSprite(text, {
-    fontSize: 64, color: "#f0f4ff",
-    background: "rgba(138, 149, 160, 0.85)", padding: 16, bold: true,
+  const sprite = makeProLabel(text, {
+    fontSize: 52,
+    textColor: "#eef4f5",        // near-white from ice family
+    accent: "#d5e4e6",           // ice accent bar
+    subtitle: "LEVEL",
+    subtitleColor: "rgba(213,228,230,0.65)",
+    style: "floor",
   });
-  sprite.position.set(-totalWidth / 2 - 2, y, 0);
-  sprite.scale.set(2.5, 0.7, 1);
+
+  const height = 1.0;
+  const width = height * sprite.userData.aspect;   // ← MUST multiply by aspect
+  sprite.scale.set(width, height, 1);   
+
+
+  const labelX = -totalWidth / 2 - width / 2 - 1.5;
+  sprite.position.set(labelX, y, 0);
   state.objects.root.add(sprite);
+
+  // connector line in ice tone
+  const lineMat = new THREE.LineBasicMaterial({
+    color: 0xd5e4e6, transparent: true, opacity: 0.4,
+  });
+  const lineGeo = new THREE.BufferGeometry().setFromPoints([
+    new THREE.Vector3(labelX + width / 2, y, 0),
+    new THREE.Vector3(-totalWidth / 2, y, 0),
+  ]);
+  state.objects.root.add(new THREE.Line(lineGeo, lineMat));
+
+  // accent dot
+  const dot = new THREE.Mesh(
+    new THREE.SphereGeometry(0.08, 12, 12),
+    new THREE.MeshBasicMaterial({ color: 0xd5e4e6 })
+  );
+  dot.position.set(-totalWidth / 2, y, 0);
+  state.objects.root.add(dot);
 }
 
 function addBuildingRoomLabel(text, x, y, z) {
-  const sprite = makeTextSprite(text, {
-    fontSize: 48, color: "#ffffff",
-    background: "rgba(10, 12, 16, 0.75)", padding: 10,
+  const sprite = makeProLabel(text, {
+    fontSize: 40,
+    textColor: "#eef4f5",
+    accent: "#9fc0c6",          // slightly darker ice for variation
+    style: "room",
   });
+  const height = 0.42;
+  const width = height * sprite.userData.aspect;
+  sprite.scale.set(width, height, 1);
   sprite.position.set(x, y, z);
-  sprite.scale.set(1.6, 0.5, 1);
   state.objects.root.add(sprite);
 }
 
-function makeTextSprite(text, opts = {}) {
-  const fontSize = opts.fontSize || 48;
-  const color = opts.color || "#ffffff";
-  const bg = opts.background || "rgba(0,0,0,0.6)";
-  const padding = opts.padding || 8;
-  const bold = opts.bold ? "900" : "700";
+function makeProLabel(text, opts = {}) {
+  const {
+    fontSize = 52,
+    textColor = "#f1f6ff",
+    accent = "#79f5dc",
+    subtitle = null,
+    subtitleColor = "rgba(200,210,225,0.7)",
+    style = "floor",   // "floor" | "room"
+  } = opts;
+
+  const dpr = 3;
+  const fontFamily = "Inter, system-ui, sans-serif";
+  const padX = 34, padY = 22;
+  const accentBarW = 8;
+  const subSize = Math.round(fontSize * 0.52);
+
+    // measure
+  const mc = document.createElement("canvas").getContext("2d");
+  mc.font = `800 ${fontSize}px ${fontFamily}`;
+  const titleW = mc.measureText(text).width;
+
+  // measure subtitle WITH letter spacing
+  let subW = 0;
+  const subSpacing = 2;
+  if (subtitle) {
+    mc.font = `700 ${subSize}px ${fontFamily}`;
+    const subText = subtitle.toUpperCase();
+    for (const ch of subText) {
+      subW += mc.measureText(ch).width + subSpacing;
+    }
+  }
+
+  const contentW = Math.max(titleW, subW);
+  const lineH = fontSize * 1.05;
+  const contentH = subtitle ? lineH + subSize * 1.6 : lineH;   // more vertical room
+
+  const w = contentW + padX * 2 + accentBarW + 16;   // +16 safety margin
+  const h = contentH + padY * 2;
+
   const canvas = document.createElement("canvas");
+  canvas.width = w * dpr;
+  canvas.height = h * dpr;
   const ctx = canvas.getContext("2d");
-  ctx.font = `${bold} ${fontSize}px Inter, sans-serif`;
-  const metrics = ctx.measureText(text);
-  const textW = metrics.width;
-  const textH = fontSize * 1.2;
-  canvas.width = Math.ceil(textW + padding * 2);
-  canvas.height = Math.ceil(textH + padding * 2);
-  ctx.font = `${bold} ${fontSize}px Inter, sans-serif`;
-  ctx.fillStyle = bg;
-  ctx.fillRect(0, 0, canvas.width, canvas.height);
-  ctx.fillStyle = color;
-  ctx.textBaseline = "middle";
-  ctx.textAlign = "center";
-  ctx.fillText(text, canvas.width / 2, canvas.height / 2);
+  ctx.scale(dpr, dpr);
+
+  // rounded rect bg with gradient
+  const r = h * 0.28;
+  const grad = ctx.createLinearGradient(0, 0, 0, h);
+      if (style === "floor") {
+    grad.addColorStop(0, "rgba(40, 52, 58, 0.95)");   // dark slate
+    grad.addColorStop(1, "rgba(26, 35, 40, 0.95)");
+  } else {
+    grad.addColorStop(0, "rgba(34, 45, 50, 0.9)");
+    grad.addColorStop(1, "rgba(20, 28, 32, 0.9)");
+  }
+  roundRect(ctx, 0, 0, w, h, r);
+  ctx.fillStyle = grad;
+  ctx.fill();
+
+  // subtle border
+  ctx.lineWidth = 1.5;
+  ctx.strokeStyle = "rgba(255,255,255,0.08)";
+  ctx.stroke();
+
+  // accent bar (left)
+  roundRect(ctx, padX * 0.45, padY * 0.7, accentBarW, h - padY * 1.4, accentBarW / 2);
+  ctx.fillStyle = accent;
+  ctx.fill();
+  // glow on accent
+    ctx.shadowColor = accent;
+  ctx.shadowBlur = 4;          // subtle, was 12
+  ctx.fill();
+  ctx.shadowBlur = 0;
+
+    const textX = padX + accentBarW + 14;
+
+  if (subtitle) {
+    // title sits in upper area
+    const titleY = padY + lineH * 0.5;
+    ctx.font = `800 ${fontSize}px ${fontFamily}`;
+    ctx.fillStyle = textColor;
+    ctx.textBaseline = "middle";
+    ctx.textAlign = "left";
+    ctx.shadowColor = "rgba(0,0,0,0.4)";
+    ctx.shadowBlur = 3;
+    ctx.fillText(text, textX, titleY);
+    ctx.shadowBlur = 0;
+
+    // subtitle below title
+    const subY = titleY + lineH * 0.55 + subSize * 0.5;
+    ctx.font = `700 ${subSize}px ${fontFamily}`;
+    ctx.fillStyle = subtitleColor;
+    drawSpacedText(ctx, subtitle.toUpperCase(), textX, subY, subSpacing);
+  } else {
+    // single centered title
+    ctx.font = `800 ${fontSize}px ${fontFamily}`;
+    ctx.fillStyle = textColor;
+    ctx.textBaseline = "middle";
+    ctx.textAlign = "left";
+    ctx.shadowColor = "rgba(0,0,0,0.4)";
+    ctx.shadowBlur = 3;
+    ctx.fillText(text, textX, h / 2);
+    ctx.shadowBlur = 0;
+  }
+
   const texture = new THREE.CanvasTexture(canvas);
   texture.colorSpace = THREE.SRGBColorSpace;
+  texture.anisotropy = anisotropy;
   texture.needsUpdate = true;
-  const material = new THREE.SpriteMaterial({ map: texture, transparent: true, depthTest: false });
+
+  const material = new THREE.SpriteMaterial({
+    map: texture, transparent: true, depthTest: false,
+  });
   const sprite = new THREE.Sprite(material);
   sprite.renderOrder = 999;
+  sprite.userData.aspect = w / h;
   return sprite;
+}
+
+// helper: rounded rectangle path
+function roundRect(ctx, x, y, w, h, r) {
+  ctx.beginPath();
+  ctx.moveTo(x + r, y);
+  ctx.arcTo(x + w, y, x + w, y + h, r);
+  ctx.arcTo(x + w, y + h, x, y + h, r);
+  ctx.arcTo(x, y + h, x, y, r);
+  ctx.arcTo(x, y, x + w, y, r);
+  ctx.closePath();
+}
+
+// helper: letter-spaced text
+function drawSpacedText(ctx, text, x, y, spacing) {
+  let cx = x;
+  for (const ch of text) {
+    ctx.fillText(ch, cx, y);
+    cx += ctx.measureText(ch).width + spacing;
+  }
 }
 
 function highlightBuildingRoom(group, isHighlighted) {
@@ -1720,6 +2111,20 @@ function onResize() {
     camera.updateProjectionMatrix();
     renderer.setSize(w, h);
   }
+  updateBackgroundAspect();   // ← add this line
+}
+
+function updateBackgroundAspect() {
+  if (!scene.background || !scene.background.image) return;
+  const tex = scene.background;
+  const canvasAspect = viewerEl.clientWidth / viewerEl.clientHeight;
+  const imageAspect = tex.image.width / tex.image.height;
+  const factor = imageAspect / canvasAspect;
+
+  tex.offset.x = factor > 1 ? (1 - 1 / factor) / 2 : 0;
+  tex.repeat.x = factor > 1 ? 1 / factor : 1;
+  tex.offset.y = factor > 1 ? 0 : (1 - factor) / 2;
+  tex.repeat.y = factor > 1 ? 1 : factor;
 }
 
 function setupLighting() {
@@ -1750,15 +2155,19 @@ function setupLighting() {
 }
 
 function setupEnvironment() {
+  const radius = 60;
+
   const outer = new THREE.Mesh(
-    new THREE.CircleGeometry(60, 80),
+    new THREE.CircleGeometry(radius, 80),
     new THREE.MeshStandardMaterial({ color: 0x5a6670, roughness: 1.0, metalness: 0 })
   );
   outer.rotation.x = -Math.PI / 2;
   outer.position.y = -0.02;
   outer.receiveShadow = true;
   scene.add(outer);
-  const grid = new THREE.GridHelper(60, 60, 0x8a95a0, 0x4a5660);
+
+  // grid size must match the circle DIAMETER (radius * 2)
+  const grid = new THREE.GridHelper(radius * 2, 120, 0x8a95a0, 0x4a5660);
   grid.position.y = -0.01;
   scene.add(grid);
 }
@@ -1831,6 +2240,31 @@ function computeDoorPlacements() {
   return placements;
 }
 
+function computeDoorPlacementsForRoom(room, dims, doorWidth) {
+  const doorCount = clamp(Math.floor(Number(room.settings.door.count) || 1), 1, 24, 1);
+  const bySide = { front: 0, back: 0, left: 0, right: 0 };
+  const order = ["front", "back", "left", "right"];
+  for (let i = 0; i < doorCount; i++) bySide[order[i % 4]]++;
+
+  const placements = [];
+  function addSide(side, k) {
+    if (k <= 0) return;
+    const span = (side === "front" || side === "back") ? dims.length : dims.width;
+    const minClear = 0.8 + doorWidth / 2;
+    const usable = Math.max(0, span - minClear * 2);
+    for (let i = 0; i < k; i++) {
+      const t = k === 1 ? 0.5 : i / (k - 1);
+      const along = -span / 2 + minClear + usable * t;
+      placements.push({ side, along });
+    }
+  }
+  addSide("front", bySide.front);
+  addSide("back", bySide.back);
+  addSide("left", bySide.left);
+  addSide("right", bySide.right);
+  return placements;
+}
+
 function computeMetrics() {
   const { length, width, height } = state.dims;
   const floorTopY = state.raisedFloorHeight;
@@ -1846,13 +2280,18 @@ function computeMetrics() {
   const panelCount = nx * nz;
   const xMargin = (length - nx) / 2;
   const zMargin = (width - nz) / 2;
+
+  // STEP 1: set metrics FIRST (so doorWidth is available)
   state.metrics = {
     ...state.dims, floorTopY, ceilingY, doorHeight, doorWidth,
-    doorPlacements: computeDoorPlacements(),
+    doorPlacements: [],                       // placeholder
     nx, nz, panelCount, usableFloorArea: panelCount,
     xMargin, zMargin, wallMaxArea: 0,
     ceilingMaxArea: panelCount, floorMaxArea: panelCount, pedestalMaxArea: panelCount,
   };
+
+  // STEP 2: now compute placements using the finalized doorWidth
+  state.metrics.doorPlacements = computeDoorPlacements();
 }
 
 function updateDimensionReadout() {
@@ -1890,8 +2329,13 @@ function buildGhostShell() {
   state.objects.root.add(shellGroup);
   const shellGeo = new THREE.BoxGeometry(length, height, width);
   const shellMat = new THREE.MeshStandardMaterial({
-  color: 0xc8d0d8, transparent: true, opacity: 0.12,
-  roughness: 0.2, metalness: 0.1, side: THREE.DoubleSide, depthWrite: false,
+  color: 0xc8d0d8,
+  transparent: true,
+  opacity: 0.02,          // ← was 0.06, much lighter
+  roughness: 0.2,
+  metalness: 0.1,
+  side: THREE.FrontSide,  // ← was DoubleSide (halves the layering)
+  depthWrite: false,
 });
   const shell = new THREE.Mesh(shellGeo, shellMat);
   shell.position.set(0, floorTopY + height / 2, 0);
@@ -2150,6 +2594,14 @@ function buildDoor_impl() {
     const p = placements[i];
     addDoorAt(p.side, p.along);
   }
+  console.log("DOOR DEBUG:", {
+  selected: state.selected.has("door"),
+  area: state.settings.door.area,
+  product: state.settings.door.product,
+  productFound: !!getProduct(state.settings.door.product),
+  placements: state.metrics.doorPlacements,
+  childrenCount: group.children.length,
+});
   state.objects.doorGroup = group;
   state.objects.categories.door.push(group);
 }
@@ -2315,9 +2767,24 @@ function applyDoorCategory() {
   const group = state.objects.doorGroup;
   if (!group) return;
   const active = state.selected.has("door");
-  const maxDoorArea = state.metrics.doorWidth * state.metrics.doorHeight;
-  const area = clamp(Number(state.settings.door.area) || 0, 0, maxDoorArea, 0);
+  const area = Number(state.settings.door.area) || 0;
   group.visible = active && area > 0;
+  group.traverse((child) => { child.visible = group.visible; });
+
+  // DIAGNOSTIC
+  if (group.visible && group.children.length) {
+    const box = new THREE.Box3().setFromObject(group);
+    console.log("DOOR APPLY:", {
+      groupVisible: group.visible,
+      childCount: group.children.length,
+      firstChildPos: group.children[0].position.toArray(),
+      boxMin: box.min.toArray(),
+      boxMax: box.max.toArray(),
+      floorTopY: state.metrics.floorTopY,
+      roomWidth: state.metrics.width,
+      roomLength: state.metrics.length,
+    });
+  }
 }
 
 function applyLightsCategory() {

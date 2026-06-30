@@ -1,14 +1,14 @@
 :root {
   /* ===== NEW GREY PALETTE (from reference image) ===== */
-  --grey-900: #2a3239;   /* deepest - panel base */
-  --grey-800: #353f47;   /* dark panel */
-  --grey-700: #424d56;   /* card surfaces */
-  --grey-600: #525e68;   /* mid-grey */
-  --grey-500: #687480;   /* borders / dividers */
-  --grey-400: #8a95a0;   /* muted text */
-  --grey-300: #aab4be;   /* light text */
-  --grey-200: #c8d0d8;   /* lighter accents */
-  --grey-100: #e2e7ec;   /* lightest */
+  --grey-900: #2a3239;
+  --grey-800: #353f47;
+  --grey-700: #424d56;
+  --grey-600: #525e68;
+  --grey-500: #687480;
+  --grey-400: #8a95a0;
+  --grey-300: #aab4be;
+  --grey-200: #c8d0d8;
+  --grey-100: #e2e7ec;
 
   --bg: #3d474f;
   --panel: rgba(42, 50, 57, 0.92);
@@ -83,6 +83,39 @@ html, body {
   padding: 14px;
   overflow-y: auto;
   transition: transform .45s cubic-bezier(.2,.9,.2,1), opacity .35s ease;
+}
+
+/* ===== PANEL HEADER + LOGO (single clean version) ===== */
+.panel-header {
+  position: relative;
+  text-align: center;
+  padding-top: 8px;
+  padding-bottom: 8px;
+}
+
+#headerLogo {
+  position: static;
+  width: 200px;
+  height: 224px;
+  margin: 0 auto 4px;
+  opacity: 0;                                    /* hidden by default */
+  transform: scale(0.6);
+  filter: blur(4px);
+  transition: opacity 0.6s ease,
+              transform 0.6s cubic-bezier(0.2,0.9,0.2,1),
+              filter 0.6s ease;
+  pointer-events: none;
+}
+#headerLogo.visible {
+  opacity: 1;
+  transform: scale(1);
+  filter: blur(0);
+}
+.header-logo-svg {
+  width: 150px;
+  height: 168px;
+  display: block;
+  margin: 0 auto;
 }
 
 .panel-header h1 {
@@ -1152,4 +1185,227 @@ svg .donut-progress {
   font-size: 0.78rem;
   font-weight: 600;
   backdrop-filter: blur(8px);
+}
+
+/* ===== SPLASH SCREEN ===== */
+#splashScreen {
+  position: fixed;
+  inset: 0;
+  z-index: 99999;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+  background: linear-gradient(135deg, #2b343b 0%, #41505b 55%, #2f3940 100%);
+  transition: background 0.8s ease;
+}
+
+#splashScreen::before {
+  content: "";
+  position: absolute; inset: 0; pointer-events: none;
+  background:
+    linear-gradient(115deg, rgba(255,255,255,0.05) 0%, rgba(255,255,255,0) 32%),
+    linear-gradient(148deg, rgba(0,0,0,0.10) 0%, rgba(0,0,0,0) 45%);
+}
+
+.splash-stage {
+  position: relative;
+  width: 600px; height: 640px;
+  transform-origin: center center;
+  transition: transform 1.1s cubic-bezier(0.7, 0, 0.2, 1),
+              opacity 0.6s ease;
+}
+
+.splash-logo {
+  width: 600px; height: 640px;
+  position: absolute; inset: 0; z-index: 1;
+}
+
+#splashParticles {
+  position: absolute;
+  top: -150px; left: -150px;
+  width: 900px; height: 940px;
+  pointer-events: none; z-index: 2;
+}
+
+#splashScreen.shrink {
+  background: transparent;
+  pointer-events: none;
+}
+#splashScreen.shrink::before { opacity: 0; }
+
+#splashScreen.fade-out {
+  opacity: 0;
+  transition: opacity 0.6s ease;
+}
+
+/* ============================================================
+   SPLASH LOGO ANIMATION (scoped to .splash-stage)
+   ============================================================ */
+.splash-stage .ring-group {
+  transform-origin: 250px 250px;
+  will-change: transform;
+  filter: drop-shadow(0 6px 6px rgba(0, 0, 0, 0.4));
+}
+
+.splash-stage .ring-fill {
+  opacity: 0;
+}
+.splash-stage.reveal-ring .ring-fill {
+  animation: splashRingFade 1.4s ease-out forwards;
+  animation-delay: 2.8s;
+}
+@keyframes splashRingFade {
+  from { opacity: 0; }
+  to   { opacity: 1; }
+}
+
+.splash-stage .trace {
+  fill: none;
+  stroke: #cfe2ec;
+  stroke-width: 30;
+  stroke-linecap: round;
+  stroke-dasharray: 1005;
+  stroke-dashoffset: 1005;
+}
+
+.splash-stage .trace-glow {
+  fill: none;
+  stroke: #9fc4d6;
+  stroke-width: 34;
+  stroke-linecap: round;
+  stroke-dasharray: 1005;
+  stroke-dashoffset: 1005;
+  opacity: 0.6;
+  filter: blur(8px);
+}
+
+.splash-stage.reveal-ring .trace,
+.splash-stage.reveal-ring .trace-glow {
+  animation: splashDrawRing 3.4s cubic-bezier(0.25, 0.6, 0.3, 1) forwards,
+             splashTraceFade 1.2s ease-out 3.0s forwards;
+}
+@keyframes splashDrawRing {
+  from { stroke-dashoffset: 1005; }
+  to   { stroke-dashoffset: 0; }
+}
+@keyframes splashTraceFade {
+  to { opacity: 0; }
+}
+
+.splash-stage .seg-text {
+  fill: #ffffff;
+  font-size: 15px;
+  font-weight: 600;
+  letter-spacing: 1px;
+  dominant-baseline: central;
+  paint-order: stroke;
+  stroke: rgba(0, 0, 0, 0.25);
+  stroke-width: 2px;
+}
+
+.splash-stage .building {
+  opacity: 0;
+  will-change: opacity;
+  transition: opacity 1.2s ease-out;
+}
+.splash-stage.reveal-on .building {
+  opacity: 1;
+}
+
+.splash-stage .brand-title {
+  fill: #ffffff;
+  font-size: 46px;
+  font-weight: 700;
+  letter-spacing: 3px;
+  text-anchor: middle;
+  opacity: 0;
+  will-change: opacity;
+  transition: opacity 1.2s ease-out;
+  transition-delay: 0.4s;
+}
+
+.splash-stage .brand-sub {
+  fill: #c4d4dd;
+  font-size: 17px;
+  font-weight: 400;
+  letter-spacing: 2px;
+  text-anchor: middle;
+  opacity: 0;
+  will-change: opacity;
+  transition: opacity 1.2s ease-out;
+  transition-delay: 1.0s;
+}
+
+.splash-stage.reveal-on .brand-title,
+.splash-stage.reveal-on .brand-sub {
+  opacity: 1;
+}
+
+.splash-stage .edge {
+  stroke: #eaf2f6;
+  stroke-width: 2;
+  fill: none;
+  stroke-linejoin: round;
+  stroke-linecap: round;
+}
+.splash-stage .mullion {
+  stroke: #c4d4dd;
+  stroke-width: 0.9;
+  fill: none;
+  opacity: 0.55;
+}
+.splash-stage .mullion-side {
+  stroke: #5d717c;
+  stroke-width: 0.9;
+  fill: none;
+  opacity: 0.55;
+}
+
+#headerLogo {
+  position: static;
+  width: 150px;
+  height: 168px;
+  margin: 0 auto 4px;
+  opacity: 0;
+  transform: scale(0.6);
+  filter: blur(4px);
+  transition: opacity 0.6s ease, transform 0.6s cubic-bezier(0.2,0.9,0.2,1), filter 0.6s ease;
+  pointer-events: none;
+}
+#headerLogo.visible {
+  opacity: 1;
+  transform: scale(1);
+  filter: blur(0);
+}
+.header-logo-svg {
+  width: 150px;
+  height: 168px;
+  display: block;
+  margin: 0 auto;
+}
+
+#splashScreen.fade-out {
+  opacity: 0;
+  transition: opacity 0.6s ease;
+}
+
+#splashScreen.dissolving {
+  background: transparent;
+  transition: background 0.6s ease;
+}
+#splashScreen.dissolving::before {
+  opacity: 0;
+  transition: opacity 0.6s ease;
+}
+
+.hseg-text {
+  fill: #ffffff;
+  font-size: 15px;
+  font-weight: 600;
+  letter-spacing: 1px;
+  dominant-baseline: central;
+  paint-order: stroke;
+  stroke: rgba(0, 0, 0, 0.25);
+  stroke-width: 2px;
 }
