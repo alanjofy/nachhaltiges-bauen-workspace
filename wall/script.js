@@ -112,8 +112,8 @@ function cacheDom() {
   dom.productImagePlaceholder = document.getElementById("productImagePlaceholder");
   dom.selectedProductType = document.getElementById("selectedProductType");
   dom.selectedProductVariant = document.getElementById("selectedProductVariant");
-  dom.verificationValue = document.getElementById("verificationValue");
-  dom.epdStatusValue = document.getElementById("epdStatusValue");
+  dom.issueDateValue = document.getElementById("issueDateValue");
+  dom.validToValue = document.getElementById("validToValue");
 
   dom.technicalGrid = document.getElementById("technicalGrid");
   dom.scenarioList = document.getElementById("scenarioList");
@@ -460,8 +460,13 @@ function renderProductOverview(record) {
 
   dom.selectedProductType.textContent = type || "—";
   dom.selectedProductVariant.textContent = product || "—";
-  dom.verificationValue.textContent = glass ? "Third-party EPD" : "Project-specific LCA";
-  dom.epdStatusValue.textContent = glass ? "EPD available" : "EPD not available";
+  if (glass) {
+    dom.issueDateValue.textContent = "03.06.2025";
+    dom.validToValue.textContent = "02.06.2030";
+  } else {
+    dom.issueDateValue.textContent = "11.05.2026";
+    dom.validToValue.textContent = "10.05.2031";
+  }
 
   const imageName = field(record, "image");
   const imagePath = imageName ? buildPath(imageName) : "";

@@ -26,6 +26,20 @@ function formatResultList(resultText) {
 }
 
 // ============================================================
+//  Abteilungs-Badges rendern (Web)
+// ============================================================
+function renderDeptBadges(item) {
+  if (!item.depts || item.depts.length === 0) return '';
+  const badges = item.depts.map(dept =>
+    '<span class="dept-badge dept-badge--' + escapeHtml(dept.color) + '">' +
+      '<span class="dept-badge__icon" aria-hidden="true">🏢</span>' +
+      escapeHtml(dept.label) +
+    '</span>'
+  ).join('');
+  return '<div class="dept-badge-row" aria-label="Durchführende Abteilungen">' + badges + '</div>';
+}
+
+// ============================================================
 //  Persistenz (localStorage)
 // ============================================================
 function saveCart() {
@@ -164,17 +178,14 @@ function buildPDF() {
   const items = data.filter(d => cart.some(c => c.code === d.code));
 
   // ============================================================
-  //  SEITE 1 – DECKBLATT (Variante a, schlicht)
+  //  SEITE 1 – DECKBLATT
   // ============================================================
   setFill(C.petrol);
   doc.rect(0, 0, PW, PH, 'F');
 
-  // dunkles Band oben
   setFill(C.petrolDeep);
   doc.rect(0, 0, PW, 70, 'F');
 
-  // Logo oben (per Canvas gerastert) – mit Text-Fallback
-   // Logo oben (PNG) – mit Text-Fallback
   if (window._lindnerLogoPNG) {
     const logoH = 14;
     const logoW = logoH * (window._lindnerLogoRatio || 3.7);
@@ -191,7 +202,6 @@ function buildPDF() {
   setText(C.white);
   doc.text('NACHHALTIGES BAUEN 2026', M, 58);
 
-  // Titel
   font('bold');
   doc.setFontSize(34);
   setText(C.white);
@@ -202,7 +212,6 @@ function buildPDF() {
   doc.setFontSize(12);
   doc.text('Erstellt am ' + today, M, 182);
 
-  // Statistik unten
   font('bold');
   doc.setFontSize(40);
   doc.text(String(items.length), M, 240);
@@ -304,6 +313,13 @@ function buildPDF() {
 
   let currentGroup = null;
 
+  // PDF-Farben für Abteilungs-Badges
+  const BADGE_COLORS = {
+    petrol: { bg: [235, 244, 247], text: [36,  76,  90], border: [53,  98, 113] },
+    navy:   { bg: [229, 239, 242], text: [4,   68,  89], border: [4,   68,  89] },
+    red:    { bg: [248, 229, 231], text: [174, 12,  30], border: [174, 12,  30] },
+  };
+
   items.forEach((item) => {
     // Gruppen-Trennüberschrift
     if (item.group !== currentGroup) {
@@ -340,6 +356,52 @@ function buildPDF() {
     doc.setLineWidth(0.3);
     doc.line(M, y, PW - M, y);
     y += 6;
+
+    // ── NEU: Abteilungs-Badges im PDF ────────────────────────
+    if (item.depts && item.depts.length > 0) {
+      ensureSpace(12);
+
+      const BADGE_H      = 6;
+      const BADGE_RADIUS = 1.5;
+      const BADGE_PAD_X  = 3;
+      const BADGE_GAP    = 3;
+
+      font('bold');
+      doc.setFontSize(6.5);
+
+      let bx = M;
+
+      item.depts.forEach((dept) => {
+        const colors = BADGE_COLORS[dept.color] || BADGE_COLORS.petrol;
+        const label  = dept.label;
+
+        const textW  = doc.getTextWidth(label);
+        const badgeW = textW + BADGE_PAD_X * 2 + 1;
+
+        // Zeilenumbruch falls kein Platz mehr
+        if (bx + badgeW > PW - M) {
+          bx  = M;
+          y  += BADGE_H + 2;
+          ensureSpace(BADGE_H + 4);
+        }
+
+        // Hintergrund + Rahmen
+        doc.setFillColor(colors.bg[0], colors.bg[1], colors.bg[2]);
+        doc.setDrawColor(colors.border[0], colors.border[1], colors.border[2]);
+        doc.setLineWidth(0.3);
+        doc.roundedRect(bx, y - BADGE_H + 1, badgeW, BADGE_H, BADGE_RADIUS, BADGE_RADIUS, 'FD');
+
+        // Text
+        doc.setTextColor(colors.text[0], colors.text[1], colors.text[2]);
+        doc.text(label, bx + BADGE_PAD_X, y - 0.8);
+
+        bx += badgeW + BADGE_GAP;
+      });
+
+      y += BADGE_H + 4;
+      font('normal');
+    }
+    // ─────────────────────────────────────────────────────────
 
     // Leistungsumfang
     ensureSpace(14);
@@ -513,6 +575,9 @@ function renderAll() {
       html +=       '<h3>' + escapeHtml(item.title) + '</h3>';
       html +=     '</button>';
       html +=     '<div class="card-details">';
+      // ── NEU: Abteilungs-Badges (Web) ─────────────────────
+      html +=       renderDeptBadges(item);
+      // ─────────────────────────────────────────────────────
       html +=       '<ul>' + item.details.map(d => '<li>' + escapeHtml(d) + '</li>').join('') + '</ul>';
       html +=       '<button class="cart-add-btn ' + (inCart ? 'active' : '') + '" type="button" onclick="toggleCartItem(event, \'' + item.code + '\')" aria-pressed="' + (inCart ? 'true' : 'false') + '" aria-label="' + (inCart ? 'Hinzugefügt' : 'Zur Anfrage hinzufügen') + '" title="' + (inCart ? 'Hinzugefügt' : 'Zur Anfrage hinzufügen') + '">';
       html +=         '<span class="cart-icon" aria-hidden="true">' + (inCart ? '✓' : '+') + '</span>';
@@ -568,7 +633,6 @@ function toggleCartItem(e, code) {
   updateCartUI();
 }
 
-// Setzt den visuellen Zustand eines "Zur Anfrage"-Buttons
 function setCartButton(btn, inCart) {
   if (!btn) return;
   btn.classList.toggle('active', inCart);
@@ -754,6 +818,9 @@ function renderOverview() {
       '<div class="card-body">' +
         '<div class="card-header" style="margin-bottom: 12px;"><span class="code-badge">' + item.code + '</span></div>' +
         '<h3 style="margin-bottom: 12px;">' + escapeHtml(item.title) + '</h3>' +
+        // ── NEU: Abteilungs-Badges (Übersichtsseite) ─────────
+        renderDeptBadges(item) +
+        // ─────────────────────────────────────────────────────
         '<ul class="overview-details">' + item.details.map(d => '<li>' + escapeHtml(d) + '</li>').join('') + '</ul>' +
         '<div class="card-result" style="margin: 0;">' +
           '<div class="card-result-label">Ergebnis</div>' +

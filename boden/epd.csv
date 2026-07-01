@@ -1,6 +1,66 @@
-﻿producttype,epd ,Issue date,Valid to ,image
-LIGNA,epd-gm-b-002-ligna--en.pdf,13.06.2025,12.06.2030,ligna.png
-FLOOR and more® ,epd-nb-b-003-floor-and-more--en.pdf,30.05.2025,29.05.2030,floorandmore.png
-LOOP,epd-nb-b-005-loop--en.pdf,11.06.2025,10.06.2030,loop.png
-NORTEC,epd-nb-b-006-nortec--en.pdf,28.07.2021,11.05.2026,nortec.png
-NORIT,epd-nb-n-002-dry-screed--en,28.10.2025,27.10.2030,norit.png
+﻿producttype,,epd ,Issue date,Valid to ,image
+LIGNA,Ligna B 28 Wood-based panels for raised floor,epd-gm-b-002-ligna--en.pdf,13.06.2025,12.06.2030,ligna.png
+LIGNA,Ligna B 28 ST Wood-based panels for raised floor,epd-gm-b-002-ligna--en.pdf,13.06.2025,12.06.2030,ligna.png
+LIGNA,Ligna B 28 ST ST Wood-based panels for raised floor,epd-gm-b-002-ligna--en.pdf,13.06.2025,12.06.2030,ligna.png
+LIGNA,Ligna B 30 Wood-based panels for raised floor,epd-gm-b-002-ligna--en.pdf,13.06.2025,12.06.2030,ligna.png
+LIGNA,Ligna B 30 ST Wood-based panels for raised floor,epd-gm-b-002-ligna--en.pdf,13.06.2025,12.06.2030,ligna.png
+LIGNA,Ligna B 30 ST ST Wood-based panels for raised floor,epd-gm-b-002-ligna--en.pdf,13.06.2025,12.06.2030,ligna.png
+LIGNA,Ligna K1 38 Wood-based panels for raised floor,epd-gm-b-002-ligna--en.pdf,13.06.2025,12.06.2030,ligna.png
+LIGNA,Ligna K1 38 ST Wood-based panels for raised floor,epd-gm-b-002-ligna--en.pdf,13.06.2025,12.06.2030,ligna.png
+LIGNA,Ligna K1 38 ST ST Wood-based panels for raised floor,epd-gm-b-002-ligna--en.pdf,13.06.2025,12.06.2030,ligna.png
+LIGNA,Ligna L 38 Wood-based panels for raised floor,epd-gm-b-002-ligna--en.pdf,13.06.2025,12.06.2030,ligna.png
+LIGNA,Ligna L 38 ST Wood-based panels for raised floor,epd-gm-b-002-ligna--en.pdf,13.06.2025,12.06.2030,ligna.png
+LIGNA,Ligna L 38 ST ST Wood-based panels for raised floor,epd-gm-b-002-ligna--en.pdf,13.06.2025,12.06.2030,ligna.png
+LIGNA,Ligna S 38 Wood-based panels for raised floor,epd-gm-b-002-ligna--en.pdf,13.06.2025,12.06.2030,ligna.png
+LIGNA,Ligna S 38 ST Wood-based panels for raised floor,epd-gm-b-002-ligna--en.pdf,13.06.2025,12.06.2030,ligna.png
+LIGNA,Ligna S 38 ST ST Wood-based panels for raised floor,epd-gm-b-002-ligna--en.pdf,13.06.2025,12.06.2030,ligna.png
+LIGNA,Ligna M 38 Wood-based panels for raised floor,epd-gm-b-002-ligna--en.pdf,13.06.2025,12.06.2030,ligna.png
+LIGNA,Ligna M 38 ST Wood-based panels for raised floor,epd-gm-b-002-ligna--en.pdf,13.06.2025,12.06.2030,ligna.png
+LIGNA,Ligna M 38 ST ST Wood-based panels for raised floor,epd-gm-b-002-ligna--en.pdf,13.06.2025,12.06.2030,ligna.png
+LIGNA,Provisorium 38 Wood-based panels for raised floor,epd-gm-b-002-ligna--en.pdf,13.06.2025,12.06.2030,ligna.png
+FLOOR and more® ,FLOOR and more® G30,epd-nb-b-003-floor-and-more--en.pdf,30.05.2025,29.05.2030,floorandmore.png
+FLOOR and more® ,FLOOR and more® G30 Vario,epd-nb-b-003-floor-and-more--en.pdf,30.05.2025,29.05.2030,floorandmore.png
+FLOOR and more® ,FLOOR and more® G34,epd-nb-b-003-floor-and-more--en.pdf,30.05.2025,29.05.2030,floorandmore.png
+FLOOR and more® ,FLOOR and more® G34 Vario,epd-nb-b-003-floor-and-more--en.pdf,30.05.2025,29.05.2030,floorandmore.png
+FLOOR and more® ,FLOOR and more® Sofo. o.OBlg.,epd-nb-b-003-floor-and-more--en.pdf,30.05.2025,29.05.2030,floorandmore.png
+FLOOR and more® ,FLOOR and more® G40,epd-nb-b-003-floor-and-more--en.pdf,30.05.2025,29.05.2030,floorandmore.png
+FLOOR and more® ,FLOOR and more® G40 Vario,epd-nb-b-003-floor-and-more--en.pdf,30.05.2025,29.05.2030,floorandmore.png
+FLOOR and more® ,FLOOR and more® G40 (FST AT),epd-nb-b-003-floor-and-more--en.pdf,30.05.2025,29.05.2030,floorandmore.png
+LOOP,LOOP prime R32,epd-nb-b-005-loop--en.pdf,11.06.2025,10.06.2030,loop.png
+LOOP,LOOP aurum R32,epd-nb-b-005-loop--en.pdf,11.06.2025,10.06.2030,loop.png
+LOOP,LOOP prime R33,epd-nb-b-005-loop--en.pdf,11.06.2025,10.06.2030,loop.png
+LOOP,LOOP aurum R33,epd-nb-b-005-loop--en.pdf,11.06.2025,10.06.2030,loop.png
+LOOP,LOOP prime R34,epd-nb-b-005-loop--en.pdf,11.06.2025,10.06.2030,loop.png
+LOOP,LOOP aurum R34,epd-nb-b-005-loop--en.pdf,11.06.2025,10.06.2030,loop.png
+LOOP,LOOP prime R35,epd-nb-b-005-loop--en.pdf,11.06.2025,10.06.2030,loop.png
+LOOP,LOOP aurum R35,epd-nb-b-005-loop--en.pdf,11.06.2025,10.06.2030,loop.png
+LOOP,LOOP prime R36,epd-nb-b-005-loop--en.pdf,11.06.2025,10.06.2030,loop.png
+LOOP,LOOP aurum R36,epd-nb-b-005-loop--en.pdf,11.06.2025,10.06.2030,loop.png
+LOOP,LOOP prime R37,epd-nb-b-005-loop--en.pdf,11.06.2025,10.06.2030,loop.png
+LOOP,LOOP aurum R37,epd-nb-b-005-loop--en.pdf,11.06.2025,10.06.2030,loop.png
+LOOP,LOOP prime R38,epd-nb-b-005-loop--en.pdf,11.06.2025,10.06.2030,loop.png
+LOOP,LOOP aurum R38,epd-nb-b-005-loop--en.pdf,11.06.2025,10.06.2030,loop.png
+LOOP,LOOP prime R39,epd-nb-b-005-loop--en.pdf,11.06.2025,10.06.2030,loop.png
+LOOP,LOOP aurum R39,epd-nb-b-005-loop--en.pdf,11.06.2025,10.06.2030,loop.png
+NORTEC,NORTEC L28,"Raised Floor Panel, Type NORTEC L 28.pdf",12.06.2026,11.06.2031,nortec.png
+NORTEC,NORTEC L30 & NORTEC aurum L30 & NORTEC L30 AL,"Raised Floor panel, Type NORTEC L 30 and NORTEC aurum L 30 and NORTEC L 30 AL.pdf",12.06.2026,11.06.2031,nortec.png
+NORTEC,NORTEC L34 & NORTEC aurum L34,"Raised Floor Panel, Type NORTEC L 34 and NORTEC aurum L 34.pdf",12.06.2026,11.06.2031,nortec.png
+NORTEC,NORTEC L36,"Raised Floor Panel, Type NORTEC L 36.pdf",12.06.2026,11.06.2031,nortec.png
+NORTEC,NORTEC L38 & NORTEC L38 LP & NORTEC aurum L38,"Raised Floor Panel, Type NORTEC L 38 and NORTEC L 38 LP and NORTEC aurum L 38.pdf",12.06.2026,11.06.2031,nortec.png
+NORTEC,NORTEC L40,"Raised Floor Panel, Type NORTEC L 40.pdf",12.06.2026,11.06.2031,nortec.png
+NORTEC,NORTEC L42,"Raised Floor Panel, Type NORTEC L 42.pdf",12.06.2026,11.06.2031,nortec.png
+NORTEC,NORTEC L44,"Raised Floor Panel, Type NORTEC L 44.pdf",12.06.2026,11.06.2031,nortec.png
+NORTEC,NORTEC L38 ST & NORTEC LP38 ST,"Raised Floor Panel, Type NORTEC L 38 ST and NORTEC LP 38 ST.pdf",12.06.2026,11.06.2031,nortec.png
+NORTEC,NORTEC G30 ST,"Raised Floor panel, Type NORTEC G 30 ST.pdf",12.06.2026,11.06.2031,nortec.png
+NORTEC,NORTEC G34 ST,"Raised Floor Panel, Type NORTEC G 34 ST.pdf",12.06.2026,11.06.2031,nortec.png
+NORTEC,NORTEC G38 ST,"Raised Floor Panel, Type NORTEC G 38 ST.pdf",12.06.2026,11.06.2031,nortec.png
+NORTEC,NORTEC U30 ST ST ,"Raised Floor Panel, Type NORTEC U 30 ST ST.pdf",12.06.2026,11.06.2031,nortec.png
+NORTEC,NORTEC U36 ST ,"Raised Floor Panel, Type NORTEC U 36 ST.pdf",12.06.2026,11.06.2031,nortec.png
+NORTEC,NORTEC power YP44 ST ,"Raised Floor Panel, Type NORTEC YP 44 ST.pdf",12.06.2026,11.06.2031,nortec.png
+NORIT,NORIT-TE 20,epd-nb-n-002-dry-screed--en,28.10.2025,27.10.2030,norit.png
+NORIT,NORIT-TE 25,epd-nb-n-002-dry-screed--en,28.10.2025,27.10.2030,norit.png
+NORIT,NORIT High Deck 18,epd-nb-n-002-dry-screed--en,28.10.2025,27.10.2030,norit.png
+NORIT,NORIT Screed board,epd-nb-n-002-dry-screed--en,28.10.2025,27.10.2030,norit.png
+NORIT,NORIT Screed board ,epd-nb-n-002-dry-screed--en,28.10.2025,27.10.2030,norit.png
+NORIT,NORIT TE 25 ,epd-nb-n-002-dry-screed--en,28.10.2025,27.10.2030,norit.png
+NORIT,NORIT  N+F,epd-nb-n-002-dry-screed--en,28.10.2025,27.10.2030,norit.png

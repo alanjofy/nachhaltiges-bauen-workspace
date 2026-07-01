@@ -73,12 +73,11 @@
           <circle class="trace" cx="250" cy="250" r="160" pathLength="1005" transform="rotate(-90 250 250)"/>
         </g>
 
-        <!-- 3D BUILDING -->
         <!-- 3D BUILDING (new image-based) -->
-<g class="building">
-  <image href="building.png"x="15" y="45" width="470" height="450"
-         preserveAspectRatio="xMidYMid meet"/>
-</g>
+        <g class="building">
+          <image href="building.png" x="15" y="45" width="470" height="450"
+                 preserveAspectRatio="xMidYMid meet"/>
+        </g>
 
         <!-- BRAND TEXT -->
         <g class="brand">
@@ -87,6 +86,34 @@
         </g>
       </svg>
       <canvas id="splashParticles"></canvas>
+    </div>
+  </div>
+
+  <!-- ===== HELP / GUIDED TOUR ===== -->
+  <button id="helpBtn" title="Guided help">
+    <span class="help-icon">?</span>
+    <span class="help-label">Help</span>
+  </button>
+
+  <div id="tourOverlay" class="tour-hidden">
+    <div id="tourSpotlight"></div>
+    <div id="tourTooltip">
+      <div id="tourArrow" class="tour-arrow arrow-left"></div>
+      <div class="tour-progress-track"><div id="tourProgress" class="tour-progress-bar"></div></div>
+      <div class="tour-lang-toggle">
+        <button data-lang="en" class="active">EN</button>
+        <button data-lang="de">DE</button>
+      </div>
+      <div class="tour-step-count" id="tourStepCount"></div>
+      <div class="tour-title" id="tourTitle"></div>
+      <div class="tour-body" id="tourBody"></div>
+      <div class="tour-actions">
+        <button id="tourSkip" class="tour-btn tour-btn-ghost">Skip</button>
+        <div class="tour-nav-right">
+          <button id="tourPrev" class="tour-btn tour-btn-ghost">← Back</button>
+          <button id="tourNext" class="tour-btn tour-btn-primary">Next →</button>
+        </div>
+      </div>
     </div>
   </div>
 
@@ -99,58 +126,58 @@
       <!-- ===== PANEL HEADER WITH FULL STATIC LOGO ===== -->
       <div class="panel-header">
         <div id="headerLogo" aria-hidden="true">
-  <svg viewBox="60 60 380 380" class="header-logo-svg">
-    <defs>
-      <!-- ARC PATHS for the curved text -->
-      <path id="hTopArc"   d="M 90 250 A 160 160 0 0 1 410 250" fill="none"/>
-      <path id="hRightArc" d="M 410 250 A 160 160 0 0 1 250 410" fill="none"/>
-      <path id="hLeftArc"  d="M 250 410 A 160 160 0 0 1 90 250" fill="none"/>
+          <svg viewBox="60 60 380 380" class="header-logo-svg">
+            <defs>
+              <!-- ARC PATHS for the curved text -->
+              <path id="hTopArc"   d="M 90 250 A 160 160 0 0 1 410 250" fill="none"/>
+              <path id="hRightArc" d="M 410 250 A 160 160 0 0 1 250 410" fill="none"/>
+              <path id="hLeftArc"  d="M 250 410 A 160 160 0 0 1 90 250" fill="none"/>
 
-      <radialGradient id="hgRing" cx="250" cy="250" r="175" gradientUnits="userSpaceOnUse">
-        <stop offset="0%" stop-color="#46555f"/><stop offset="74%" stop-color="#46555f"/>
-        <stop offset="80%" stop-color="#8a9ba6"/><stop offset="89%" stop-color="#6f818d"/>
-        <stop offset="96%" stop-color="#48565f"/><stop offset="100%" stop-color="#37434b"/>
-      </radialGradient>
-      <radialGradient id="hgRingLight" cx="200" cy="190" r="220" gradientUnits="userSpaceOnUse">
-        <stop offset="0%" stop-color="rgba(255,255,255,0.30)"/>
-        <stop offset="45%" stop-color="rgba(255,255,255,0.06)"/>
-        <stop offset="100%" stop-color="rgba(255,255,255,0)"/>
-      </radialGradient>
-    </defs>
+              <radialGradient id="hgRing" cx="250" cy="250" r="175" gradientUnits="userSpaceOnUse">
+                <stop offset="0%" stop-color="#46555f"/><stop offset="74%" stop-color="#46555f"/>
+                <stop offset="80%" stop-color="#8a9ba6"/><stop offset="89%" stop-color="#6f818d"/>
+                <stop offset="96%" stop-color="#48565f"/><stop offset="100%" stop-color="#37434b"/>
+              </radialGradient>
+              <radialGradient id="hgRingLight" cx="200" cy="190" r="220" gradientUnits="userSpaceOnUse">
+                <stop offset="0%" stop-color="rgba(255,255,255,0.30)"/>
+                <stop offset="45%" stop-color="rgba(255,255,255,0.06)"/>
+                <stop offset="100%" stop-color="rgba(255,255,255,0)"/>
+              </radialGradient>
+            </defs>
 
-    <!-- RING -->
-    <g>
-      <g>
-        <path d="M 75 250 A 175 175 0 0 1 425 250 L 395 250 A 145 145 0 0 0 105 250 Z" fill="url(#hgRing)"/>
-        <path d="M 425 250 A 175 175 0 0 1 250 425 L 250 395 A 145 145 0 0 0 395 250 Z" fill="url(#hgRing)"/>
-        <path d="M 250 425 A 175 175 0 0 1 75 250 L 105 250 A 145 145 0 0 0 250 395 Z" fill="url(#hgRing)"/>
-      </g>
-      <g>
-        <path d="M 75 250 A 175 175 0 0 1 425 250 L 395 250 A 145 145 0 0 0 105 250 Z" fill="url(#hgRingLight)"/>
-        <path d="M 425 250 A 175 175 0 0 1 250 425 L 250 395 A 145 145 0 0 0 395 250 Z" fill="url(#hgRingLight)"/>
-        <path d="M 250 425 A 175 175 0 0 1 75 250 L 105 250 A 145 145 0 0 0 250 395 Z" fill="url(#hgRingLight)"/>
-      </g>
-      <circle cx="250" cy="250" r="175" fill="none" stroke="rgba(255,255,255,0.35)" stroke-width="1"/>
-      <circle cx="250" cy="250" r="145" fill="none" stroke="rgba(0,0,0,0.45)" stroke-width="2"/>
-      <g stroke="rgba(0,0,0,0.35)" stroke-width="1.5">
-        <line x1="75" y1="250" x2="105" y2="250"/>
-        <line x1="425" y1="250" x2="395" y2="250"/>
-        <line x1="250" y1="425" x2="250" y2="395"/>
-      </g>
+            <!-- RING -->
+            <g>
+              <g>
+                <path d="M 75 250 A 175 175 0 0 1 425 250 L 395 250 A 145 145 0 0 0 105 250 Z" fill="url(#hgRing)"/>
+                <path d="M 425 250 A 175 175 0 0 1 250 425 L 250 395 A 145 145 0 0 0 395 250 Z" fill="url(#hgRing)"/>
+                <path d="M 250 425 A 175 175 0 0 1 75 250 L 105 250 A 145 145 0 0 0 250 395 Z" fill="url(#hgRing)"/>
+              </g>
+              <g>
+                <path d="M 75 250 A 175 175 0 0 1 425 250 L 395 250 A 145 145 0 0 0 105 250 Z" fill="url(#hgRingLight)"/>
+                <path d="M 425 250 A 175 175 0 0 1 250 425 L 250 395 A 145 145 0 0 0 395 250 Z" fill="url(#hgRingLight)"/>
+                <path d="M 250 425 A 175 175 0 0 1 75 250 L 105 250 A 145 145 0 0 0 250 395 Z" fill="url(#hgRingLight)"/>
+              </g>
+              <circle cx="250" cy="250" r="175" fill="none" stroke="rgba(255,255,255,0.35)" stroke-width="1"/>
+              <circle cx="250" cy="250" r="145" fill="none" stroke="rgba(0,0,0,0.45)" stroke-width="2"/>
+              <g stroke="rgba(0,0,0,0.35)" stroke-width="1.5">
+                <line x1="75" y1="250" x2="105" y2="250"/>
+                <line x1="425" y1="250" x2="395" y2="250"/>
+                <line x1="250" y1="425" x2="250" y2="395"/>
+              </g>
 
-      <!-- CURVED RING TEXT (same as splash) -->
-      <text class="hseg-text"><textPath href="#hTopArc" startOffset="50%" text-anchor="middle">Pre-Use-Design/Herstellung</textPath></text>
-      <text class="hseg-text"><textPath href="#hRightArc" startOffset="50%" text-anchor="middle">Use-Nutzung</textPath></text>
-      <text class="hseg-text"><textPath href="#hLeftArc" startOffset="50%" text-anchor="middle">Post-Use-Lebensende</textPath></text>
-    </g>
+              <!-- CURVED RING TEXT (same as splash) -->
+              <text class="hseg-text"><textPath href="#hTopArc" startOffset="50%" text-anchor="middle">Pre-Use-Design/Herstellung</textPath></text>
+              <text class="hseg-text"><textPath href="#hRightArc" startOffset="50%" text-anchor="middle">Use-Nutzung</textPath></text>
+              <text class="hseg-text"><textPath href="#hLeftArc" startOffset="50%" text-anchor="middle">Post-Use-Lebensende</textPath></text>
+            </g>
 
-    <!-- BUILDING IMAGE -->
-    <g>
-      <image href="building.png" x="15" y="45" width="470" height="450"
-             preserveAspectRatio="xMidYMid meet"/>
-    </g>
-  </svg>
-</div>
+            <!-- BUILDING IMAGE -->
+            <g>
+              <image href="building.png" x="15" y="45" width="470" height="450"
+                     preserveAspectRatio="xMidYMid meet"/>
+            </g>
+          </svg>
+        </div>
 
         <h1>RE Tool</h1>
         <p>CO₂ savings potential</p>

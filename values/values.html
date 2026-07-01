@@ -1,0 +1,454 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Our Values — Lindner Nachhaltiges Bauen</title>
+<meta name="description" content="Circular · Digital · Innovative — the Future of Construction. Lindner Nachhaltiges Bauen.">
+<link rel="icon" href="../compass-body.png">
+<link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Montserrat:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="../lindner-theme.css">
+<link rel="prefetch" href="../tool/tool.html">
+<style>
+  body { overflow: hidden; }
+
+  /* ═══ HEADER (matches tool.html) ═══ */
+  .lindner-header {
+    display: flex; align-items: center; justify-content: space-between;
+    padding: 22px 52px 22px 40px;
+    position: relative; z-index: 20;
+    opacity: 0; animation: fadeIn 0.6s ease 0.1s forwards;
+  }
+  .header-left { display: flex; align-items: center; gap: 26px; }
+  .lindner-header-logo img { height: 40px; width: auto; display: block; transition: opacity .3s; }
+  .lindner-header-logo:hover img { opacity: .85; }
+  .header-divider { width: 1px; height: 36px; background: rgba(255,255,255,0.28); }
+  .header-compass { position: relative; width: 48px; height: 48px; flex-shrink: 0; display: block; transition: transform .4s; }
+  .header-compass:hover { transform: rotate(8deg); }
+  .header-compass img {
+    position: absolute; inset: 0; width: 100%; height: 100%; object-fit: contain;
+    filter: drop-shadow(0 3px 6px rgba(0,0,0,.6)) drop-shadow(0 0 4px rgba(255,255,255,.15)) brightness(1.12) contrast(1.05);
+  }
+  .header-compass .needle-mini { z-index: 2; transform: scale(0.7); transform-origin: center; }
+  .header-compass .body-mini { z-index: 1; }
+  .lindner-header-tag { font-size: 13px; letter-spacing: 6px; text-transform: uppercase; color: var(--text-primary); font-weight: 500; }
+
+  /* ═══ STAGE ═══ */
+  .values-stage {
+    position: relative; z-index: 10;
+    min-height: calc(100vh - 88px);
+    display: flex; flex-direction: column;
+    align-items: center; justify-content: center;
+    padding: 20px 24px 80px;
+    text-align: center;
+  }
+
+  /* Progress dots */
+  .value-progress {
+    display: flex; gap: 12px; margin-bottom: 48px;
+    opacity: 0; animation: fadeIn 0.6s ease 0.4s forwards;
+  }
+  .value-dot {
+    width: 10px; height: 10px; border-radius: 50%;
+    background: rgba(255,255,255,0.18);
+    transition: all 0.4s var(--ease-smooth);
+  }
+  .value-dot.active {
+    background: var(--accent-red-bright);
+    box-shadow: 0 0 12px var(--accent-red-glow);
+    transform: scale(1.3);
+  }
+  .value-dot.done { background: rgba(255,255,255,0.5); }
+
+  /* ═══ VALUE PANELS ═══ */
+  .value-panel {
+    position: absolute;
+    display: flex; flex-direction: column; align-items: center;
+    opacity: 0; pointer-events: none;
+    transform: translateY(20px) scale(0.98);
+    transition: opacity 0.6s var(--ease-smooth), transform 0.6s var(--ease-smooth);
+    max-width: 760px;
+    width: 100%;
+  }
+  .value-panel.show {
+    opacity: 1; pointer-events: auto;
+    transform: translateY(0) scale(1);
+  }
+
+  /* Animation canvas area */
+  .value-anim {
+    width: 180px; height: 180px;
+    margin-bottom: 32px;
+    position: relative;
+  }
+
+  .value-word {
+    font-family: var(--font-display);
+    font-size: clamp(48px, 8vw, 88px);
+    letter-spacing: 6px;
+    line-height: 1;
+    color: var(--text-primary);
+    text-transform: uppercase;
+    margin-bottom: 24px;
+    text-shadow: 0 4px 24px rgba(0,0,0,0.4);
+  }
+  .value-word .accent { color: var(--accent-red-bright); }
+
+  .value-meaning {
+    font-size: clamp(16px, 2.2vw, 22px);
+    font-weight: 300;
+    line-height: 1.6;
+    color: var(--text-secondary);
+    max-width: 640px;
+    letter-spacing: 0.5px;
+  }
+
+  /* ═══ CIRCULAR — self-drawing rotating ring ═══ */
+  .circ-svg { width: 100%; height: 100%; }
+  .circ-track { fill: none; stroke: rgba(35,185,214,0.15); stroke-width: 6; }
+  .circ-draw {
+    fill: none; stroke: url(#circGrad); stroke-width: 6; stroke-linecap: round;
+    stroke-dasharray: 471; stroke-dashoffset: 471;
+    transform: rotate(-90deg); transform-origin: center;
+  }
+  .value-panel.show .circ-draw { animation: circDraw 1.4s ease forwards, circSpin 8s linear 1.4s infinite; }
+  @keyframes circDraw { to { stroke-dashoffset: 0; } }
+  @keyframes circSpin { to { transform: rotate(270deg); } }
+  .circ-arrow { fill: #23B9D6; opacity: 0; }
+  .value-panel.show .circ-arrow { animation: fadeIn 0.5s ease 1.2s forwards; }
+
+  /* ═══ DIGITAL — assembling dot grid ═══ */
+  .dig-svg { width: 100%; height: 100%; }
+  .dig-dot {
+    fill: #23B9D6; opacity: 0;
+    filter: drop-shadow(0 0 3px rgba(35,185,214,0.6));
+  }
+  .value-panel.show .dig-dot { animation: digAssemble 0.6s var(--ease-smooth) forwards; }
+  @keyframes digAssemble {
+    from { opacity: 0; transform: scale(0.3) translate(var(--dgx,0), var(--dgy,0)); }
+    to   { opacity: 1; transform: scale(1) translate(0,0); }
+  }
+  .dig-line { stroke: rgba(35,185,214,0.4); stroke-width: 1.5; opacity: 0; }
+  .value-panel.show .dig-line { animation: fadeIn 0.8s ease 0.7s forwards; }
+
+  /* ═══ INNOVATIVE — igniting spark ═══ */
+  .inno-svg { width: 100%; height: 100%; }
+  .inno-core { fill: var(--accent-red-bright); opacity: 0; transform-origin: center; }
+  .value-panel.show .inno-core { animation: innoIgnite 1.2s var(--ease-smooth) forwards; }
+  @keyframes innoIgnite {
+    0%   { opacity: 0; transform: scale(0); }
+    50%  { opacity: 1; transform: scale(1.3); }
+    70%  { transform: scale(0.9); }
+    100% { opacity: 1; transform: scale(1); }
+  }
+  .inno-ray {
+    stroke: var(--accent-red-bright); stroke-width: 3; stroke-linecap: round;
+    opacity: 0; transform-origin: center;
+  }
+  .value-panel.show .inno-ray { animation: innoRay 0.6s ease 0.5s forwards; }
+  @keyframes innoRay {
+    0%   { opacity: 0; stroke-dashoffset: 30; }
+    60%  { opacity: 1; }
+    100% { opacity: 0.7; stroke-dashoffset: 0; }
+  }
+  .inno-glow {
+    fill: var(--accent-red-bright); opacity: 0;
+    filter: blur(14px);
+  }
+  .value-panel.show .inno-glow { animation: innoGlow 2s ease 0.8s infinite alternate; }
+  @keyframes innoGlow { from { opacity: 0.2; } to { opacity: 0.5; } }
+
+  /* ═══ FINALE ═══ */
+  .value-finale {
+    position: absolute;
+    display: flex; flex-direction: column; align-items: center;
+    opacity: 0; pointer-events: none;
+    transform: translateY(20px);
+    transition: opacity 0.8s var(--ease-smooth), transform 0.8s var(--ease-smooth);
+  }
+  .value-finale.show { opacity: 1; pointer-events: auto; transform: translateY(0); }
+
+  .finale-values {
+    font-family: var(--font-display);
+    font-size: clamp(18px, 2.6vw, 26px);
+    letter-spacing: 5px;
+    color: var(--text-secondary);
+    text-transform: uppercase;
+    margin-bottom: 18px;
+  }
+  .finale-values .sep { color: var(--accent-red-bright); margin: 0 6px; }
+  .finale-divider {
+    width: 0; height: 2px;
+    background: linear-gradient(90deg, transparent, var(--accent-red-bright), transparent);
+    margin: 0 auto 24px;
+  }
+  .value-finale.show .finale-divider { animation: expandLine 0.9s ease 0.3s forwards; }
+  @keyframes expandLine { to { width: 420px; } }
+
+  .finale-headline {
+    font-family: var(--font-display);
+    font-size: clamp(44px, 7vw, 82px);
+    letter-spacing: 4px;
+    line-height: 1.05;
+    color: var(--text-primary);
+    text-transform: uppercase;
+    margin-bottom: 20px;
+    text-shadow: 0 2px 12px rgba(0,0,0,0.4);
+  }
+  .finale-headline .accent {
+    color: var(--accent-red-bright);
+  }
+  .finale-sub {
+    font-size: clamp(14px, 2vw, 18px);
+    font-weight: 300;
+    letter-spacing: 2px;
+    color: var(--text-secondary);
+    margin-bottom: 8px;
+  }
+  .finale-brand {
+    font-size: 11px; letter-spacing: 4px; text-transform: uppercase;
+    color: var(--text-dim); margin-bottom: 40px;
+  }
+
+  .finale-continue {
+    display: inline-flex; align-items: center; gap: 12px;
+    font-family: var(--font-body);
+    font-size: 13px; font-weight: 600; letter-spacing: 2px; text-transform: uppercase;
+    color: #fff;
+    padding: 16px 36px;
+    background: linear-gradient(135deg, #E40428, #AE0C1E);
+    border: none; border-radius: 999px;
+    cursor: pointer;
+    box-shadow: 0 8px 24px rgba(228,4,40,0.4);
+    transition: transform 0.3s ease, box-shadow 0.3s ease, gap 0.3s ease;
+    text-decoration: none;
+  }
+  .finale-continue:hover { transform: translateY(-2px); gap: 16px; box-shadow: 0 12px 32px rgba(228,4,40,0.55); }
+  .finale-continue svg { width: 16px; height: 16px; stroke: #fff; fill: none; stroke-width: 2; stroke-linecap: round; stroke-linejoin: round; }
+
+  /* ═══ CONTROLS ═══ */
+  .nav-hint {
+    position: fixed; bottom: 28px; left: 50%; transform: translateX(-50%);
+    z-index: 20; font-size: 10px; letter-spacing: 3px; text-transform: uppercase;
+    color: var(--text-dim); opacity: 0; animation: fadeIn 0.5s ease 1.5s forwards;
+  }
+  .skip-link, .replay-link {
+    position: fixed; bottom: 28px; z-index: 20;
+    display: inline-flex; align-items: center; gap: 8px;
+    font-size: 10px; letter-spacing: 3px; text-transform: uppercase;
+    color: var(--text-dim); background: none; border: none; cursor: pointer;
+    font-family: var(--font-body);
+    opacity: 0; animation: fadeIn 0.5s ease 1s forwards;
+    transition: color 0.3s ease, gap 0.3s ease;
+  }
+  .skip-link { right: 32px; }
+  .replay-link { left: 32px; }
+  .skip-link:hover, .replay-link:hover { color: var(--text-primary); gap: 12px; }
+  .skip-link svg, .replay-link svg { width: 11px; height: 11px; stroke: currentColor; fill: none; stroke-width: 2; stroke-linecap: round; stroke-linejoin: round; }
+  .replay-link svg { transition: transform 0.5s ease; }
+  .replay-link:hover svg { transform: rotate(-180deg); }
+
+  @media (prefers-reduced-motion: reduce) {
+    * { animation-duration: 0.01s !important; }
+  }
+  @media (max-width: 600px) {
+    .lindner-header { padding: 14px 20px; }
+    .lindner-header-tag { display: none; }
+    .value-anim { width: 130px; height: 130px; }
+    .finale-divider { width: 280px !important; }
+    .skip-link { right: 20px; } .replay-link { left: 20px; }
+    .nav-hint { display: none; }
+  }
+</style>
+</head>
+<body>
+
+<div class="lindner-bg"></div>
+<div class="lindner-grain"></div>
+
+<header class="lindner-header">
+  <div class="header-left">
+    <a class="lindner-header-logo" href="../welcome/welcome.html" aria-label="Back to Welcome">
+      <img src="../tool/lindner-logo.png" alt="Lindner">
+    </a>
+  </div>
+  <span class="lindner-header-tag">Nachhaltiges Bauen · Our Values</span>
+</header>
+
+<main class="values-stage">
+
+  <!-- Progress dots -->
+  <div class="value-progress" id="progress">
+    <div class="value-dot active" data-step="0"></div>
+    <div class="value-dot" data-step="1"></div>
+    <div class="value-dot" data-step="2"></div>
+    <div class="value-dot" data-step="3"></div>
+  </div>
+
+  <!-- STEP 1 — CIRCULAR -->
+  <div class="value-panel" data-panel="0">
+    <div class="value-anim">
+      <svg class="circ-svg" viewBox="0 0 100 100">
+        <defs>
+          <linearGradient id="circGrad" x1="0" y1="0" x2="1" y2="1">
+            <stop offset="0%" stop-color="#23B9D6"/>
+            <stop offset="100%" stop-color="#044459"/>
+          </linearGradient>
+        </defs>
+        <circle class="circ-track" cx="50" cy="50" r="37"/>
+        <circle class="circ-draw" cx="50" cy="50" r="37"/>
+        <polygon class="circ-arrow" points="50,8 44,18 56,18"/>
+      </svg>
+    </div>
+    <div class="value-word">Circular</div>
+    <p class="value-meaning">We design buildings that give materials a second life — no waste, only cycles.</p>
+  </div>
+
+  <!-- STEP 2 — DIGITAL -->
+  <div class="value-panel" data-panel="1">
+    <div class="value-anim">
+      <svg class="dig-svg" viewBox="0 0 100 100">
+        <line class="dig-line" x1="25" y1="25" x2="50" y2="25"/>
+        <line class="dig-line" x1="50" y1="25" x2="75" y2="25"/>
+        <line class="dig-line" x1="25" y1="25" x2="25" y2="50"/>
+        <line class="dig-line" x1="75" y1="25" x2="75" y2="50"/>
+        <line class="dig-line" x1="25" y1="50" x2="50" y2="75"/>
+        <line class="dig-line" x1="75" y1="50" x2="50" y2="75"/>
+        <line class="dig-line" x1="50" y1="25" x2="50" y2="50"/>
+        <line class="dig-line" x1="25" y1="50" x2="50" y2="50"/>
+        <line class="dig-line" x1="75" y1="50" x2="50" y2="50"/>
+        <circle class="dig-dot" cx="25" cy="25" r="4" style="--dgx:-20px;--dgy:-20px;animation-delay:0.1s"/>
+        <circle class="dig-dot" cx="50" cy="25" r="4" style="--dgx:0;--dgy:-25px;animation-delay:0.2s"/>
+        <circle class="dig-dot" cx="75" cy="25" r="4" style="--dgx:20px;--dgy:-20px;animation-delay:0.3s"/>
+        <circle class="dig-dot" cx="25" cy="50" r="4" style="--dgx:-25px;--dgy:0;animation-delay:0.4s"/>
+        <circle class="dig-dot" cx="50" cy="50" r="5" style="--dgx:0;--dgy:0;animation-delay:0.55s"/>
+        <circle class="dig-dot" cx="75" cy="50" r="4" style="--dgx:25px;--dgy:0;animation-delay:0.4s"/>
+        <circle class="dig-dot" cx="50" cy="75" r="4" style="--dgx:0;--dgy:22px;animation-delay:0.5s"/>
+      </svg>
+    </div>
+    <div class="value-word">Digital</div>
+    <p class="value-meaning">We make sustainability measurable — turning building data into clear, confident decisions.</p>
+  </div>
+
+  <!-- STEP 3 — INNOVATIVE -->
+  <div class="value-panel" data-panel="2">
+    <div class="value-anim">
+      <svg class="inno-svg" viewBox="0 0 100 100">
+        <circle class="inno-glow" cx="50" cy="50" r="20"/>
+        <line class="inno-ray" x1="50" y1="14" x2="50" y2="26" stroke-dasharray="30"/>
+        <line class="inno-ray" x1="50" y1="74" x2="50" y2="86" stroke-dasharray="30"/>
+        <line class="inno-ray" x1="14" y1="50" x2="26" y2="50" stroke-dasharray="30"/>
+        <line class="inno-ray" x1="74" y1="50" x2="86" y2="50" stroke-dasharray="30"/>
+        <line class="inno-ray" x1="25" y1="25" x2="34" y2="34" stroke-dasharray="30"/>
+        <line class="inno-ray" x1="66" y1="66" x2="75" y2="75" stroke-dasharray="30"/>
+        <line class="inno-ray" x1="75" y1="25" x2="66" y2="34" stroke-dasharray="30"/>
+        <line class="inno-ray" x1="34" y1="66" x2="25" y2="75" stroke-dasharray="30"/>
+        <polygon class="inno-core" points="50,30 56,46 72,46 59,56 64,72 50,62 36,72 41,56 28,46 44,46"/>
+      </svg>
+    </div>
+    <div class="value-word">Innovative</div>
+    <p class="value-meaning">We rethink how we build — pioneering methods and materials for what comes next.</p>
+  </div>
+
+  <!-- FINALE -->
+  <div class="value-finale" data-panel="3">
+    <div class="finale-values">Circular<span class="sep">·</span>Digital<span class="sep">·</span>Innovative</div>
+    <div class="finale-divider"></div>
+    <h1 class="finale-headline">Future of Construction</h1>
+    <p class="finale-sub">Circular thinking. Digital precision. Innovative spirit.</p>
+    <p class="finale-brand">Lindner · Nachhaltiges Bauen</p>
+    <a class="finale-continue" href="../tool/tool.html">
+      Continue to Workspace
+      <svg viewBox="0 0 24 24"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
+    </a>
+  </div>
+
+</main>
+
+<span class="nav-hint" id="navHint">Press Space or → to continue</span>
+<button class="replay-link" id="replayBtn"><svg viewBox="0 0 24 24"><path d="M1 4v6h6"/><path d="M3.51 15a9 9 0 1 0 2.13-9.36L1 10"/></svg> Replay</button>
+<button class="skip-link" id="skipBtn">Skip to Workspace <svg viewBox="0 0 24 24"><path d="M5 12h14M13 6l6 6-6 6"/></svg></button>
+
+<script>
+  (function () {
+    const DEST = "../tool/tool.html";
+    const AUTO_MS = 5000;       // auto-advance timing per value
+    const panels = [...document.querySelectorAll("[data-panel]")];
+    const dots = [...document.querySelectorAll(".value-dot")];
+    const navHint = document.getElementById("navHint");
+    const skipBtn = document.getElementById("skipBtn");
+    const replayBtn = document.getElementById("replayBtn");
+
+    let step = -1;
+    let autoTimer = null;
+    let autoPlay = true;
+
+    // Fast-path: seen this session → go straight to workspace
+    if (sessionStorage.getItem("values-seen")) {
+      window.location.replace(DEST);
+      return;
+    }
+
+    function showStep(n) {
+      if (n >= panels.length) { finish(); return; }
+      step = n;
+      panels.forEach((p, i) => p.classList.toggle("show", i === n));
+      dots.forEach((d, i) => {
+        d.classList.toggle("active", i === n);
+        d.classList.toggle("done", i < n);
+      });
+      if (n === panels.length - 1) {
+        // finale reached
+        if (navHint) navHint.style.display = "none";
+        const progress = document.getElementById("progress");
+        if (progress) progress.style.display = "none";   // ← hide the dots
+        clearTimeout(autoTimer);
+        sessionStorage.setItem("values-seen", "1");
+      } else if (autoPlay) {
+        clearTimeout(autoTimer);
+        autoTimer = setTimeout(() => showStep(step + 1), AUTO_MS);
+      }
+    }
+
+    function advance() {
+      autoPlay = false;              // manual override
+      clearTimeout(autoTimer);
+      if (step < panels.length - 1) showStep(step + 1);
+    }
+
+    function finish() {
+      sessionStorage.setItem("values-seen", "1");
+      window.location.replace(DEST);
+    }
+
+    // Controls
+    document.addEventListener("keydown", e => {
+      if (e.key === " " || e.key === "ArrowRight" || e.key === "Enter") {
+        e.preventDefault(); advance();
+      }
+      if (e.key === "Escape") { sessionStorage.setItem("values-seen","1"); window.location.replace(DEST); }
+    });
+    document.querySelector(".values-stage").addEventListener("click", e => {
+      if (e.target.closest(".finale-continue")) return; // let the link work
+      advance();
+    });
+    skipBtn.addEventListener("click", () => { sessionStorage.setItem("values-seen","1"); window.location.replace(DEST); });
+    replayBtn.addEventListener("click", () => {
+      sessionStorage.removeItem("values-seen");
+      autoPlay = true;
+      const progress = document.getElementById("progress");
+      if (progress) progress.style.display = "flex";   // ← show dots again
+      showStep(0);
+    });
+
+    // Reduced motion → skip ceremony
+    if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) {
+      showStep(panels.length - 1);
+    } else {
+      setTimeout(() => showStep(0), 600);
+    }
+  })();
+</script>
+
+</body>
+</html>

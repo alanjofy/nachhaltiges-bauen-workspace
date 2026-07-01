@@ -2,6 +2,7 @@ import { RoomEnvironment } from "three/addons/environments/RoomEnvironment.js";
 import * as THREE from "three";
 import { OrbitControls } from "three/addons/controls/OrbitControls.js";
 import { getProduct } from "./productBuilder.js";
+import { initTour } from "./tour.js"; 
 
 const appRoot = document.getElementById("appRoot");
 const scenarioStage = document.getElementById("scenarioStage");
@@ -497,6 +498,7 @@ scene.fog = new THREE.Fog(0x6b7882, 80, 200);
   }
   renderer.setAnimationLoop(renderLoop);
     runSplash();
+    initTour(); 
 }
 
 function parseScenarioCSVs(chartCSVText, descCSVText) {

@@ -49,7 +49,10 @@
       "Grundlage für 3D-Modellierung",
       "Geeignet für anspruchsvolle Projekte mit hohen Genauigkeitsanforderungen"
     ],
-    "result": "Punktwolke (.e57 / .rcp)\nPanoramabilder\ndigitale Grundrisse"
+    "result": "Punktwolke (.e57 / .rcp)\nPanoramabilder\ndigitale Grundrisse",
+    "depts": [
+      { "label": "Bereich Vermessung / F&E", "color": "petrol" }
+    ]
   },
   {
     "code": "A4",
@@ -64,7 +67,10 @@
       "IFC-konformer Export für Planungspartner und Fachplaner",
       "Grundlage für Ökobilanz, Materialpässe und Ressourcenplanung"
     ],
-    "result": "BIM-Modell (Revit)\nIFC-Modell (IFC)\nBauteilliste mit Attributen\n\nLevel of Geometry (LOG): 300\nLevel of Information (LOI): 200 – 300"
+    "result": "BIM-Modell (Revit)\nIFC-Modell (IFC)\nBauteilliste mit Attributen\n\nLevel of Geometry (LOG): 300\nLevel of Information (LOI): 200 – 300",
+    "depts": [
+      { "label": "Bereich BIM Informationsmanagement / F&E", "color": "petrol" }
+    ]
   },
   {
     "code": "B1",
@@ -340,11 +346,10 @@
       "Analyse der wirtschaftlichen und ökologischen Vor-/Nachteile von Product-as-a-Service gegenüber dem Kaufmodell",
       "Abstimmung mit Herstellern, die Rücknahme- und Recyclinggarantien übernehmen",
       "Integration der Leasingstrukturen in die Ausschreibung und Vergabe",
-      "Sicherstellung der Rückgabekriterien (Zustand, Reinigung, Demontage) für den Hersteller"
+      "Sicherung der Rückgabekriterien (Zustand, Reinigung, Demontage) für den Hersteller"
     ],
     "result": "PaaS-Konzept\nHersteller-Shortlist\nVergabeunterlagen mit Leasingstruktur\nVertragsrahmen für Rücknahme"
-  }
-  ,
+  },
   {
     "code": "E1",
     "group": "Zertifizierung",
@@ -357,15 +362,15 @@
     ],
     "result": "DGNB-Zertifizierung für Bestandsgebäude"
   },
-  {
-    "code": "E2",
-    "group": "Zertifizierung",
-    "icon": "◔",
-    "title": "LEED ID+C",
-    "details": [
-      "Beratung und Begleitung der LEED-Zertifizierung „Interior Design + Construction“",
-      "Ermittlung der Kreditpunkte in den Kategorien Materials & Resources, Indoor Environmental Quality etc."
-    ],
-    "result": "LEED ID+C Zertifizierung (Certified bis Platinum)"
-  }
+{
+  "code": "E2",
+  "group": "Zertifizierung",
+  "icon": "◔",
+  "title": "LEED ID+C",
+  "details": [
+    "Beratung und Begleitung der LEED-Zertifizierung 'Interior Design + Construction'",
+    "Ermittlung der Kreditpunkte in den Kategorien Materials & Resources, Indoor Environmental Quality etc."
+  ],
+  "result": "LEED ID+C Zertifizierung (Certified bis Platinum)"
+}
 ]

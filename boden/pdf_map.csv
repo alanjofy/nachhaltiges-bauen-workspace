@@ -1,23 +1,23 @@
 ﻿floortype,producttype,productvariant,pdf
 Raised floor,LIGNA,LIGNA Wood-based panels for raised floor,
-Raised floor,LIGNA,Ligna B 28 Wood-based panels for raised floor,lca-nb-b-067-Ligna_B_28mm.pdf
-Raised floor,LIGNA,Ligna B 28 ST Wood-based panels for raised floor,lca-nb-b-068-Ligna_B_28mm_ST.pdf
-Raised floor,LIGNA,Ligna B 28 ST ST Wood-based panels for raised floor,lca-nb-b-069-Ligna_B_28mm_ST_ST.pdf
-Raised floor,LIGNA,Ligna B 30 Wood-based panels for raised floor,lca-nb-b-070-Ligna_B_30mm.pdf
-Raised floor,LIGNA,Ligna B 30 ST Wood-based panels for raised floor,lca-nb-b-071-Ligna_B_30mm_ST.pdf
-Raised floor,LIGNA,Ligna B 30 ST ST Wood-based panels for raised floor,lca-nb-b-072-Ligna_B_30mm_ST_ST.pdf
-Raised floor,LIGNA,Ligna K1 38 Wood-based panels for raised floor,lca-nb-b-073-Ligna_K1_38mm.pdf
-Raised floor,LIGNA,Ligna K1 38 ST Wood-based panels for raised floor,lca-nb-b-074-Ligna_K1_38mm_ST.pdf
-Raised floor,LIGNA,Ligna K1 38 ST ST Wood-based panels for raised floor,lca-nb-b-075-Ligna_K1_38mm_ST_ST.pdf
-Raised floor,LIGNA,Ligna L 38 Wood-based panels for raised floor,lca-nb-b-076-Ligna_L_38mm.pdf
-Raised floor,LIGNA,Ligna L 38 ST Wood-based panels for raised floor,lca-nb-b-077-Ligna_L_38mm_ST.pdf
-Raised floor,LIGNA,Ligna L 38 ST ST Wood-based panels for raised floor,lca-nb-b-078-Ligna_L_38mm_ST_ST.pdf
-Raised floor,LIGNA,Ligna S 38 Wood-based panels for raised floor,lca-nb-b-079-Ligna_S_38mm.pdf
-Raised floor,LIGNA,Ligna S 38 ST Wood-based panels for raised floor,lca-nb-b-080-Ligna_S_38mm_ST.pdf
-Raised floor,LIGNA,Ligna S 38 ST ST Wood-based panels for raised floor,lca-nb-b-081-Ligna_S_38mm_ST_ST.pdf
-Raised floor,LIGNA,Ligna M 38 Wood-based panels for raised floor,lca-nb-b-082-Ligna_M_38mm.pdf
-Raised floor,LIGNA,Ligna M 38 ST Wood-based panels for raised floor,lca-nb-b-083-Ligna_M_38mm_ST.pdf
-Raised floor,LIGNA,Ligna M 38 ST ST Wood-based panels for raised floor,lca-nb-b-084-Ligna_M_38mm_ST_ST.pdf
+Raised floor,LIGNA,LIGNA B 28 Wood-based panels for raised floor,lca-nb-b-067-Ligna_B_28mm.pdf
+Raised floor,LIGNA,LIGNA B 28 ST Wood-based panels for raised floor,lca-nb-b-068-Ligna_B_28mm_ST.pdf
+Raised floor,LIGNA,LIGNA B 28 ST ST Wood-based panels for raised floor,lca-nb-b-069-Ligna_B_28mm_ST_ST.pdf
+Raised floor,LIGNA,LIGNA B 30 Wood-based panels for raised floor,lca-nb-b-070-Ligna_B_30mm.pdf
+Raised floor,LIGNA,LIGNA B 30 ST Wood-based panels for raised floor,lca-nb-b-071-Ligna_B_30mm_ST.pdf
+Raised floor,LIGNA,LIGNA B 30 ST ST Wood-based panels for raised floor,lca-nb-b-072-Ligna_B_30mm_ST_ST.pdf
+Raised floor,LIGNA,LIGNA K1 38 Wood-based panels for raised floor,lca-nb-b-073-Ligna_K1_38mm.pdf
+Raised floor,LIGNA,LIGNA K1 38 ST Wood-based panels for raised floor,lca-nb-b-074-Ligna_K1_38mm_ST.pdf
+Raised floor,LIGNA,LIGNA K1 38 ST ST Wood-based panels for raised floor,lca-nb-b-075-Ligna_K1_38mm_ST_ST.pdf
+Raised floor,LIGNA,LIGNA L 38 Wood-based panels for raised floor,lca-nb-b-076-Ligna_L_38mm.pdf
+Raised floor,LIGNA,LIGNA L 38 ST Wood-based panels for raised floor,lca-nb-b-077-Ligna_L_38mm_ST.pdf
+Raised floor,LIGNA,LIGNA L 38 ST ST Wood-based panels for raised floor,lca-nb-b-078-Ligna_L_38mm_ST_ST.pdf
+Raised floor,LIGNA,LIGNA S 38 Wood-based panels for raised floor,lca-nb-b-079-Ligna_S_38mm.pdf
+Raised floor,LIGNA,LIGNA S 38 ST Wood-based panels for raised floor,lca-nb-b-080-Ligna_S_38mm_ST.pdf
+Raised floor,LIGNA,LIGNA S 38 ST ST Wood-based panels for raised floor,lca-nb-b-081-Ligna_S_38mm_ST_ST.pdf
+Raised floor,LIGNA,LIGNA M 38 Wood-based panels for raised floor,lca-nb-b-082-Ligna_M_38mm.pdf
+Raised floor,LIGNA,LIGNA M 38 ST Wood-based panels for raised floor,lca-nb-b-083-Ligna_M_38mm_ST.pdf
+Raised floor,LIGNA,LIGNA M 38 ST ST Wood-based panels for raised floor,lca-nb-b-084-Ligna_M_38mm_ST_ST.pdf
 Raised floor,LIGNA,Provisorium 38 Wood-based panels for raised floor,lca-nb-b-085-Ligna_Provisorium_38mm.pdf
 Hollow floor,FLOOR and more® ,FLOOR and more® hollow floor,
 Hollow floor,FLOOR and more® ,FLOOR and more® G30,lca-nb-b-062-Floor-and-more_G_30mm.pdf
@@ -45,3 +45,25 @@ Raised floor,LOOP,LOOP prime R38,lca-nb-b-098-Loop_prime_R_38mm.pdf
 Raised floor,LOOP,LOOP aurum R38,lca-nb-b-099-Loop_aurum_R_38mm.pdf
 Raised floor,LOOP,LOOP prime R39,lca-nb-b-100-Loop_prime_R_39mm.pdf
 Raised floor,LOOP,LOOP aurum R39,lca-nb-b-101-Loop_aurum_R_39mm.pdf
+Raised floor,NORTEC,NORTEC L28,
+Raised floor,NORTEC,NORTEC L30 & NORTEC aurum L30 & NORTEC L30 AL,
+Raised floor,NORTEC,NORTEC L34 & NORTEC aurum L34,
+Raised floor,NORTEC,NORTEC L36,
+Raised floor,NORTEC,NORTEC L38 & NORTEC L38 LP & NORTEC aurum L38,
+Raised floor,NORTEC,NORTEC L40,
+Raised floor,NORTEC,NORTEC L42,
+Raised floor,NORTEC,NORTEC L44,
+Raised floor,NORTEC,NORTEC L38 ST & NORTEC LP38 ST,
+Raised floor,NORTEC,NORTEC G30 ST,
+Raised floor,NORTEC,NORTEC G34 ST,
+Raised floor,NORTEC,NORTEC G38 ST,
+Raised floor,NORTEC,NORTEC U30 ST ST ,
+Raised floor,NORTEC,NORTEC U36 ST ,
+Raised floor,NORTEC,NORTEC power YP44 ST ,
+Hollow floor,NORIT,NORIT-TE 20,
+Hollow floor,NORIT,NORIT-TE 25,
+Hollow floor,NORIT,NORIT High Deck 18,
+Hollow floor,NORIT,NORIT Screed board,
+Hollow floor,NORIT,NORIT Screed board ,
+Hollow floor,NORIT,NORIT TE 25 ,
+Hollow floor,NORIT,NORIT  N+F,
