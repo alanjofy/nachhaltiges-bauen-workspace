@@ -1,10 +1,11 @@
-const GLASS_EPD_FILE = "epd-nb-w-rr-001-glass-partition-walls--en.pdf";
+
 
 const state = {
   types: [],
   results: [],
-  scenarioInfo: [],   // ← ADD
-  moduleInfo: [], 
+  scenarioInfo: [],
+  moduleInfo: [],
+  pdfMap: [],
   selectedScenarios: [],
   theme: "dark",
   expandedProductStage: false,
@@ -167,17 +168,18 @@ function updateDashboardVisibility() {
 
 async function loadData() {
   try {
-    const [types, results, scenarioInfo, moduleInfo] = await Promise.all([
+    const [types, results, scenarioInfo, moduleInfo, pdfMap] = await Promise.all([
       fetchCsv("types.csv"),
       fetchCsv("results.csv"),
       fetchCsv("scenario_info.csv").catch(() => []),
-      fetchCsv("module_info.csv").catch(() => [])
+      fetchCsv("module_info.csv").catch(() => []),
+      fetchCsv("pdf_map.csv").catch(() => [])
     ]);
-
     state.types = types;
     state.results = results;
     state.scenarioInfo = scenarioInfo;
     state.moduleInfo = moduleInfo;
+    state.pdfMap = pdfMap;
   } catch (error) {
     console.error(error);
   }
@@ -398,6 +400,13 @@ function findResultRecord(productName) {
   );
 }
 
+function findEpdFile(productName) {
+  const row = state.pdfMap.find(
+    r => cleanKeyText(field(r, "product")) === cleanKeyText(productName)
+  );
+  return row ? field(row, "epd") : "";
+}
+
 function isGlassWall(record) {
   return cleanKeyText(field(record, "type")) === cleanKeyText("Glass partition walls");
 }
@@ -431,14 +440,14 @@ function renderDashboard() {
 }
 
 function renderDownloads(record) {
-  const epdHref = isGlassWall(record) ? buildPath(GLASS_EPD_FILE) : "";
+  const productName = field(record, "product");
+  const epdFile = findEpdFile(productName);
+  const epdHref = epdFile ? buildPath("epd", epdFile) : "";   // PDFs live in wall/epd/
   const lcaFile = field(record, "lca");
   const reportHref = lcaFile ? buildPath("report", lcaFile) : "";
-
   setLinkState(dom.epdDownloadBtn, epdHref);
   setLinkState(dom.reportDownloadBtn, reportHref);
 }
-
 function setLinkState(link, href) {
   if (href) {
     link.href = href;
