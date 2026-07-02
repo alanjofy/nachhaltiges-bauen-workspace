@@ -31,7 +31,14 @@
   }
   .header-compass .needle-mini { z-index: 2; transform: scale(0.7); transform-origin: center; }
   .header-compass .body-mini { z-index: 1; }
-  .lindner-header-tag { font-size: 13px; letter-spacing: 6px; text-transform: uppercase; color: var(--text-primary); font-weight: 500; }
+  .lindner-header-tag {
+    font-size: 15px;
+    letter-spacing: 6px;
+    text-transform: uppercase;
+    color: #ffffff;
+    font-weight: 600;
+    text-shadow: 0 2px 8px rgba(0,0,0,0.4);
+  }
 
   /* ═══ STAGE ═══ */
   .values-stage {
@@ -199,15 +206,18 @@
     color: var(--accent-red-bright);
   }
   .finale-sub {
-    font-size: clamp(14px, 2vw, 18px);
-    font-weight: 300;
+    font-size: clamp(18px, 2.6vw, 24px);
+    font-weight: 400;
     letter-spacing: 2px;
     color: var(--text-secondary);
-    margin-bottom: 8px;
+    margin-bottom: 12px;
   }
   .finale-brand {
-    font-size: 11px; letter-spacing: 4px; text-transform: uppercase;
-    color: var(--text-dim); margin-bottom: 40px;
+    font-size: 14px;
+    letter-spacing: 4px;
+    text-transform: uppercase;
+    color: var(--text-muted);
+    margin-bottom: 40px;
   }
 
   .finale-continue {
@@ -272,7 +282,7 @@
       <img src="../tool/lindner-logo.png" alt="Lindner">
     </a>
   </div>
-  <span class="lindner-header-tag">Nachhaltiges Bauen · Our Values</span>
+  <span class="lindner-header-tag">Nachhaltiges Bauen</span>
 </header>
 
 <main class="values-stage">
